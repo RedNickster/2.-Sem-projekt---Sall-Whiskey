@@ -87,7 +87,7 @@ public class GUI extends Application {
             int lastId = startId + caskAmount - 1;
             int liters = Integer.parseInt(txfXLiterSpace.getText().trim());
 
-            model.CaskLiquids selectedLiquid = cbxCaskLiquids.getSelectionModel().getSelectedItem();
+            CaskLiquids selectedLiquid = cbxCaskLiquids.getSelectionModel().getSelectedItem();
             ArrayList<CaskLiquids> liquidsList = new ArrayList<>();
             liquidsList.add(selectedLiquid);
 
