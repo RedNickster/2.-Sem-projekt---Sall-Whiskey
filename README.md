@@ -4,7 +4,7 @@
 **Udviklere:** Luca, Nicklas, Lucas (25T, 2026).  
 **Formål:** Erstatte manuelle logbøger med et system til registrering af fade, destilleringer, og whiskyprodukter, inkl. automatisk beregning af svind (Angels’ Share/Devils’ Cut) og QR-kode-sporbarhed.
 
-**Arkitektur:** 3-lags model (Presentation, Logic, Storage) i Java og MS SQL.  
+**Arkitektur:** 3-lags model (Presentation, Logic, Storage) i Java.  
 **Kernefunktioner:** Registrering af fade, destilleringer, lageroversigt, og whiskyhistorik.  
 **Teknologier:** Java (backend), MS SQL (database), lav kobling og høj samhørighed.
 
