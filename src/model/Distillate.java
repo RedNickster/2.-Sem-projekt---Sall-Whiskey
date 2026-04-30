@@ -8,9 +8,9 @@ public class Distillate {
 
     private List<Distillation> distillations = new ArrayList<Distillation>();
     private int newMakeNumber;
-    private Enum<GrainVariety> grainVarietyEnum;
+    private GrainVariety grainVarietyEnum;
 
-    public Distillate(int newMakeNumber, Enum<GrainVariety> grainVarietyEnum) {
+    public Distillate(int newMakeNumber, GrainVariety grainVarietyEnum) {
         this.newMakeNumber = newMakeNumber;
         this.grainVarietyEnum = grainVarietyEnum;
     }
@@ -19,7 +19,7 @@ public class Distillate {
         return newMakeNumber;
     }
 
-    public Enum<GrainVariety> getGrainVarietyEnum() {
+    public GrainVariety getGrainVarietyEnum() {
         return grainVarietyEnum;
     }
 

@@ -32,10 +32,18 @@ public class Controller {
                 storage.getDistillationCount() + 1);
     }
 
-    public Distillate createDistilitate(int newMakeNumber, Enum<GrainVariety> grainVarietyEnum) {
+    public Distillate createDistilitate(int newMakeNumber, GrainVariety grainVarietyEnum) {
         Distillate temp = new Distillate(newMakeNumber, grainVarietyEnum);
         storage.addDistillate(temp);
         return temp;
+    }
+
+    public void endDistillitation(Distillation distillitation, LocalDate endDate, int liquidAmount,
+                                  double alcoholPercentage, String comment) {
+
+
+
+        distillitation.endDistillation(endDate, liquidAmount, alcoholPercentage, comment);
     }
 
     public void addComment(){}
