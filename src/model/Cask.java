@@ -6,7 +6,7 @@ import java.util.List;
 public class Cask {
     private int id;
     private int liters;
-    private List<CaskLiquids> previousLiquids = new ArrayList<>();
+    private List<CaskLiquids> previousLiquids = new ArrayList<>(); // Okay if null, REMEMBER NULL CHECKS WHEN HANDELING!!!
     private String countryOfOrigin;
     private String supplier;
 
