@@ -5,6 +5,7 @@ import storage.Storage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
 
@@ -14,15 +15,15 @@ public class Controller {
         this.storage = new Storage();
     }
 
-    public Cask createCask(int id, int liters, ArrayList<CaskLiquids> previousLiquids, String countryOfOrigin, String supplier) {
+    public Cask createCask(int id, int liters, ArrayList<CaskLiquids> previousLiquids, String countryOfOrigin,
+                           String supplier) {
         Cask tempCask = new Cask(id, liters, previousLiquids, countryOfOrigin, supplier);
         storage.addCask(tempCask);
         return tempCask;
     }
 
     public Distillation createDistillation(Distillate destillitate, LocalDate startDate,
-                                          SmokingMaterial smokingMaterialEnum,
-                                           int maltBatch, String employee) {
+                                           SmokingMaterial smokingMaterialEnum, int maltBatch, String employee) {
         return destillitate.createDistillations(startDate, smokingMaterialEnum, maltBatch, employee,
                 storage.getDistillationCount() + 1);
     }
@@ -37,5 +38,9 @@ public class Controller {
 
     public int getCaskCount(){
         return storage.getCaskCount();
+    }
+
+    public List<Cask> getCasks(){
+        return storage.getCasks();
     }
 }
