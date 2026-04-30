@@ -8,7 +8,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import controller.*;
 import model.*;
+import storage.*;
 
 public class GUI extends Application {
 
@@ -21,7 +23,7 @@ public class GUI extends Application {
       private final TextField txfXCountryOfOrigin = new TextField();
       private final TextField txfXSupplier = new TextField();
 
-//      private final TextField txfX4 = new TextField();
+//    private final TextField txfX4 = new TextField();
 //    private final TextField txfX5 = new TextField();
 
     private final Button btnCreateCask = new Button("Create cask");
@@ -44,6 +46,8 @@ public class GUI extends Application {
         pane.setVgap(10);
         pane.setPadding(new Insets(20,20,20,20));
         pane.setAlignment(Pos.CENTER);
+
+        cbxCaskLiquids.getItems().setAll(CaskLiquids.values());
 
         lvwCasks.setPrefSize(250,150);
 
@@ -72,16 +76,19 @@ public class GUI extends Application {
     }
 
     private void createCask() {
-        int id = ;
+        int id = Controller.getCaskCount() + 1;
         int liters = Integer.parseInt(txfXLiterSpace.getText());
-        Enum<CaskLiquids> = ;
+        model.CaskLiquids selectedLiquid = cbxCaskLiquids.getSelectionModel().getSelectedItem();
         String countryOfOrigin = txfXCountryOfOrigin.getText();
         String supplier = txfXSupplier.getText();
 
+        if (!countryOfOrigin.isEmpty() && !supplier.isEmpty()) {
+            Controller.
+        }
     }
 
-    private void createDistillation() {
-
+    private void updateLists() {
+        //lvwCasks.getItems().setAll(Storage.get)
     }
 
 }
