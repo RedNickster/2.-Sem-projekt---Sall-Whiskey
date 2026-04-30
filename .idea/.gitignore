@@ -2,6 +2,7 @@
 /shelf/
 /workspace.xml
 /misc.xml
+/out/
 # Editor-based HTTP Client requests
 /httpRequests/
 # Ignored default folder with query files
