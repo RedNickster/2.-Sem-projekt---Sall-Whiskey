@@ -37,4 +37,11 @@ public class Cask {
     public String getSupplier() {
         return supplier;
     }
+
+
+    @Override
+    public String toString() {
+        return "Cask #" + id + " (" + liters + "L) - " + supplier + "(" + countryOfOrigin + ")" +
+                " | Previous Liquids: " + previousLiquids;
+    }
 }

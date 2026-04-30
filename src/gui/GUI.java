@@ -12,7 +12,11 @@ import controller.*;
 import model.*;
 import storage.*;
 
+import java.util.ArrayList;
+
 public class GUI extends Application {
+
+      Controller controller = new Controller();
 
       //GUI-komponenter
       private final ListView<Cask> lvwCasks = new ListView<>();
@@ -22,9 +26,7 @@ public class GUI extends Application {
       private final TextField txfXLiterSpace = new TextField();
       private final TextField txfXCountryOfOrigin = new TextField();
       private final TextField txfXSupplier = new TextField();
-
-//    private final TextField txfX4 = new TextField();
-//    private final TextField txfX5 = new TextField();
+      private final TextField txfCaskAmount = new TextField();
 
     private final Button btnCreateCask = new Button("Create cask");
 
@@ -56,6 +58,7 @@ public class GUI extends Application {
         Label lblCaskLiquid = new Label("Cask liquid");
         Label lblCountryOfOrigin = new Label("Coutry of origin");
         Label lblSupplier = new Label("Supplier");
+        Label lblCaskAmount = new Label("Amount");
 
         pane.add(lblCasks, 0, 0);
         pane.add(lvwCasks,0,1);
@@ -68,27 +71,66 @@ public class GUI extends Application {
         pane.add(txfXCountryOfOrigin,0,7);
         pane.add(lblSupplier,0,8);
         pane.add(txfXSupplier,0,9);
+        pane.add(lblCaskAmount,0,10);
+        pane.add(txfCaskAmount,0,11);
 
 
-        pane.add(btnCreateCask, 0, 10);
+        pane.add(btnCreateCask, 0, 12);
 
-        //btnCreateCask.setOnAction(event -> this.createCask);
+        btnCreateCask.setOnAction(event -> this.createCask());
     }
 
     private void createCask() {
-        int id = Controller.getCaskCount() + 1;
-        int liters = Integer.parseInt(txfXLiterSpace.getText());
-        model.CaskLiquids selectedLiquid = cbxCaskLiquids.getSelectionModel().getSelectedItem();
-        String countryOfOrigin = txfXCountryOfOrigin.getText();
-        String supplier = txfXSupplier.getText();
+        try {
+            int caskAmount = Integer.parseInt(txfCaskAmount.getText().trim());
+            int startId = controller.getCaskCount() + 1;
+            int lastId = startId + caskAmount - 1;
+            int liters = Integer.parseInt(txfXLiterSpace.getText().trim());
 
-        if (!countryOfOrigin.isEmpty() && !supplier.isEmpty()) {
-            Controller.
+            model.CaskLiquids selectedLiquid = cbxCaskLiquids.getSelectionModel().getSelectedItem();
+            ArrayList<CaskLiquids> liquidsList = new ArrayList<>();
+            liquidsList.add(selectedLiquid);
+
+            String countryOfOrigin = txfXCountryOfOrigin.getText();
+            String supplier = txfXSupplier.getText();
+
+            if (!countryOfOrigin.isEmpty() && !supplier.isEmpty()) {
+                int currentId = startId;
+                for (int index = 0; index < caskAmount; index++) {
+                    controller.createCask(currentId, liters, liquidsList, countryOfOrigin, supplier);
+                    currentId++;
+                }
+
+                updateLists();
+
+                // --- SHOW POPUP ---
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Casks Created");
+                alert.setHeaderText(null);
+
+                if (caskAmount == 1) {
+                    alert.setContentText("Successfully created Cask #" + startId);
+                } else {
+                    alert.setContentText("Successfully created " + caskAmount + " casks.\n" +
+                            "IDs: " + startId + " through " + lastId);
+                }
+                alert.showAndWait();
+            }
+        } catch (NumberFormatException e) {
+            // Error popup if input isn't a number
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setContentText("Please enter valid numbers for Litre and Amount.");
+            error.showAndWait();
         }
+
+        txfXLiterSpace.clear();
+        txfXCountryOfOrigin.clear();
+        txfXSupplier.clear();
+        txfCaskAmount.clear();
     }
 
     private void updateLists() {
-        //lvwCasks.getItems().setAll(Storage.get)
+        lvwCasks.getItems().setAll(controller.getStorage().getCasks());
     }
 
 }
