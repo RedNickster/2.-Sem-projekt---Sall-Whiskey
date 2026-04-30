@@ -34,4 +34,8 @@ public class Controller {
     }
 
     public void addComment(){}
+
+    public int getCaskCount(){
+        return storage.getCaskCount();
+    }
 }

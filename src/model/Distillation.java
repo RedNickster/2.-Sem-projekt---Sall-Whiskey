@@ -24,6 +24,42 @@ public class Distillation {
         this.id = id;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public int getLiquidAmount() {
+        return liquidAmount;
+    }
+
+    public double getAlcoholPercentage() {
+        return alcoholPercentage;
+    }
+
+    public Enum<SmokingMaterial> getSmokingMaterialEnum() {
+        return smokingMaterialEnum;
+    }
+
+    public int getMaltBatch() {
+        return maltBatch;
+    }
+
+    public List<String> getComments() {
+        return comments;
+    }
+
+    public String getEmployee() {
+        return employee;
+    }
+
     public void addComment(String comment) {
         comments.add(comment);
     }
