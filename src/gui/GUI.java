@@ -7,12 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.controlsfx.control.*;
 
 import controller.*;
 import model.*;
 import storage.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GUI extends Application {
 
@@ -21,7 +23,7 @@ public class GUI extends Application {
       //GUI-komponenter
       private final ListView<Cask> lvwCasks = new ListView<>();
 
-      private final ComboBox<CaskLiquids> cbxCaskLiquids = new ComboBox<>();
+      private final CheckComboBox<CaskLiquids> cbxCaskLiquids = new CheckComboBox();
 
       private final TextField txfXLiterSpace = new TextField();
       private final TextField txfXCountryOfOrigin = new TextField();
@@ -50,6 +52,7 @@ public class GUI extends Application {
         pane.setAlignment(Pos.CENTER);
 
         cbxCaskLiquids.getItems().setAll(CaskLiquids.values());
+        cbxCaskLiquids.setPrefWidth(200);
 
         lvwCasks.setPrefSize(250,150);
 
@@ -87,9 +90,8 @@ public class GUI extends Application {
             int lastId = startId + caskAmount - 1;
             int liters = Integer.parseInt(txfXLiterSpace.getText().trim());
 
-            model.CaskLiquids selectedLiquid = cbxCaskLiquids.getSelectionModel().getSelectedItem();
-            ArrayList<CaskLiquids> liquidsList = new ArrayList<>();
-            liquidsList.add(selectedLiquid);
+            List<CaskLiquids> selectedLiquids = cbxCaskLiquids.getCheckModel().getCheckedItems();
+            ArrayList<CaskLiquids> liquidsList = new ArrayList<>(selectedLiquids);
 
             String countryOfOrigin = txfXCountryOfOrigin.getText();
             String supplier = txfXSupplier.getText();
@@ -127,6 +129,7 @@ public class GUI extends Application {
         txfXCountryOfOrigin.clear();
         txfXSupplier.clear();
         txfCaskAmount.clear();
+        cbxCaskLiquids.getCheckModel().clearChecks();
     }
 
     private void updateLists() {
