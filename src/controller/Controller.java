@@ -20,9 +20,7 @@ public class Controller {
         return tempCask;
     }
 
-    public Distillation createDistillation(Distillate destillitate, LocalDate startDate,
-                                          SmokingMaterial smokingMaterialEnum,
-                                           int maltBatch, String employee) {
+    public Distillation createDistillation(Distillate destillitate, LocalDate startDate, SmokingMaterial smokingMaterialEnum, int maltBatch, String employee) {
         return destillitate.createDistillations(startDate, smokingMaterialEnum, maltBatch, employee,
                 storage.getDistillationCount() + 1);
     }

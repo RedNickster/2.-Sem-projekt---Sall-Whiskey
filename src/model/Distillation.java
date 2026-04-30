@@ -15,8 +15,7 @@ public class Distillation {
     private List<String> comments = new ArrayList<>();
     private String employee;
 
-    public Distillation(LocalDate startDate, Enum<SmokingMaterial> smokingMaterialEnum, int maltBatch,
-                        String employee, int id) {
+    public Distillation(LocalDate startDate, Enum<SmokingMaterial> smokingMaterialEnum, int maltBatch, String employee, int id) {
         this.startDate = startDate;
         this.smokingMaterialEnum = smokingMaterialEnum;
         this.maltBatch = maltBatch;
