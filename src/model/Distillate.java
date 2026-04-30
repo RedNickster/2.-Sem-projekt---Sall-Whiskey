@@ -8,15 +8,23 @@ public class Distillate {
 
     private List<Distillation> distillations = new ArrayList<Distillation>();
     private int newMakeNumber;
-    private Enum<GrainVariety> grainVarietyEnum;
+    private GrainVariety grainVarietyEnum;
 
-    public Distillate(int newMakeNumber, Enum<GrainVariety> grainVarietyEnum) {
+    public Distillate(int newMakeNumber, GrainVariety grainVarietyEnum) {
         this.newMakeNumber = newMakeNumber;
         this.grainVarietyEnum = grainVarietyEnum;
     }
 
+    public int getNewMakeNumber() {
+        return newMakeNumber;
+    }
+
+    public GrainVariety getGrainVarietyEnum() {
+        return grainVarietyEnum;
+    }
+
     public void addDistillation(Distillation distillation) {
-        if (!this.distillations.contains(distillation)) {
+        if (distillation != null && !this.distillations.contains(distillation)) {
             this.distillations.add(distillation);
         }
     }
@@ -32,6 +40,6 @@ public class Distillate {
     }
 
     public List<Distillation> getDistillations() {
-        return distillations;
+        return new ArrayList<>(this.distillations);
     }
 }

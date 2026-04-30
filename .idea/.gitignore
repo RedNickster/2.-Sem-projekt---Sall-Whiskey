@@ -3,6 +3,7 @@
 /workspace.xml
 /misc.xml
 /out/
+.DS_Store
 # Editor-based HTTP Client requests
 /httpRequests/
 # Ignored default folder with query files

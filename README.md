@@ -6,7 +6,7 @@
 
 **Arkitektur:** 3-lags model (Presentation, Logic, Storage) i Java.  
 **Kernefunktioner:** Registrering af fade, destilleringer, lageroversigt, og whiskyhistorik.  
-**Teknologier:** Java (backend), MS SQL (database), lav kobling og høj samhørighed.
+**Teknologier:** Java (backend), lav kobling og høj samhørighed.
 
 **Projektperioder:**
 

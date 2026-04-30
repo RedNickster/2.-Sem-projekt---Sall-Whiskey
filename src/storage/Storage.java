@@ -35,4 +35,12 @@ public class Storage {
             distillates.add(distillate);
         }
     }
+
+    public int getCaskCount() {
+        return casks.size();
+    }
+
+    public List<Cask> getCasks() {
+        return new ArrayList<>(this.casks);
+    }
 }
