@@ -15,6 +15,10 @@ public class Controller {
         this.storage = new Storage();
     }
 
+    public Storage getStorage() {
+        return storage;
+    }
+
     public Cask createCask(int id, int liters, ArrayList<CaskLiquids> previousLiquids, String countryOfOrigin,
                            String supplier) {
         Cask tempCask = new Cask(id, liters, previousLiquids, countryOfOrigin, supplier);
