@@ -6,15 +6,35 @@ import java.util.List;
 public class Cask {
     private int id;
     private int liters;
-    private List<CaskLiquids> previousLiquids = new ArrayList<>(); // Okay if null, REMEMBER NULL CHECKS WHEN HANDELING!!!
+    private List<CaskLiquids> previousLiquids;
     private String countryOfOrigin;
     private String supplier;
 
-    public Cask(int id, int liters, ArrayList<CaskLiquids> previousLiquids, String countryOfOrigin, String supplier) {
+    public Cask(int id, int liters, List<CaskLiquids> previousLiquids, String countryOfOrigin, String supplier) {
         this.id = id;
         this.liters = liters;
-        this.previousLiquids = previousLiquids;
+        this.previousLiquids = (previousLiquids != null) ? new ArrayList<>(previousLiquids) : new ArrayList<>();
         this.countryOfOrigin = countryOfOrigin;
         this.supplier = supplier;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getLiters() {
+        return liters;
+    }
+
+    public List<CaskLiquids> getPreviousLiquids() {
+        return new ArrayList<>(this.previousLiquids);
+    }
+
+    public String getCountryOfOrigin() {
+        return countryOfOrigin;
+    }
+
+    public String getSupplier() {
+        return supplier;
     }
 }
