@@ -1,31 +1,37 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Distillation {
+    private int id;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Enum<GrainVariety> grainVarietyEnum;
     private int liquidAmount;
     private double alcoholPercentage;
     private Enum<SmokingMaterial> smokingMaterialEnum;
     private int maltBatch;
-    private String comment;
-    private int newMakeNumber;
+    private List<String> comments = new ArrayList<>();
     private String employee;
 
-    public Distillation(LocalDate startDate, LocalDate endDate, Enum<GrainVariety> grainVarietyEnum,
-                        int liquidAmount, double alcoholPercentage, Enum<SmokingMaterial> smokingMaterialEnum,
-                        int maltBatch, String comment, int newMakeNumber, String employee) {
+    public Distillation(LocalDate startDate, Enum<SmokingMaterial> smokingMaterialEnum, int maltBatch,
+                        String employee, int id) {
         this.startDate = startDate;
-        this.endDate = endDate;
-        this.grainVarietyEnum = grainVarietyEnum;
-        this.liquidAmount = liquidAmount;
-        this.alcoholPercentage = alcoholPercentage;
         this.smokingMaterialEnum = smokingMaterialEnum;
         this.maltBatch = maltBatch;
-        this.comment = comment;
-        this.newMakeNumber = newMakeNumber;
         this.employee = employee;
+        this.id = id;
+    }
+
+    public void addComment(String comment) {
+        comments.add(comment);
+    }
+
+    public void endDistillation(LocalDate endDate, int liquidAmount,double alcoholPercentage, String comment) {
+        this.endDate = endDate;
+        this.liquidAmount = liquidAmount;
+        this.alcoholPercentage = alcoholPercentage;
+        this.comments.add(comment);
     }
 }
