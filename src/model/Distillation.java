@@ -86,4 +86,19 @@ public class Distillation {
         this.alcoholPercentage = alcoholPercentage;
         addComment(comment);
     }
+
+    @Override
+    public String toString() {
+        return "Distillation{" +
+                "id=" + id +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", liquidAmount=" + liquidAmount +
+                ", alcoholPercentage=" + alcoholPercentage +
+                ", smokingMaterialEnum=" + smokingMaterialEnum +
+                ", maltBatch=" + maltBatch +
+                ", comments=" + comments +
+                ", employee='" + employee + '\'' +
+                '}';
+    }
 }
