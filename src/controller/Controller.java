@@ -46,6 +46,15 @@ public class Controller {
         distillitation.endDistillation(endDate, liquidAmount, alcoholPercentage, comment);
     }
 
+    public void createWarehouse(String adresse, double m2, int lagerPladser){
+        storage.addWarehouse(new Warehouse(adresse, m2, lagerPladser));
+    }
+
+    public void pourDistillateIntoCask(Distillate distillate, int amount, Cask cask) {
+        cask.addDistillate(distillate, amount);
+    }
+
+
     public void addComment(){}
 
     public int getCaskCount(){

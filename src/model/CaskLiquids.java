@@ -2,6 +2,6 @@ package model;
 
 public enum CaskLiquids {
     BURBON,
-    CHERRY,
+    SHERRY,
     REDWINE
 }
