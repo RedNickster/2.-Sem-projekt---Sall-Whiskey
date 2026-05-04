@@ -45,6 +45,14 @@ public class Cask {
         }
     }
 
+    public void tabDistillate(Integer litersTapped) {
+        int total = containsLiters();
+        for (Integer distillateLiters : distillates.values()) {
+            int percent = distillateLiters / total;
+            distillateLiters = distillateLiters - litersTapped * percent;
+        }
+    }
+
     public int getId() {
         return id;
     }

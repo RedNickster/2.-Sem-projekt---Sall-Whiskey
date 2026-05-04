@@ -50,6 +50,11 @@ public class Controller {
         storage.addWarehouse(new Warehouse(adresse, m2, lagerPladser));
     }
 
+    public void pourDistillateIntoCask(Distillate distillate, int amount, Cask cask) {
+        cask.addDistillate(distillate, amount);
+    }
+
+
     public void addComment(){}
 
     public int getCaskCount(){
