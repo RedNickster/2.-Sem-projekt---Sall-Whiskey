@@ -2,6 +2,7 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
@@ -55,7 +56,7 @@ public class DistillationTest {
     }
 
     @Test
-    void testEndDistillation() {
+    void TC1_testEndDistillation() {
         //Arrange
         LocalDate endDate = LocalDate.of(2023, 1, 20);
         int liquidAmount = 500;
@@ -74,7 +75,7 @@ public class DistillationTest {
     }
 
     @Test
-    void testEndDistillationWithPreExistingComments() {
+    void TC1_testEndDistillationWithPreExistingComments() {
         // Arrange
         String preExistingComment = "Pre-existing comment.";
         distillation.addComment(preExistingComment);
@@ -95,4 +96,161 @@ public class DistillationTest {
         assertTrue(distillation.getComments().contains(preExistingComment));
         assertTrue(distillation.getComments().contains(endComment));
     }
+
+    @Test
+    void TC2_testEndDistillationendDateAtLimit() {
+        // Arrange
+        String preExistingComment = "Pre-existing comment.";
+        distillation.addComment(preExistingComment);
+
+        LocalDate endDate = LocalDate.of(2023, 1, 10);
+        int liquidAmount = 500;
+        double alcoholPercentage = 63.5;
+        String endComment = "Distillation completed successfully.";
+
+        // Act
+        distillation.endDistillation(endDate, liquidAmount, alcoholPercentage, endComment);
+
+        // Assert
+        assertEquals(endDate, distillation.getEndDate());
+    }
+
+    @Test
+    void TC3_testEndDistillationendDateBeforeLimit() {
+        // Arrange
+        String preExistingComment = "Pre-existing comment.";
+        distillation.addComment(preExistingComment);
+
+        LocalDate endDate = LocalDate.of(2023, 1, 9);
+        int liquidAmount = 500;
+        double alcoholPercentage = 63.5;
+        String endComment = "Distillation completed successfully.";
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            distillation.endDistillation(endDate, liquidAmount, alcoholPercentage, endComment);
+        });
+    }
+
+    @Test
+    void TC4_testEndDistillationendDateIsNULL() {
+        // Arrange
+        String preExistingComment = "Pre-existing comment.";
+        distillation.addComment(preExistingComment);
+
+        LocalDate endDate = null;
+        int liquidAmount = 500;
+        double alcoholPercentage = 63.5;
+        String endComment = "Distillation completed successfully.";
+
+        // Act + Assert
+        assertThrows(NullPointerException.class, () -> {
+            distillation.endDistillation(endDate, liquidAmount, alcoholPercentage, endComment);
+        });
+    }
+
+    @Test
+    void TC5_testEndDistillationliquidAmountAtLimit() {
+        // Arrange
+        String preExistingComment = "Pre-existing comment.";
+        distillation.addComment(preExistingComment);
+
+        LocalDate endDate = LocalDate.of(2023, 1, 10);
+        int liquidAmount = 1;
+        double alcoholPercentage = 63.5;
+        String endComment = "Distillation completed successfully.";
+
+        // Act
+        distillation.endDistillation(endDate, liquidAmount, alcoholPercentage, endComment);
+
+        // Assert
+        assertEquals(liquidAmount, distillation.getLiquidAmount());
+    }
+
+    @Test
+    void TC6_testEndDistillationalliquidAmountOverLimit() {
+        // Arrange
+        String preExistingComment = "Pre-existing comment.";
+        distillation.addComment(preExistingComment);
+
+        LocalDate endDate = LocalDate.of(2023, 1, 10);
+        int liquidAmount = 0;
+        double alcoholPercentage = 63.5;
+        String endComment = "Distillation completed successfully.";
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            distillation.endDistillation(endDate, liquidAmount, alcoholPercentage, endComment);
+        });
+    }
+
+    @Test
+    void TC7_testEndDistillationalalcoholPercentageAtLimit() {
+        // Arrange
+        String preExistingComment = "Pre-existing comment.";
+        distillation.addComment(preExistingComment);
+
+        LocalDate endDate = LocalDate.of(2023, 1, 10);
+        int liquidAmount = 500;
+        double alcoholPercentage = 0.1;
+        String endComment = "Distillation completed successfully.";
+
+        // Act
+        distillation.endDistillation(endDate, liquidAmount, alcoholPercentage, endComment);
+
+        // Assert
+        assertEquals(alcoholPercentage, distillation.getAlcoholPercentage());
+    }
+
+    @Test
+    void TC8_testEndDistillationalalcoholPercentageOnLimit() {
+        // Arrange
+        String preExistingComment = "Pre-existing comment.";
+        distillation.addComment(preExistingComment);
+
+        LocalDate endDate = LocalDate.of(2023, 1, 10);
+        int liquidAmount = 500;
+        double alcoholPercentage = 0;
+        String endComment = "Distillation completed successfully.";
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            distillation.endDistillation(endDate, liquidAmount, alcoholPercentage, endComment);
+        });
+    }
+
+    @Test
+    void TC9_testEndDistillationalcommentIsEmpty() {
+        // Arrange
+        String preExistingComment = "Pre-existing comment.";
+        distillation.addComment(preExistingComment);
+
+        LocalDate endDate = LocalDate.of(2023, 1, 10);
+        int liquidAmount = 500;
+        double alcoholPercentage = 63.5;
+        String endComment = "";
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            distillation.endDistillation(endDate, liquidAmount, alcoholPercentage, endComment);
+        });
+    }
+
+    @Test
+    void TC10_testEndDistillationalcommentOnlySpace() {
+        // Arrange
+        String preExistingComment = "Pre-existing comment.";
+        distillation.addComment(preExistingComment);
+
+        LocalDate endDate = LocalDate.of(2023, 1, 10);
+        int liquidAmount = 500;
+        double alcoholPercentage = 63.5;
+        String endComment = "   ";
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            distillation.endDistillation(endDate, liquidAmount, alcoholPercentage, endComment);
+        });
+    }
+
 }
