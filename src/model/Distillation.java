@@ -63,15 +63,27 @@ public class Distillation {
     public void addComment(String comment) {
         if (comment != null && !comment.trim().isEmpty()) {
             comments.add(comment);
+        } else {
+            throw new IllegalArgumentException("Comment cannot be null or empty");
         }
     }
 
     public void endDistillation(LocalDate endDate, int liquidAmount, double alcoholPercentage, String comment) {
+        if (endDate == null) {
+            throw new NullPointerException("endDate is null");
+        }
+        if (endDate.isBefore(this.startDate)) {
+            throw new IllegalArgumentException("endDate is before startDate");
+        }
+        if (liquidAmount <= 0) {
+            throw new IllegalArgumentException("liquidAmount <= 0");
+        }
+        if (alcoholPercentage <= 0) {
+            throw new IllegalArgumentException("alcoholPercentage <= 0");
+        }
         this.endDate = endDate;
         this.liquidAmount = liquidAmount;
         this.alcoholPercentage = alcoholPercentage;
-        if (comment != null && !comment.trim().isEmpty()) {
-            this.comments.add(comment);
-        }
+        addComment(comment);
     }
 }
