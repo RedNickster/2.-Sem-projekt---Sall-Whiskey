@@ -3,6 +3,7 @@ package storage;
 import model.Cask;
 import model.Distillate;
 import model.Distillation;
+import model.Warehouse;
 
 import java.util.*;
 
@@ -10,6 +11,7 @@ public class Storage {
 
     List<Cask> casks = new ArrayList<>();
     List<Distillate> distillates = new ArrayList<>();
+    List<Warehouse> warehouses = new ArrayList<>();
 
     public Storage() {
     }
@@ -42,5 +44,11 @@ public class Storage {
 
     public List<Cask> getCasks() {
         return new ArrayList<>(this.casks);
+    }
+
+    public void addWarehouse(Warehouse warehouse) {
+        if (!warehouses.contains(warehouse)) {
+            warehouses.add(warehouse);
+        }
     }
 }
