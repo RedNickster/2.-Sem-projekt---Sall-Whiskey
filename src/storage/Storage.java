@@ -51,4 +51,16 @@ public class Storage {
             warehouses.add(warehouse);
         }
     }
+
+    public int getDistillateCount() {
+        int count = 0;
+        for (Distillate d : distillates) {
+            count++;
+        }
+        return count;
+    }
+
+    public List<Distillate> getDistillates() {
+        return distillates;
+    }
 }
