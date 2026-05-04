@@ -43,4 +43,16 @@ public class Storage {
     public List<Cask> getCasks() {
         return new ArrayList<>(this.casks);
     }
+
+    public int getDistillateCount() {
+        int count = 0;
+        for (Distillate d : distillates) {
+            count++;
+        }
+        return count;
+    }
+
+    public List<Distillate> getDistillates() {
+        return distillates;
+    }
 }
