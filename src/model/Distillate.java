@@ -42,4 +42,9 @@ public class Distillate {
     public List<Distillation> getDistillations() {
         return new ArrayList<>(this.distillations);
     }
+
+    @Override
+    public String toString() {
+        return "Grain variety = " + grainVarietyEnum + " NM" + newMakeNumber;
+    }
 }
