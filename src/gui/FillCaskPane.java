@@ -20,7 +20,7 @@ public class FillCaskPane extends GridPane {
 
     private final TextField txfAmount = new TextField();
 
-    private final Button btnFillCask = new Button();
+    private final Button btnFillCask = new Button("Fill cask");
 
     public FillCaskPane(Controller controller) {
         this.controller = controller;
@@ -50,16 +50,31 @@ public class FillCaskPane extends GridPane {
         rightSection.getChildren().addAll(
                 new Label("Fill cask"),
                 new Separator(),
-                new Label("Liquid amount"), txfAmount
-
+                new Label("Liquid amount"), txfAmount,
+                btnFillCask
         );
+        this.add(rightSection,2,0);
+
+        btnFillCask.setOnAction(event -> this.fillCasks());
     }
 
     private void fillCasks() {
+        Distillate selectedDistillate = lvwDistillates.getSelectionModel().getSelectedItem();
+        Cask selectedCask = lvwCasks.getSelectionModel().getSelectedItem();
+        String liquidAmountString = txfAmount.getText().trim();
 
+        if (selectedCask != null && selectedDistillate != null && !liquidAmountString.isEmpty()) {
+            int liquidAmount = Integer.parseInt(liquidAmountString);
+
+            controller.pourDistillateIntoCask(selectedDistillate,liquidAmount,selectedCask);
+        }
+        refresh();
     }
 
     void refresh() {
+        lvwCasks.getItems().setAll(controller.getStorage().getCasks());
+        lvwDistillates.getItems().setAll(controller.getStorage().getDistillates());
 
+        txfAmount.clear();
     }
 }
