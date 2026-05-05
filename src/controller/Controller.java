@@ -51,7 +51,9 @@ public class Controller {
     }
 
     public void pourDistillateIntoCask(Distillate distillate, int amount, Cask cask) {
-        cask.addDistillate(distillate, amount);
+        if (!cask.equals(null) && !distillate.equals(null) && amount != 0) {
+            cask.addDistillate(distillate, amount);
+        }
     }
 
 
