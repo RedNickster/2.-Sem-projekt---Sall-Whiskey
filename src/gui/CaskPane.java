@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CaskPane extends GridPane {
 
-    Controller controller = new Controller();
+    private final Controller controller;
 
     private final ListView<Cask> lvwCasks = new ListView<>();
 
@@ -32,7 +32,9 @@ public class CaskPane extends GridPane {
     private final Button btnCreateCask = new Button("Create cask");
 
 
-    public CaskPane() {
+    public CaskPane(Controller controller) {
+        this.controller = controller;
+
         this.setPadding(new Insets(20));
         this.setHgap(20);
         this.setVgap(15);
