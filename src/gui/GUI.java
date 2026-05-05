@@ -1,5 +1,6 @@
 package gui;
 
+import controller.Controller;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -9,8 +10,12 @@ import javafx.stage.Stage;
 
 public class GUI extends Application {
 
+    private final Controller controller = new Controller();
+
     private CaskPane caskPane;
     private DistillationCreatePane distillationCreatePane;
+    private DistillationEndPane distillationEndPane;
+    private FillCaskPane fillCaskPane;
 
 
     public void start(Stage stage) {
@@ -24,30 +29,33 @@ public class GUI extends Application {
         menu.setPadding(new Insets(10));
 
         Button btnCasks = new Button("Casks");
-        Button btnDistillation = new Button("Distillation");
-        Button btnTilmelding = new Button("3");
-        Button btnLedsager = new Button("4");
+        Button btnCreateDistillation = new Button("Create distillation");
+        Button btnEndDistillation = new Button("End distillation");
+        Button btnFillCask = new Button("Fill cask");
         Button btnUdflugtsOversigt = new Button("5");
         Button btnHotelOversigt = new Button("6");
         Button btnSøgDeltager = new Button("7");
         Button btnKonfDeltagere = new Button("8");
 
-        menu.getChildren().addAll(btnCasks, btnDistillation, btnTilmelding, btnLedsager,
+        menu.getChildren().addAll(btnCasks, btnCreateDistillation, btnEndDistillation, btnFillCask,
                 btnUdflugtsOversigt, btnHotelOversigt, btnSøgDeltager, btnKonfDeltagere);
         borderPane.setLeft(menu);
 
         // Panes
-        caskPane = new CaskPane();
-        distillationCreatePane = new DistillationCreatePane();
+        caskPane = new CaskPane(controller);
+        distillationCreatePane = new DistillationCreatePane(controller);
+        distillationEndPane = new DistillationEndPane(controller);
+        fillCaskPane = new FillCaskPane(controller);
+
 
         // Default view
         borderPane.setCenter(caskPane);
 
         // menu knapper
         btnCasks.setOnAction(e -> { caskPane.refresh(); borderPane.setCenter(caskPane); });
-        btnDistillation.setOnAction(e -> { distillationCreatePane.refresh(); borderPane.setCenter(distillationCreatePane); });
-//        btnTilmelding.setOnAction(e -> { tilmeldingPane.refreshAll(); borderPane.setCenter(tilmeldingPane); });
-//        btnLedsager.setOnAction(e -> { ledsagerPane.refresh(); borderPane.setCenter(ledsagerPane); });
+        btnCreateDistillation.setOnAction(e -> { distillationCreatePane.refresh(); borderPane.setCenter(distillationCreatePane); });
+        btnEndDistillation.setOnAction(e -> { distillationEndPane.refresh(); borderPane.setCenter(distillationEndPane); });
+        btnFillCask.setOnAction(e -> { fillCaskPane.refresh(); borderPane.setCenter(fillCaskPane); });
 //        btnUdflugtsOversigt.setOnAction(e -> { udflugtOversigtPane.refresh(); borderPane.setCenter(udflugtOversigtPane); });
 //        btnHotelOversigt.setOnAction(e -> { hotelOversigtPane.refresh(); borderPane.setCenter(hotelOversigtPane); });
 //        btnSøgDeltager.setOnAction(e -> { participantSearchPane.refresh(); borderPane.setCenter(participantSearchPane); });

@@ -2,10 +2,10 @@ package gui;
 
 import controller.*;
 
-import javafx.geometry.Insets;
-import javafx.scene.layout.VBox;
 import model.*;
 
+import javafx.geometry.Insets;
+import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 public class DistillationCreatePane extends GridPane {
 
-    Controller controller = new Controller();
+    private final Controller controller;
 
     private final ListView<Distillate> lvwDistillates = new ListView<>();
     private final ListView<Distillation> lvwDistillations = new ListView<>();
@@ -31,7 +31,9 @@ public class DistillationCreatePane extends GridPane {
 
 
 
-    public DistillationCreatePane() {
+    public DistillationCreatePane(Controller controller) {
+        this.controller = controller;
+
         this.setPadding(new Insets(20));
         this.setHgap(20);
         this.setVgap(15);
@@ -58,8 +60,8 @@ public class DistillationCreatePane extends GridPane {
         centerSection.getChildren().addAll(
                 new Label("Create distillation"),
                 new Separator(),
-                new Label(""), dtpStartDate,
-                new Label(""), cbxSmoke,
+                new Label("Start date"), dtpStartDate,
+                new Label("Smoking material"), cbxSmoke,
                 new Label("Malt batch"), txfMaltBatch,
                 new Label("Employee"), txfEmployee,
                 btnCreateDistillation
