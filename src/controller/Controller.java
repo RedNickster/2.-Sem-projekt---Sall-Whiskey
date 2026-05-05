@@ -26,16 +26,24 @@ public class Controller {
         return tempCask;
     }
 
-    public Distillation createDistillation(Distillate destillitate, LocalDate startDate,
-                                           SmokingMaterial smokingMaterialEnum, int maltBatch, String employee) {
-        return destillitate.createDistillations(startDate, smokingMaterialEnum, maltBatch, employee,
-                storage.getDistillationCount() + 1);
+
+
+    public Distillation createDistillation(int id, LocalDate startDate, LocalDate endDate, double liquidAmount, double alcoholPercentage, String maltBatch, GrainVariety grainVariety, SmokingMaterial smokingMaterialEnum, String commment) {
+        Distillation temp = new Distillation(id, startDate, endDate, liquidAmount, alcoholPercentage, maltBatch, grainVariety, smokingMaterialEnum, commment);
+        storage.addDistillation(temp);
+        return temp;
+
     }
 
-    public Distillate createDistilitate(int newMakeNumber, GrainVariety grainVarietyEnum) {
-        Distillate temp = new Distillate(newMakeNumber, grainVarietyEnum);
-        storage.addDistillate(temp);
-        return temp;
+    public Distillate compineToDistillate(List<Distillation> selectedDistillates, int newMakeNumber) {
+        Distillate distillate = new Distillate(storage.getDistillateCount() + 1);
+
+        for (Distillation selected : selectedDistillates) {
+            distillate.addDistillation(selected);
+        }
+
+        storage.addDistillate(distillate);
+        return distillate;
     }
 
     public void endDistillitation(Distillation distillitation, LocalDate endDate, int liquidAmount,

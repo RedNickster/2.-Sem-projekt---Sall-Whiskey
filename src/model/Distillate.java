@@ -5,46 +5,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Distillate {
-
-    private List<Distillation> distillations = new ArrayList<Distillation>();
     private int newMakeNumber;
-    private GrainVariety grainVarietyEnum;
+    private List<Distillation> distillations;
 
-    public Distillate(int newMakeNumber, GrainVariety grainVarietyEnum) {
+    public Distillate(int newMakeNumber) {
         this.newMakeNumber = newMakeNumber;
-        this.grainVarietyEnum = grainVarietyEnum;
-    }
-
-    public int getNewMakeNumber() {
-        return newMakeNumber;
-    }
-
-    public GrainVariety getGrainVarietyEnum() {
-        return grainVarietyEnum;
+        this.distillations = new ArrayList<>();
     }
 
     public void addDistillation(Distillation distillation) {
         if (distillation != null && !this.distillations.contains(distillation)) {
-            this.distillations.add(distillation);
+            distillations.add(distillation);
         }
     }
 
-    public Distillation createDistillations(LocalDate startDate, SmokingMaterial smokingMaterialEnum, int maltBatch,
-                                            String employee, int newMakeNumber) {
-
-        Distillation distillation = new Distillation(startDate, smokingMaterialEnum, maltBatch, employee,
-                newMakeNumber);
-
-        this.distillations.add(distillation);
-        return distillation;
+    public double getTotalVolume(){
+        double total = 0;
+        for (Distillation distillation : distillations) {
+            total += distillation.getLiquidAmount();
+        }
+        return total;
     }
 
     public List<Distillation> getDistillations() {
-        return new ArrayList<>(this.distillations);
-    }
-
-    @Override
-    public String toString() {
-        return "Grain variety = " + grainVarietyEnum + " NM" + newMakeNumber;
+        return new ArrayList<>(distillations);
     }
 }

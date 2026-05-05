@@ -8,20 +8,29 @@ public class Distillation {
     private int id;
     private LocalDate startDate;
     private LocalDate endDate;
-    private int liquidAmount;
+    private double liquidAmount;
     private double alcoholPercentage;
     private SmokingMaterial smokingMaterialEnum;
-    private int maltBatch;
+    private String maltBatch;
     private List<String> comments = new ArrayList<>();
     private String employee;
+    private GrainVariety grainVariety;
 
-    public Distillation(LocalDate startDate, SmokingMaterial smokingMaterialEnum, int maltBatch,
-                        String employee, int id) {
+    public Distillation(int id, LocalDate startDate, LocalDate endDate, double liquidAmount, double alcoholPercentage, String maltBatch, GrainVariety grainVariety, SmokingMaterial smokingMaterialEnum, String commment) {
+        this.id = id;
         this.startDate = startDate;
+        this.endDate = endDate;
+        this.liquidAmount = liquidAmount;
+        this.alcoholPercentage = alcoholPercentage;
         this.smokingMaterialEnum = smokingMaterialEnum;
         this.maltBatch = maltBatch;
+        this.grainVariety = grainVariety;
         this.employee = employee;
-        this.id = id;
+
+        if (commment != null && !commment.isEmpty()) {
+            this.comments.add(commment);
+        }
+
     }
 
     public int getId() {
@@ -36,7 +45,7 @@ public class Distillation {
         return endDate;
     }
 
-    public int getLiquidAmount() {
+    public double getLiquidAmount() {
         return liquidAmount;
     }
 
@@ -48,7 +57,7 @@ public class Distillation {
         return smokingMaterialEnum;
     }
 
-    public int getMaltBatch() {
+    public String getMaltBatch() {
         return maltBatch;
     }
 

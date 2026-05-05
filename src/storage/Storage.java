@@ -9,17 +9,46 @@ import java.util.*;
 
 public class Storage {
 
-    List<Cask> casks = new ArrayList<>();
-    List<Distillate> distillates = new ArrayList<>();
-    List<Warehouse> warehouses = new ArrayList<>();
+    private List<Cask> casks = new ArrayList<>();
+    private List<Distillate> distillates = new ArrayList<>();
+    private List<Warehouse> warehouses = new ArrayList<>();
+    private List<Distillation> distillations = new ArrayList<>();
+
+    private int distillateCount;
+
 
     public Storage() {
+        this.distillateCount = 0;
     }
 
+    // ----- Cask -----
     public void addCask(Cask cask) {
         if (!casks.contains(cask)) {
             casks.add(cask);
         }
+    }
+
+    public int getCaskCount() {
+        return casks.size();
+    }
+
+    public List<Cask> getCasks() {
+        return new ArrayList<>(this.casks);
+    }
+
+
+
+
+    // ----- Distillates -----
+    public void addDistillate(Distillate distillate) {
+        if (!distillates.contains(distillate)) {
+            distillates.add(distillate);
+        }
+        distillateCount++;
+    }
+
+    public int getDistillateCount() {
+        return distillateCount;
     }
 
     public int getDistillationCount() {
@@ -32,39 +61,33 @@ public class Storage {
         return count;
     }
 
-    public void addDistillate(Distillate distillate) {
-        if (!distillates.contains(distillate)) {
-            distillates.add(distillate);
-        }
+
+    public List<Distillate> getDistillates() {
+        return distillates;
     }
 
-    public int getCaskCount() {
-        return casks.size();
-    }
 
-    public List<Cask> getCasks() {
-        return new ArrayList<>(this.casks);
-    }
-    
-    public List<Warehouse> getWarehouses() {
-        return warehouses;
-    }
-    
+
+    // ----- Warehouse -----
     public void addWarehouse(Warehouse warehouse) {
         if (!warehouses.contains(warehouse)) {
             warehouses.add(warehouse);
         }
     }
 
-    public int getDistillateCount() {
-        int count = 0;
-        for (Distillate d : distillates) {
-            count++;
-        }
-        return count;
+    public List<Warehouse> getWarehouses() {
+        return warehouses;
     }
 
-    public List<Distillate> getDistillates() {
-        return distillates;
+
+    // ----- Distillation -----
+    public void addDistillation(Distillation distillation) {
+        if (!distillations.contains(distillation)) {
+            distillations.add(distillation);
+        }
+    }
+
+    public List<Distillation> getDistillations() {
+        return new ArrayList<>(distillations);
     }
 }
