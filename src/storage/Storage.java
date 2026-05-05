@@ -45,7 +45,11 @@ public class Storage {
     public List<Cask> getCasks() {
         return new ArrayList<>(this.casks);
     }
-
+    
+    public List<Warehouse> getWarehouses() {
+        return warehouses;
+    }
+    
     public void addWarehouse(Warehouse warehouse) {
         if (!warehouses.contains(warehouse)) {
             warehouses.add(warehouse);

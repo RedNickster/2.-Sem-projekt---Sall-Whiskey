@@ -12,7 +12,7 @@ public class Cask {
     private String countryOfOrigin;
     private String supplier;
     private Map<Distillate, Integer> distillates;
-
+    
     public Cask(int id, int liters, List<CaskLiquids> previousLiquids, String countryOfOrigin, String supplier) {
         this.id = id;
         this.liters = liters;
@@ -21,7 +21,7 @@ public class Cask {
         this.supplier = supplier;
         this.distillates = new HashMap<>();
     }
-
+    
     private int containsLiters() {
         int count = 0;
         for (Integer liters : distillates.values()) {
@@ -29,7 +29,7 @@ public class Cask {
         }
         return count;
     }
-
+    
     public void addDistillate(Distillate distillate, Integer literToAdd) {
         if (literToAdd == null || distillate == null || literToAdd <= 0) {
             return;
@@ -37,43 +37,66 @@ public class Cask {
         if (containsLiters() + literToAdd > liters) {
             throw new IllegalArgumentException("There is not room for that amount of disstillate");
         }
-
+        
         if (distillates.containsKey(distillate)) {
             distillates.compute(distillate, (_, currentLiters) -> currentLiters + literToAdd);
         } else {
             distillates.put(distillate, literToAdd);
         }
     }
-
+    
     public void tabDistillate(Integer litersTapped) {
-        int total = containsLiters();
-        for (Integer distillateLiters : distillates.values()) {
-            int percent = distillateLiters / total;
-            distillateLiters = distillateLiters - litersTapped * percent;
+        if (litersTapped == null || litersTapped <= 0) {
+            throw new IllegalArgumentException("Liters to tap must be positive.");
         }
-    }
+        int total = containsLiters();
+        if (litersTapped > total) {
+            throw new IllegalArgumentException("Cannot tap more liters than available in the cask. Available: " + total + ", Tapped: " + litersTapped);
+        }
 
+        Map<Distillate, Integer> updatedDistillates = new HashMap<>();
+        for (Map.Entry<Distillate, Integer> entry : distillates.entrySet()) {
+            Distillate distillate = entry.getKey();
+            Integer currentLiters = entry.getValue();
+            
+            // Calculate proportional reduction
+            double proportion = (double) currentLiters / total;
+            int litersToRemove = (int) Math.round(proportion * litersTapped);
+            
+            int newLiters = currentLiters - litersToRemove;
+            if (newLiters < 0) {
+                newLiters = 0; // Should not happen if calculations are correct and litersTapped <= total
+            }
+            updatedDistillates.put(distillate, newLiters);
+        }
+        this.distillates = updatedDistillates;
+    }
+    
     public int getId() {
         return id;
     }
-
+    
     public int getLiters() {
         return liters;
     }
-
+    
     public List<CaskLiquids> getPreviousLiquids() {
         return new ArrayList<>(this.previousLiquids);
     }
-
+    
     public String getCountryOfOrigin() {
         return countryOfOrigin;
     }
-
+    
     public String getSupplier() {
         return supplier;
     }
 
-
+    public int getTotalCurrentLiters() {
+        return containsLiters();
+    }
+    
+    
     @Override
     public String toString() {
         return "Cask #" + id + " (" + liters + "L) - " + supplier + "(" + countryOfOrigin + ")" +

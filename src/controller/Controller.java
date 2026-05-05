@@ -53,6 +53,10 @@ public class Controller {
     public void pourDistillateIntoCask(Distillate distillate, int amount, Cask cask) {
         cask.addDistillate(distillate, amount);
     }
+    
+    public void addCaskToWarehouse(Cask cask, Warehouse warehouse) {
+        warehouse.addCask(cask);
+    }
 
 
     public void addComment(){}
