@@ -54,7 +54,7 @@ public class WarehouseTest {
         // Act & Assert
         assertDoesNotThrow(() -> {
             warehouse.addCask(cask1);
-        }, "Adding cask1 to an empty warehouse should not throw an exception");
+        });
     }
 
     /**
@@ -77,7 +77,7 @@ public class WarehouseTest {
         assertDoesNotThrow(() -> {
             warehouse.addCask(cask1); // Add first cask
             warehouse.addCask(cask2); // Add second cask
-        }, "Filling the warehouse to capacity should not throw an exception");
+        });
     }
 
     /**
@@ -97,7 +97,7 @@ public class WarehouseTest {
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {
             warehouse.addCask(nullCask);
-        }, "Should throw IllegalArgumentException when adding a null cask");
+        });
     }
 
     /**
@@ -119,7 +119,7 @@ public class WarehouseTest {
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {
             warehouse.addCask(cask1); // Try to add cask1 again
-        }, "Should throw IllegalArgumentException when adding a cask already in warehouse");
+        });
     }
 
     /**
@@ -142,7 +142,7 @@ public class WarehouseTest {
         // Act & Assert
         assertThrows(IllegalStateException.class, () -> {
             warehouse.addCask(cask3); // Try to add a third cask
-        }, "Should throw IllegalStateException when warehouse is full");
+        });
     }
 
     /**
@@ -164,7 +164,7 @@ public class WarehouseTest {
         // Act & Assert
         assertDoesNotThrow(() -> {
             warehouse.removeCask(cask1);
-        }, "Removing an existing cask should not throw an exception");
+        });
     }
 
     /**
@@ -185,7 +185,7 @@ public class WarehouseTest {
         // Act & Assert
         assertDoesNotThrow(() -> {
             warehouse.removeCask(cask3); // Try to remove a cask not in the warehouse
-        }, "Removing a non-existent cask should not throw an exception");
+        });
     }
 
     /**
@@ -206,7 +206,7 @@ public class WarehouseTest {
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {
             warehouse.removeCask(nullCask);
-        }, "Should throw IllegalArgumentException when removing a null cask");
+        });
     }
 
     /**
@@ -229,27 +229,13 @@ public class WarehouseTest {
         Distillate newDistillate = distillate1;
         Integer litersToAdd = 300;
         Integer litersToTap = 50;
-
-        // Act - Add distillate to cask
-        assertDoesNotThrow(() -> cask1.addDistillate(newDistillate, litersToAdd),
-                "Adding distillate to cask should not throw an exception");
-        assertEquals(300, cask1.getTotalCurrentLiters(), "Cask should have 300L after adding distillate");
-
-        // Act - Add cask to warehouse
-        assertDoesNotThrow(() -> warehouse.addCask(cask1),
-                "Adding cask to warehouse should not throw an exception");
-        // No public method to verify cask presence, so implicit assertion by no exception.
-
-        // Act - Tap from cask
-        assertDoesNotThrow(() -> cask1.tabDistillate(litersToTap),
-                "Tapping from cask should not throw an exception");
-
-        // Assert - Verify cask content (now expecting correct behavior)
-        assertEquals(litersToAdd - litersToTap, cask1.getTotalCurrentLiters(), "Cask should have reduced liters after tapping");
-
-        // Act - Remove cask from warehouse
-        assertDoesNotThrow(() -> warehouse.removeCask(cask1),
-                "Removing cask from warehouse should not throw an exception");
-        // No public method to verify cask absence, so implicit assertion by no exception.
+        
+        // Act + Assert         // assertDoesNotThrow bruges for at vi kalder dem og er sikker på der ikke kommer fejl
+        assertDoesNotThrow(() -> cask1.addDistillate(newDistillate, litersToAdd));
+        assertEquals(300, cask1.getTotalCurrentLiters());
+        assertDoesNotThrow(() -> warehouse.addCask(cask1));
+        assertDoesNotThrow(() -> cask1.tabDistillate(litersToTap));
+        assertEquals(litersToAdd - litersToTap, cask1.getTotalCurrentLiters());
+        assertDoesNotThrow(() -> warehouse.removeCask(cask1));
     }
 }
