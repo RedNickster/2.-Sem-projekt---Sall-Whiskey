@@ -55,6 +55,10 @@ public class Controller {
             cask.addDistillate(distillate, amount);
         }
     }
+    
+    public void addCaskToWarehouse(Cask cask, Warehouse warehouse) {
+        warehouse.addCask(cask);
+    }
 
 
     public void addComment(){}
