@@ -94,7 +94,7 @@ public class DistillationCreatePane extends GridPane {
         GrainVariety grainVariety = cbxGrain.getValue();
         int newmakeNumber = controller.getStorage().getDistillateCount() + 1;
         if (grainVariety != null) {
-            controller.createDistilitate(newmakeNumber, grainVariety);
+            //controller.createDistilitate(newmakeNumber, grainVariety);
         }
         refresh();
     }
@@ -109,7 +109,7 @@ public class DistillationCreatePane extends GridPane {
 
             if(selectedDestillate != null && startDate != null && smoke != null && !maltBatchString.isEmpty() && !employee.isEmpty()) {
                 int maltchBatch = Integer.parseInt(maltBatchString);
-                controller.createDistillation(selectedDestillate, startDate, smoke, maltchBatch, employee);
+                //controller.createDistillation(selectedDestillate, startDate, smoke, maltchBatch, employee);
             }
             refresh();
 
