@@ -45,7 +45,7 @@ public class Cask {
         }
     }
     
-    public void tabDistillate(Integer litersTapped) {
+    public void tapDistillate(Integer litersTapped) {
         if (litersTapped == null || litersTapped <= 0) {
             throw new IllegalArgumentException("Liters to tap must be positive.");
         }
