@@ -8,30 +8,28 @@ public class Distillation {
     private int id;
     private LocalDate startDate;
     private LocalDate endDate;
-    private double liquidAmount;
+    private double liquidAmountAtEnd;
     private double alcoholPercentage;
-    private SmokingMaterial smokingMaterialEnum;
-    private String maltBatch;
     private List<String> comments = new ArrayList<>();
     private String employee;
-    private GrainVariety grainVariety;
-
-    public Distillation(int id, LocalDate startDate, LocalDate endDate, double liquidAmount, double alcoholPercentage, String maltBatch, GrainVariety grainVariety, SmokingMaterial smokingMaterialEnum, String employee, String commment) {
+    
+    public Distillation(int id, LocalDate startDate, String employee, String commment) {
         this.id = id;
         this.startDate = startDate;
-        this.endDate = endDate;
-        this.liquidAmount = liquidAmount;
-        this.alcoholPercentage = alcoholPercentage;
-        this.smokingMaterialEnum = smokingMaterialEnum;
-        this.maltBatch = maltBatch;
-        this.grainVariety = grainVariety;
         this.employee = employee;
 
         if (commment != null && !commment.isEmpty()) {
             this.comments.add(commment);
         }
-
     }
+    
+    public Distillation(int id, LocalDate startDate, String employee) {
+        this.id = id;
+        this.startDate = startDate;
+        this.employee = employee;
+    }
+    
+    
 
     public void addComment(String comment) {
         if (comment != null && !comment.trim().isEmpty()) {
@@ -55,7 +53,7 @@ public class Distillation {
             throw new IllegalArgumentException("alcoholPercentage <= 0");
         }
         this.endDate = endDate;
-        this.liquidAmount = liquidAmount;
+        this.liquidAmountAtEnd = liquidAmount;
         this.alcoholPercentage = alcoholPercentage;
         addComment(comment);
     }
@@ -70,23 +68,14 @@ public class Distillation {
     public LocalDate getEndDate() {
         return endDate;
     }
-    public double getLiquidAmount() {
-        return liquidAmount;
+    public double getLiquidAmountAtEnd() {
+        return liquidAmountAtEnd;
     }
     public double getAlcoholPercentage() {
         return alcoholPercentage;
     }
-    public SmokingMaterial getSmokingMaterialEnum() {
-        return smokingMaterialEnum;
-    }
-    public String getMaltBatch() {
-        return maltBatch;
-    }
     public List<String> getComments() {
         return new ArrayList<>(this.comments);
-    }
-    public GrainVariety getGrainVariety() {
-        return grainVariety;
     }
     public String getEmployee() {
         return employee;
@@ -96,6 +85,6 @@ public class Distillation {
 
     @Override
     public String toString() {
-        return "Distillation #"+ id + " (" + grainVariety + ")";
+        return "Distillation #"+ id;
     }
 }

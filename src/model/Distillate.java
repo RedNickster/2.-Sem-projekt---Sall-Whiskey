@@ -1,16 +1,21 @@
 package model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Distillate {
+    
     private int newMakeNumber;
     private List<Distillation> distillations;
+    private GrainVariety grainVariety;
+    private String maltBatch;
+    private boolean isSmoked;
 
-    public Distillate(int newMakeNumber) {
+    public Distillate(int newMakeNumber,  GrainVariety grainVariety, String maltBatch) {
         this.newMakeNumber = newMakeNumber;
         this.distillations = new ArrayList<>();
+        this.grainVariety = grainVariety;
+        this.maltBatch = maltBatch;
     }
 
     public void addDistillation(Distillation distillation) {
@@ -22,7 +27,7 @@ public class Distillate {
     public double getTotalVolume(){
         double total = 0;
         for (Distillation distillation : distillations) {
-            total += distillation.getLiquidAmount();
+            total += distillation.getLiquidAmountAtEnd();
         }
         return total;
     }

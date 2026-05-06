@@ -25,23 +25,25 @@ public class Controller {
         return cask;
     }
 
-    public Distillation createDistillation(int id, LocalDate startDate, LocalDate endDate, double liquidAmount, double alcoholPercentage, String maltBatch, GrainVariety grainVariety, SmokingMaterial smokingMaterialEnum, String employee, String commment) {
-        Distillation temp = new Distillation(id, startDate, endDate, liquidAmount, alcoholPercentage, maltBatch, grainVariety, smokingMaterialEnum, employee, commment);
+    public Distillation createDistillation(int id, LocalDate startDate, String employee, String commment) {
+        Distillation temp = new Distillation(id, startDate, employee, commment);
         storage.addDistillation(temp);
         return temp;
 
     }
-
-    public Distillate combineToDistillate(List<Distillation> selectedDistillates) {
+    
+    public Distillate createDistillate(GrainVariety grainVariety, String maltBatch) {
         int newMakeNumber = storage.getDistillates().size() + 1;
-        Distillate distillate = new Distillate(newMakeNumber);
+        
+        Distillate temp = new Distillate(newMakeNumber, grainVariety, maltBatch);
+        storage.addDistillate(temp);
+        return temp;
+    }
 
+    public void combineToDistillate(List<Distillation> selectedDistillates, Distillate selectedDistillate) {
         for (Distillation selected : selectedDistillates) {
-            distillate.addDistillation(selected);
+            selectedDistillate.addDistillation(selected);
         }
-
-        storage.addDistillate(distillate);
-        return distillate;
     }
 
     public void endDistillation(Distillation distillitation, LocalDate endDate, double liquidAmount, double alcoholPercentage, String comment) {
