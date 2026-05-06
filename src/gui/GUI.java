@@ -32,13 +32,9 @@ public class GUI extends Application {
         Button btnCreateDistillation = new Button("Create distillation");
         Button btnEndDistillation = new Button("End distillation");
         Button btnFillCask = new Button("Fill cask");
-        Button btnUdflugtsOversigt = new Button("5");
-        Button btnHotelOversigt = new Button("6");
-        Button btnSøgDeltager = new Button("7");
-        Button btnKonfDeltagere = new Button("8");
 
-        menu.getChildren().addAll(btnCasks, btnCreateDistillation, btnEndDistillation, btnFillCask,
-                btnUdflugtsOversigt, btnHotelOversigt, btnSøgDeltager, btnKonfDeltagere);
+        menu.getChildren().addAll(btnCasks, btnCreateDistillation, btnEndDistillation, btnFillCask
+                );
         borderPane.setLeft(menu);
 
         // Panes
@@ -56,10 +52,6 @@ public class GUI extends Application {
         btnCreateDistillation.setOnAction(e -> { distillationCreatePane.refresh(); borderPane.setCenter(distillationCreatePane); });
         btnEndDistillation.setOnAction(e -> { distillationEndPane.refresh(); borderPane.setCenter(distillationEndPane); });
         btnFillCask.setOnAction(e -> { fillCaskPane.refresh(); borderPane.setCenter(fillCaskPane); });
-//        btnUdflugtsOversigt.setOnAction(e -> { udflugtOversigtPane.refresh(); borderPane.setCenter(udflugtOversigtPane); });
-//        btnHotelOversigt.setOnAction(e -> { hotelOversigtPane.refresh(); borderPane.setCenter(hotelOversigtPane); });
-//        btnSøgDeltager.setOnAction(e -> { participantSearchPane.refresh(); borderPane.setCenter(participantSearchPane); });
-//        btnKonfDeltagere.setOnAction(e -> { conferenceParticipantsPane.refresh(); borderPane.setCenter(conferenceParticipantsPane); });
 
         Scene scene = new Scene(borderPane, 1000, 600);
         stage.setScene(scene);
