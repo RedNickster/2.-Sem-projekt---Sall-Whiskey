@@ -90,11 +90,25 @@ public class DistillationCreatePane extends GridPane {
     private void createDistillate() {
         GrainVariety grainVariety = cbxGrain.getValue();
         String maltBatch = txfMaltBatch.getText().trim();
-        // TODO lav alert hvis ikke udfyldt
         // TODO isSmoked boolean relevant?
-        if (grainVariety != null && !maltBatch.isEmpty()) {
-            controller.createDistillate(grainVariety, maltBatch);
+
+        if (grainVariety == null || maltBatch.isEmpty()) {
+            AppAlerts.showError("Missing information", "Please fill out all information");
+            return;
         }
+
+        boolean confirm = AppAlerts.showConfirmation("Confirm distillate",
+                "Are you sure you want to create a distillate?");
+
+
+        if (confirm) {
+            controller.createDistillate(grainVariety, maltBatch);
+
+
+            AppAlerts.showInformation("Success", "Created distillate #" +
+                    (controller.getStorage().getDistillates().size()));
+        }
+
         refresh();
     }
 
