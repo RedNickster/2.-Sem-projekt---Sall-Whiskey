@@ -140,7 +140,7 @@ public class WarehouseTest {
         assertDoesNotThrow(() -> cask1.addDistillate(distillate1, litersToAdd));
         assertEquals(litersToAdd, cask1.getTotalCurrentLiters());
         assertDoesNotThrow(() -> warehouse.addCask(cask1));
-        assertDoesNotThrow(() -> cask1.tabDistillate(litersToTap));
+        assertDoesNotThrow(() -> cask1.tapDistillate(litersToTap));
         assertEquals(litersToAdd - litersToTap, cask1.getTotalCurrentLiters());
         assertDoesNotThrow(() -> warehouse.removeCask(cask1));
     }
