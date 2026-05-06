@@ -11,8 +11,6 @@ public class DistillationTest {
 
     private Distillation distillation;
     private LocalDate startDate;
-    private SmokingMaterial smokingMaterial;
-    private String maltBatch;
     private String employee;
     private int id;
     
@@ -21,8 +19,6 @@ public class DistillationTest {
         // setUp /\ Arrange
         startDate = LocalDate.of(2023, 1, 10);
         
-        smokingMaterial = SmokingMaterial.OAK;
-        maltBatch = 1;
         employee = "John Doe";
         id = 1;
         distillation = new Distillation(id, startDate, employee);
@@ -34,8 +30,6 @@ public class DistillationTest {
         assertNotNull(distillation);
         assertEquals(id, distillation.getId());
         assertEquals(startDate, distillation.getStartDate());
-        assertEquals(smokingMaterial, distillation.getSmokingMaterialEnum());
-        assertEquals(maltBatch, distillation.getMaltBatch());
         assertEquals(employee, distillation.getEmployee());
         assertTrue(distillation.getComments().isEmpty());
         assertNull(distillation.getEndDate());
