@@ -32,7 +32,10 @@ public class WarehouseTest {
         cask3 = new Cask(3, 700, previousLiquids, "Ireland", "Supplier C");
 
         // Basic data for Distillates (initialized here)
-        distillate1 = new Distillate(1);
+        int newMakeNumber = 1;
+        GrainVariety grainVariety = GrainVariety.EVERGREEN;
+        String maltBatch = "Malt Batch";
+        distillate1 = new Distillate(newMakeNumber, grainVariety, maltBatch);
     }
 
     @Test
