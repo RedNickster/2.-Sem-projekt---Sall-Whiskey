@@ -29,7 +29,6 @@ public class Controller {
         Distillation temp = new Distillation(id, startDate, employee, commment);
         storage.addDistillation(temp);
         return temp;
-        
     }
     
     public Distillate createDistillate(GrainVariety grainVariety, String maltBatch) {
