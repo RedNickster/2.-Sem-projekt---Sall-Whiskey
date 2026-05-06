@@ -98,19 +98,29 @@ public class DistillationCreatePane extends GridPane {
         refresh();
     }
 
-    private void createDistillation(){
-            int id = controller.getStorage().getDistillationCount() + 1;
+    private void createDistillation() {
             LocalDate startDate = dtpStartDate.getValue();
             String comment = txfComment.getText().trim();
             String employee = txfEmployee.getText().trim();
             Distillate selectedDistillate = lvwDistillates.getSelectionModel().getSelectedItem();
 
-            if(startDate != null && !comment.isEmpty() && !employee.isEmpty() && selectedDistillate != null) {
+            if (startDate == null || employee.isEmpty() || selectedDistillate == null) {
+                AppAlerts.showError("Missing information", "Please fill out all information");
+                return;
+            }
+
+            boolean confirm = AppAlerts.showConfirmation("Confirm distillation",
+                    "Are you sure you want to start a distillation?");
+
+            if (confirm) {
+                int id = controller.getStorage().getDistillationCount() + 1;
                 controller.createDistillationAndAddToDistillate(id, startDate, employee, comment, selectedDistillate);
+
+                AppAlerts.showInformation("Success", "Created distillation #" + id +
+                        " and added it to distillate #" + selectedDistillate.getNewMakeNumber());
             }
             refresh();
 
-            // TODO tilføj info om oprettelse
     }
 
     void refresh() {
