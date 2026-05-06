@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class GUI extends Application {
 
-    private final Controller controller = new Controller();
+    private final Controller controller = App.getController();
 
     private CaskPane caskPane;
     private DistillationCreatePane distillationCreatePane;

@@ -2,16 +2,44 @@ package gui;
 
 import controller.Controller;
 import javafx.application.Application;
+import model.GrainVariety;
+import model.CaskLiquids;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class App {
 
-    private Controller controller;
-
-
+    private static final Controller controller = new Controller();
 
     public static void main(String[] args) {
-        App app = new App();
-        // TODO initContent eller savefile
+        initContent();
         Application.launch(GUI.class);
+    }
+    
+    public static Controller getController() {
+        return controller;
+    }
+    
+    private static void initContent(){
+        // Distillates
+        controller.createDistillate(GrainVariety.EVERGREEN, "MaltBatch1");
+        controller.createDistillate(GrainVariety.STAIRWAY, "MaltBatch2");
+
+        // Distillations
+        var d1 = controller.createDistillation(1, LocalDate.now().minusDays(10), "Employee1", "Comment1");
+        controller.createDistillation(2, LocalDate.now().minusDays(5), "Employee2", "Comment2");
+        controller.endDistillation(d1, LocalDate.now(), 50.0, 45.0, "Finished distillation");
+
+        // Casks
+        controller.createCask(1, 100, new ArrayList<>(), "Denmark", "Supplier1");
+        
+        ArrayList<CaskLiquids> usedLiquids = new ArrayList<>();
+        usedLiquids.add(CaskLiquids.BURBON);
+        controller.createCask(2, 200, usedLiquids, "Scotland", "Supplier2");
+        
+        // Warehouse
+        controller.createWarehouse("Address1", 100, 10);
+        controller.createWarehouse("Address2", 200, 5);
     }
 }
