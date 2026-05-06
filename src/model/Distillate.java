@@ -24,8 +24,12 @@ public class Distillate {
         }
     }
 
-    public double getLiquidAmount(){
-        return distillations.getLast().getLiquidAmountAtEnd();
+    public double getTotalVolume(){
+        double total = 0;
+        for (Distillation distillation : distillations) {
+            total += distillation.getLiquidAmountAtEnd();
+        }
+        return total;
     }
 
     public List<Distillation> getDistillations() {
@@ -38,6 +42,6 @@ public class Distillate {
 
     @Override
     public String toString() {
-        return "New Make #" + newMakeNumber + " (" + getLiquidAmount() + "L)";
+        return "New Make #" + newMakeNumber + " (" + getTotalVolume() + "L) " + grainVariety + " - " + maltBatch;
     }
 }

@@ -31,21 +31,18 @@ public class GUI extends Application {
         Button btnCasks = new Button("Casks");
         Button btnCreateDistillation = new Button("Create distillation");
         Button btnEndDistillation = new Button("End distillation");
-        Button btnFillCask = new Button("Fill cask");
-        Button btnUdflugtsOversigt = new Button("5");
-        Button btnHotelOversigt = new Button("6");
-        Button btnSøgDeltager = new Button("7");
-        Button btnKonfDeltagere = new Button("8");
+        //Button btnFillCask = new Button("Fill cask");
 
-        menu.getChildren().addAll(btnCasks, btnCreateDistillation, btnEndDistillation, btnFillCask,
-                btnUdflugtsOversigt, btnHotelOversigt, btnSøgDeltager, btnKonfDeltagere);
+        // TODO sætte knapperne i toppen
+        menu.getChildren().addAll(btnCasks, btnCreateDistillation, btnEndDistillation
+                );
         borderPane.setLeft(menu);
 
         // Panes
         caskPane = new CaskPane(controller);
         distillationCreatePane = new DistillationCreatePane(controller);
         distillationEndPane = new DistillationEndPane(controller);
-        fillCaskPane = new FillCaskPane(controller);
+        //fillCaskPane = new FillCaskPane(controller);
 
 
         // Default view
@@ -55,14 +52,14 @@ public class GUI extends Application {
         btnCasks.setOnAction(e -> { caskPane.refresh(); borderPane.setCenter(caskPane); });
         btnCreateDistillation.setOnAction(e -> { distillationCreatePane.refresh(); borderPane.setCenter(distillationCreatePane); });
         btnEndDistillation.setOnAction(e -> { distillationEndPane.refresh(); borderPane.setCenter(distillationEndPane); });
-        btnFillCask.setOnAction(e -> { fillCaskPane.refresh(); borderPane.setCenter(fillCaskPane); });
-//        btnUdflugtsOversigt.setOnAction(e -> { udflugtOversigtPane.refresh(); borderPane.setCenter(udflugtOversigtPane); });
-//        btnHotelOversigt.setOnAction(e -> { hotelOversigtPane.refresh(); borderPane.setCenter(hotelOversigtPane); });
-//        btnSøgDeltager.setOnAction(e -> { participantSearchPane.refresh(); borderPane.setCenter(participantSearchPane); });
-//        btnKonfDeltagere.setOnAction(e -> { conferenceParticipantsPane.refresh(); borderPane.setCenter(conferenceParticipantsPane); });
+        //btnFillCask.setOnAction(e -> { fillCaskPane.refresh(); borderPane.setCenter(fillCaskPane); });
 
         Scene scene = new Scene(borderPane, 1000, 600);
         stage.setScene(scene);
         stage.show();
+
+        // TODO lave en Alert til bekræftelse man kan kalde i alle de forskellige panes
+        // TODO lave Alert til information efter oprettelse
+        // TODO lave ugyldig information Alert
     }
 }

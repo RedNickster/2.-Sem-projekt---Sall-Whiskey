@@ -1,16 +1,17 @@
 package gui;
 
+import controller.Controller;
 import javafx.application.Application;
-import javafx.scene.Parent;
-import javafx.stage.Stage;
-
 
 public class App {
 
-    private Stage stage;
+    private Controller controller;
+
+
 
     public static void main(String[] args) {
         App app = new App();
+        // TODO initContent eller savefile
         Application.launch(GUI.class);
     }
 }

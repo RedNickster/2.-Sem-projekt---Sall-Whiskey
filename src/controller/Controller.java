@@ -30,6 +30,14 @@ public class Controller {
         storage.addDistillation(temp);
         return temp;
     }
+
+    public Distillation createDistillationAndAddToDistillate(int id, LocalDate startDate, String employee, String commment, Distillate distillate) {
+        Distillation temp = new Distillation(id, startDate, employee, commment);
+        storage.addDistillation(temp);
+        distillate.addDistillation(temp);
+        return temp;
+
+    }
     
     public Distillate createDistillate(GrainVariety grainVariety, String maltBatch) {
         int newMakeNumber = storage.getDistillates().size() + 1;
