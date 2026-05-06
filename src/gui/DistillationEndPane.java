@@ -90,7 +90,7 @@ public class DistillationEndPane extends GridPane{
             int liquidAmount = Integer.parseInt(liquidAmountString);
             double alcoholPercent = Double.parseDouble(alcoholPercentString);
 
-            controller.endDistillitation(selectedDistillation,endDate,liquidAmount,alcoholPercent,comment);
+            controller.endDistillation(selectedDistillation,endDate,liquidAmount,alcoholPercent,comment);
         }
         refresh();
     }

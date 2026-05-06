@@ -30,4 +30,13 @@ public class Distillate {
     public List<Distillation> getDistillations() {
         return new ArrayList<>(distillations);
     }
+
+    public int getNewMakeNumber() {
+        return newMakeNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "New Make #" + newMakeNumber + " (" + getTotalVolume() + "L)";
+    }
 }

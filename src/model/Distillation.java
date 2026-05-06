@@ -16,7 +16,7 @@ public class Distillation {
     private String employee;
     private GrainVariety grainVariety;
 
-    public Distillation(int id, LocalDate startDate, LocalDate endDate, double liquidAmount, double alcoholPercentage, String maltBatch, GrainVariety grainVariety, SmokingMaterial smokingMaterialEnum, String commment) {
+    public Distillation(int id, LocalDate startDate, LocalDate endDate, double liquidAmount, double alcoholPercentage, String maltBatch, GrainVariety grainVariety, SmokingMaterial smokingMaterialEnum, String employee, String commment) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -33,42 +33,6 @@ public class Distillation {
 
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public double getLiquidAmount() {
-        return liquidAmount;
-    }
-
-    public double getAlcoholPercentage() {
-        return alcoholPercentage;
-    }
-
-    public SmokingMaterial getSmokingMaterialEnum() {
-        return smokingMaterialEnum;
-    }
-
-    public String getMaltBatch() {
-        return maltBatch;
-    }
-
-    public List<String> getComments() {
-        return new ArrayList<>(this.comments);
-    }
-
-    public String getEmployee() {
-        return employee;
-    }
-
     public void addComment(String comment) {
         if (comment != null && !comment.trim().isEmpty()) {
             comments.add(comment);
@@ -77,7 +41,7 @@ public class Distillation {
         }
     }
 
-    public void endDistillation(LocalDate endDate, int liquidAmount, double alcoholPercentage, String comment) {
+    public void endDistillation(LocalDate endDate, double liquidAmount, double alcoholPercentage, String comment) {
         if (endDate == null) {
             throw new NullPointerException("endDate is null");
         }
@@ -96,18 +60,42 @@ public class Distillation {
         addComment(comment);
     }
 
+    // Getters
+    public int getId() {
+        return id;
+    }
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+    public double getLiquidAmount() {
+        return liquidAmount;
+    }
+    public double getAlcoholPercentage() {
+        return alcoholPercentage;
+    }
+    public SmokingMaterial getSmokingMaterialEnum() {
+        return smokingMaterialEnum;
+    }
+    public String getMaltBatch() {
+        return maltBatch;
+    }
+    public List<String> getComments() {
+        return new ArrayList<>(this.comments);
+    }
+    public GrainVariety getGrainVariety() {
+        return grainVariety;
+    }
+    public String getEmployee() {
+        return employee;
+    }
+
+
+
     @Override
     public String toString() {
-        return "Distillation{" +
-                "id=" + id +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", liquidAmount=" + liquidAmount +
-                ", alcoholPercentage=" + alcoholPercentage +
-                ", smokingMaterialEnum=" + smokingMaterialEnum +
-                ", maltBatch=" + maltBatch +
-                ", comments=" + comments +
-                ", employee='" + employee + '\'' +
-                '}';
+        return "Distillation #"+ id + " (" + grainVariety + ")";
     }
 }

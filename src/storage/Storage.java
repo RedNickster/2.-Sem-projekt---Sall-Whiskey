@@ -9,17 +9,17 @@ import java.util.*;
 
 public class Storage {
 
-    private List<Cask> casks = new ArrayList<>();
-    private List<Distillate> distillates = new ArrayList<>();
-    private List<Warehouse> warehouses = new ArrayList<>();
-    private List<Distillation> distillations = new ArrayList<>();
+    private final List<Cask> casks = new ArrayList<>();
+    private final List<Distillate> distillates = new ArrayList<>();
+    private final List<Warehouse> warehouses = new ArrayList<>();
+    private final List<Distillation> distillations = new ArrayList<>();
 
-    private int distillateCount;
 
 
     public Storage() {
-        this.distillateCount = 0;
     }
+
+
 
     // ----- Cask -----
     public void addCask(Cask cask) {
@@ -28,14 +28,13 @@ public class Storage {
         }
     }
 
-    public int getCaskCount() {
-        return casks.size();
-    }
-
     public List<Cask> getCasks() {
         return new ArrayList<>(this.casks);
     }
 
+    public int getCaskCount() {
+        return casks.size();
+    }
 
 
 
@@ -44,11 +43,10 @@ public class Storage {
         if (!distillates.contains(distillate)) {
             distillates.add(distillate);
         }
-        distillateCount++;
     }
 
-    public int getDistillateCount() {
-        return distillateCount;
+    public List<Distillate> getDistillates() {
+        return new ArrayList<>(this.distillates);
     }
 
     public int getDistillationCount() {
@@ -62,12 +60,6 @@ public class Storage {
     }
 
 
-    public List<Distillate> getDistillates() {
-        return distillates;
-    }
-
-
-
     // ----- Warehouse -----
     public void addWarehouse(Warehouse warehouse) {
         if (!warehouses.contains(warehouse)) {
@@ -76,7 +68,7 @@ public class Storage {
     }
 
     public List<Warehouse> getWarehouses() {
-        return warehouses;
+        return new ArrayList<>(this.warehouses);
     }
 
 
@@ -88,6 +80,6 @@ public class Storage {
     }
 
     public List<Distillation> getDistillations() {
-        return new ArrayList<>(distillations);
+        return new ArrayList<>(this.distillations);
     }
 }
