@@ -11,8 +11,6 @@ public class DistillationTest {
 
     private Distillation distillation;
     private LocalDate startDate;
-    private SmokingMaterial smokingMaterial;
-    private int maltBatch;
     private String employee;
     private int id;
     
@@ -20,11 +18,10 @@ public class DistillationTest {
     void setUp() {
         // setUp /\ Arrange
         startDate = LocalDate.of(2023, 1, 10);
-        smokingMaterial = SmokingMaterial.OAK;
-        maltBatch = 1;
+        
         employee = "John Doe";
         id = 1;
-        distillation = new Distillation(startDate, smokingMaterial, maltBatch, employee, id);
+        distillation = new Distillation(id, startDate, employee);
     }
 
     @Test
@@ -33,12 +30,10 @@ public class DistillationTest {
         assertNotNull(distillation);
         assertEquals(id, distillation.getId());
         assertEquals(startDate, distillation.getStartDate());
-        assertEquals(smokingMaterial, distillation.getSmokingMaterialEnum());
-        assertEquals(maltBatch, distillation.getMaltBatch());
         assertEquals(employee, distillation.getEmployee());
         assertTrue(distillation.getComments().isEmpty());
         assertNull(distillation.getEndDate());
-        assertEquals(0, distillation.getLiquidAmount());
+        assertEquals(0, distillation.getLiquidAmountAtEnd());
         assertEquals(0.0, distillation.getAlcoholPercentage());
     }
 
@@ -68,7 +63,7 @@ public class DistillationTest {
 
         // Assert
         assertEquals(endDate, distillation.getEndDate());
-        assertEquals(liquidAmount, distillation.getLiquidAmount());
+        assertEquals(liquidAmount, distillation.getLiquidAmountAtEnd());
         assertEquals(alcoholPercentage, distillation.getAlcoholPercentage());
         assertEquals(1, distillation.getComments().size());
         assertTrue(distillation.getComments().contains(endComment));
@@ -90,7 +85,7 @@ public class DistillationTest {
 
         // Assert
         assertEquals(endDate, distillation.getEndDate());
-        assertEquals(liquidAmount, distillation.getLiquidAmount());
+        assertEquals(liquidAmount, distillation.getLiquidAmountAtEnd());
         assertEquals(alcoholPercentage, distillation.getAlcoholPercentage());
         assertEquals(2, distillation.getComments().size());
         assertTrue(distillation.getComments().contains(preExistingComment));
@@ -164,7 +159,7 @@ public class DistillationTest {
         distillation.endDistillation(endDate, liquidAmount, alcoholPercentage, endComment);
 
         // Assert
-        assertEquals(liquidAmount, distillation.getLiquidAmount());
+        assertEquals(liquidAmount, distillation.getLiquidAmountAtEnd());
     }
 
     @Test

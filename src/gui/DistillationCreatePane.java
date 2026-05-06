@@ -92,9 +92,9 @@ public class DistillationCreatePane extends GridPane {
 
     private void createDistillate() {
         GrainVariety grainVariety = cbxGrain.getValue();
-        int newmakeNumber = controller.getStorage().getDistillateCount() + 1;
+        // TODO lav sådan at man kan skrive hvilken maltbatch der er brugt til distillatet.
         if (grainVariety != null) {
-            //controller.createDistilitate(newmakeNumber, grainVariety);
+            controller.createDistillate(grainVariety, "");
         }
         refresh();
     }

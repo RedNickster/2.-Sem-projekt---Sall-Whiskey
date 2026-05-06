@@ -25,9 +25,11 @@ public class CaskTest {
         String supplier = "Supplier A";
         cask = new Cask(id, litersCapacity, previousLiquids, countryOfOrigin, supplier);
         
+        
         // Basic data for Distillates
-        distillate1 = new Distillate(1, GrainVariety.EVERGREEN);
-        distillate2 = new Distillate(2, GrainVariety.STAIRWAY);
+        String maltbatch = "malt batch";
+        distillate1 = new Distillate(1, GrainVariety.EVERGREEN, maltbatch);
+        distillate2 = new Distillate(2, GrainVariety.STAIRWAY, maltbatch);
     }
     
     @Test

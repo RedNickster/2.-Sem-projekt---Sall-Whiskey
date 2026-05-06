@@ -4,15 +4,13 @@ import java.util.HashMap;
 
 public class Warehouse {
 
-    private String adresse;
-    private double m2;
-    private boolean erFuld;
-    private Cask[] lokationer; // <Lokation, Cask>
+    private final String adresse;
+    private final double m2;
+    private final Cask[] lokationer; // <Lokation, Cask>
 
     public Warehouse(String adresse, double m2, int lagerPladser) {
         this.adresse = adresse;
         this.m2 = m2;
-        this.erFuld = false;
         lokationer = new Cask[lagerPladser];
     }
 
@@ -58,5 +56,18 @@ public class Warehouse {
         }
     }
 
+    public boolean isFull() {
+        for (Cask cask : lokationer) {
+            if (cask == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Warehouse: " + adresse + ", m2: " + m2;
+    }
 
 }

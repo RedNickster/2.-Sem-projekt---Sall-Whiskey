@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Controller {
 
-    Storage storage;
+    private Storage storage;
 
     public Controller() {
         this.storage = new Storage();
@@ -19,63 +19,74 @@ public class Controller {
         return storage;
     }
 
-    public Cask createCask(int id, int liters, ArrayList<CaskLiquids> previousLiquids, String countryOfOrigin,
-                           String supplier) {
-        Cask tempCask = new Cask(id, liters, previousLiquids, countryOfOrigin, supplier);
-        storage.addCask(tempCask);
-        return tempCask;
+    public Cask createCask(int id, int liters, ArrayList<CaskLiquids> previousLiquids, String countryOfOrigin, String supplier) {
+        Cask cask = new Cask(id, liters, previousLiquids, countryOfOrigin, supplier);
+        storage.addCask(cask);
+        return cask;
     }
 
-
-
-    public Distillation createDistillation(int id, LocalDate startDate, LocalDate endDate, double liquidAmount, double alcoholPercentage, String maltBatch, GrainVariety grainVariety, SmokingMaterial smokingMaterialEnum, String commment) {
-        Distillation temp = new Distillation(id, startDate, endDate, liquidAmount, alcoholPercentage, maltBatch, grainVariety, smokingMaterialEnum, commment);
+    public Distillation createDistillation(int id, LocalDate startDate, String employee, String commment) {
+        Distillation temp = new Distillation(id, startDate, employee, commment);
         storage.addDistillation(temp);
         return temp;
 
     }
-
-    public Distillate compineToDistillate(List<Distillation> selectedDistillates, int newMakeNumber) {
-        Distillate distillate = new Distillate(storage.getDistillateCount() + 1);
-
-        for (Distillation selected : selectedDistillates) {
-            distillate.addDistillation(selected);
-        }
-
-        storage.addDistillate(distillate);
-        return distillate;
+    
+    public Distillate createDistillate(GrainVariety grainVariety, String maltBatch) {
+        int newMakeNumber = storage.getDistillates().size() + 1;
+        
+        Distillate temp = new Distillate(newMakeNumber, grainVariety, maltBatch);
+        storage.addDistillate(temp);
+        return temp;
     }
 
-    public void endDistillitation(Distillation distillitation, LocalDate endDate, int liquidAmount,
-                                  double alcoholPercentage, String comment) {
+    public void combineToDistillate(List<Distillation> selectedDistillates, Distillate selectedDistillate) {
+        for (Distillation selected : selectedDistillates) {
+            selectedDistillate.addDistillation(selected);
+        }
+    }
 
+    public void endDistillation(Distillation distillitation, LocalDate endDate, double liquidAmount, double alcoholPercentage, String comment) {
+        if (distillitation != null) {
+            distillitation.endDistillation(endDate, liquidAmount, alcoholPercentage, comment);
+        }
+    }
 
-
-        distillitation.endDistillation(endDate, liquidAmount, alcoholPercentage, comment);
+    public void pourDistillateIntoCask(Distillate distillate, int amount, Cask cask) {
+        if (cask != null && distillate != null && amount > 0) {
+            cask.addDistillate(distillate, amount);
+        }
     }
 
     public void createWarehouse(String adresse, double m2, int lagerPladser){
         storage.addWarehouse(new Warehouse(adresse, m2, lagerPladser));
     }
 
-    public void pourDistillateIntoCask(Distillate distillate, int amount, Cask cask) {
-        if (!cask.equals(null) && !distillate.equals(null) && amount != 0) {
-            cask.addDistillate(distillate, amount);
-        }
-    }
-    
     public void addCaskToWarehouse(Cask cask, Warehouse warehouse) {
         warehouse.addCask(cask);
     }
 
 
-    public void addComment(){}
+    public void addComment(Distillation distillation, String comment){
+        if (distillation != null && comment != null) {
+            distillation.addComment(comment);
+        }
+    }
 
     public int getCaskCount(){
         return storage.getCaskCount();
     }
 
+    public List<Distillation> getDistillations() {
+        return storage.getDistillations();
+    }
     public List<Cask> getCasks(){
         return storage.getCasks();
+    }
+    public List<Distillate> getDistillates() {
+        return storage.getDistillates();
+    }
+    public List<Warehouse> getWarehouses() {
+        return storage.getWarehouses();
     }
 }
