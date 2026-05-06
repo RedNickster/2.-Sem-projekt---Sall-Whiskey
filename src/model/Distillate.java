@@ -42,6 +42,6 @@ public class Distillate {
 
     @Override
     public String toString() {
-        return "New Make #" + newMakeNumber + " (" + getTotalVolume() + "L)";
+        return "New Make #" + newMakeNumber + " (" + getTotalVolume() + "L) " + grainVariety + " - " + maltBatch;
     }
 }

@@ -57,9 +57,6 @@ public class DistillationEndPane extends GridPane{
             if (newValue != null) {
                 // Only try to get distillations if an actual object is selected
                 lvwDistillations.getItems().setAll(newValue.getDistillations());
-            } else {
-                // If nothing is selected (e.g., after a refresh), clear the center list
-                lvwDistillations.getItems().clear();
             }
         });
 

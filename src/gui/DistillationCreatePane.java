@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
+import java.util.Locale;
 
 public class DistillationCreatePane extends GridPane {
 
@@ -19,12 +20,12 @@ public class DistillationCreatePane extends GridPane {
     private final ListView<Distillation> lvwDistillations = new ListView<>();
 
     private final ComboBox<GrainVariety> cbxGrain = new ComboBox<>();
-    private final ComboBox<SmokingMaterial> cbxSmoke = new ComboBox<>();
 
     private final DatePicker dtpStartDate = new DatePicker();
 
     private final TextField txfMaltBatch = new TextField();
     private final TextField txfEmployee = new TextField();
+    private final TextField txfComment = new TextField();
 
     private final Button btnCreateDistillate = new Button("Create distillate");
     private final Button btnCreateDistillation = new Button("Create distillation");
@@ -46,6 +47,7 @@ public class DistillationCreatePane extends GridPane {
                 new Label("Create distillates"),
                 new Separator(),
                 new Label("Grain variety"), cbxGrain,
+                new Label("Malt batch"), txfMaltBatch,
                 btnCreateDistillate,
                 lvwDistillates
         );
@@ -54,87 +56,72 @@ public class DistillationCreatePane extends GridPane {
         btnCreateDistillate.setOnAction(event -> this.createDistillate());
 
         // Center
-        VBox centerSection = new VBox(5);
-        cbxSmoke.getItems().setAll(SmokingMaterial.values());
-        cbxSmoke.setPrefWidth(200);
-        centerSection.getChildren().addAll(
+        VBox rightSection = new VBox(5);
+        rightSection.getChildren().addAll(
                 new Label("Create distillation"),
                 new Separator(),
                 new Label("Start date"), dtpStartDate,
-                new Label("Smoking material"), cbxSmoke,
-                new Label("Malt batch"), txfMaltBatch,
+                new Label("Comment"), txfComment,
                 new Label("Employee"), txfEmployee,
                 btnCreateDistillation
         );
-        this.add(centerSection,1,0);
+        this.add(rightSection,1,0);
 
         btnCreateDistillation.setOnAction(event -> this.createDistillation());
 
         // Right
-        VBox rightSection = new VBox(5);
-        rightSection.getChildren().addAll(
+        VBox centerSection = new VBox(5);
+        centerSection.getChildren().addAll(
                 new Label("Distillations"),
                 new Separator(),
                 lvwDistillations
         );
-        this.add(rightSection,2,0);
+        this.add(centerSection,2,0);
 
         lvwDistillates.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 // Only try to get distillations if an actual object is selected
                 lvwDistillations.getItems().setAll(newValue.getDistillations());
-            } else {
-                // If nothing is selected (e.g., after a refresh), clear the right list
-                lvwDistillations.getItems().clear();
             }
         });
+
     }
 
     private void createDistillate() {
         GrainVariety grainVariety = cbxGrain.getValue();
-        // TODO lav sådan at man kan skrive hvilken maltbatch der er brugt til distillatet.
-        if (grainVariety != null) {
-            controller.createDistillate(grainVariety, "");
+        String maltBatch = txfMaltBatch.getText().trim();
+        // TODO lav alert hvis ikke udfyldt
+        // TODO isSmoked boolean relevant?
+        if (grainVariety != null && !maltBatch.isEmpty()) {
+            controller.createDistillate(grainVariety, maltBatch);
         }
         refresh();
     }
 
     private void createDistillation(){
-        try {
-            Distillate selectedDestillate = lvwDistillates.getSelectionModel().getSelectedItem();
+            int id = controller.getStorage().getDistillationCount() + 1;
             LocalDate startDate = dtpStartDate.getValue();
-            SmokingMaterial smoke = cbxSmoke.getValue();
-            String maltBatchString = txfMaltBatch.getText().trim();
+            String comment = txfComment.getText().trim();
             String employee = txfEmployee.getText().trim();
+            Distillate selectedDistillate = lvwDistillates.getSelectionModel().getSelectedItem();
 
-            if(selectedDestillate != null && startDate != null && smoke != null && !maltBatchString.isEmpty() && !employee.isEmpty()) {
-                int maltchBatch = Integer.parseInt(maltBatchString);
-                //controller.createDistillation(selectedDestillate, startDate, smoke, maltchBatch, employee);
+            if(startDate != null && !comment.isEmpty() && !employee.isEmpty() && selectedDistillate != null) {
+                controller.createDistillationAndAddToDistillate(id, startDate, employee, comment, selectedDistillate);
             }
             refresh();
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("");
-            alert.setContentText("Distillation created");
-            alert.setHeaderText(null);
-            alert.showAndWait();
-
-        } catch (NumberFormatException e) {
-            // Error popup if input isn't a number
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setContentText("Please enter valid info for malt batch and employee.");
-            error.showAndWait();
-        }
-
+            // TODO tilføj info om oprettelse
     }
 
     void refresh() {
         lvwDistillates.getItems().setAll(controller.getStorage().getDistillates());
         lvwDistillations.getItems().clear();
+        // TODO kun vis dem uden en endDate
+        // TODO udvid ToString
 
         cbxGrain.setValue(null);
         dtpStartDate.setValue(null);
-        cbxSmoke.setValue(null);
+        txfComment.clear();
         txfMaltBatch.clear();
         txfEmployee.clear();
     }
