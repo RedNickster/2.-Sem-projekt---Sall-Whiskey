@@ -19,22 +19,74 @@ public class Controller {
         return storage;
     }
 
+    /**
+     * Metode som creater en ny tom Cask og tilføjer den til storage.
+     * @param id
+     * @param liters
+     * @param previousLiquids
+     * @param countryOfOrigin
+     * @param supplier
+     * @return
+     */
     public Cask createCask(int id, int liters, ArrayList<CaskLiquids> previousLiquids, String countryOfOrigin, String supplier) {
         Cask cask = new Cask(id, liters, previousLiquids, countryOfOrigin, supplier);
         storage.addCask(cask);
         return cask;
     }
 
+    /**
+     * Metode som creater en ny Distillation, som ikke er destilleret endnu.
+     * @param id
+     * @param startDate
+     * @param employee
+     * @param commment
+     * @return
+     */
     public Distillation createDistillation(int id, LocalDate startDate, String employee, String commment) {
         Distillation temp = new Distillation(id, startDate, employee, commment);
         storage.addDistillation(temp);
         return temp;
-
     }
-    
+
+    /**
+     * Metode som sætter status på distillation til "First Distillation Data Added" så første distillation er færdig.
+     * @param distillation
+     */
+    public void registerFirstDistillation(Distillation distillation) {
+        if (distillation != null) {
+            distillation.setStatus("First Distillation Data Added");
+        }
+    }
+
+    /**
+     * Metode som sætter status på distillation til "Second Distillation Data Added" så første distillation er færdig.
+     * @param distillation
+     */
+    public void registerSecondDistillation(Distillation distillation) {
+        if (distillation != null) {
+            distillation.setStatus("Second distillation Data Added");
+        }
+    }
+
+    /**
+     * Metode som slutter en distillation ved at sætte dens status til "Finalized", og dermed kan kun fortsætte
+     * arbejdet hvis distillationen har destilleret to gange.
+     * @param distillitation
+     * @param endDate
+     * @param liquidAmount
+     * @param alcoholPercentage
+     * @param comment
+     */
+    public void endDistillation(Distillation distillitation, LocalDate endDate, double liquidAmount, double alcoholPercentage, String comment) {
+        if (distillitation != null) {
+            distillitation.endDistillation(endDate, liquidAmount, alcoholPercentage, comment);
+        }
+    }
+
+
     public Distillate createDistillate(GrainVariety grainVariety, String maltBatch) {
         int newMakeNumber = storage.getDistillates().size() + 1;
-        
+
         Distillate temp = new Distillate(newMakeNumber, grainVariety, maltBatch);
         storage.addDistillate(temp);
         return temp;
@@ -43,12 +95,6 @@ public class Controller {
     public void combineToDistillate(List<Distillation> selectedDistillates, Distillate selectedDistillate) {
         for (Distillation selected : selectedDistillates) {
             selectedDistillate.addDistillation(selected);
-        }
-    }
-
-    public void endDistillation(Distillation distillitation, LocalDate endDate, double liquidAmount, double alcoholPercentage, String comment) {
-        if (distillitation != null) {
-            distillitation.endDistillation(endDate, liquidAmount, alcoholPercentage, comment);
         }
     }
 

@@ -12,11 +12,13 @@ public class Distillation {
     private double alcoholPercentage;
     private List<String> comments = new ArrayList<>();
     private String employee;
+    private String status;
     
     public Distillation(int id, LocalDate startDate, String employee, String commment) {
         this.id = id;
         this.startDate = startDate;
         this.employee = employee;
+        this.status = "Created";
 
         if (commment != null && !commment.isEmpty()) {
             this.comments.add(commment);
@@ -27,6 +29,7 @@ public class Distillation {
         this.id = id;
         this.startDate = startDate;
         this.employee = employee;
+        this.status = "Created";
     }
     
     
@@ -55,6 +58,7 @@ public class Distillation {
         this.endDate = endDate;
         this.liquidAmountAtEnd = liquidAmount;
         this.alcoholPercentage = alcoholPercentage;
+        this.status = "Finalized";
         addComment(comment);
     }
 
@@ -80,8 +84,13 @@ public class Distillation {
     public String getEmployee() {
         return employee;
     }
+    public String getStatus() {
+        return status;
+    }
 
-
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {

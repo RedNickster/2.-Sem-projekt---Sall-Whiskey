@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Warehouse {
 
     private final String adresse;
-    private final double m2;
+    private double m2;
     private final Cask[] lokationer; // <Lokation, Cask>
 
     public Warehouse(String adresse, double m2, int lagerPladser) {
