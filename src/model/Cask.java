@@ -99,7 +99,7 @@ public class Cask {
     
     @Override
     public String toString() {
-        return "Cask #" + id + " (" + liters + "L) - " + supplier + "(" + countryOfOrigin + ")" +
+        return "Cask #" + id + " (Available space: " + (liters - containsLiters()) + "L / Total: " + liters + "L) - " + supplier + "(" + countryOfOrigin + ")" +
                 " | Previous Liquids: " + previousLiquids;
     }
 }

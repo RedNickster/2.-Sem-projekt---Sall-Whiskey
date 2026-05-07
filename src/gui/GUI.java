@@ -16,7 +16,8 @@ public class GUI extends Application {
     private DistillationCreatePane distillationCreatePane;
     private DistillationEndPane distillationEndPane;
     private FillCaskPane fillCaskPane;
-
+    private WarehousePane warehousePane;
+    private WarehouseTapPane warehouseTapPane;
 
     public void start(Stage stage) {
         stage.setTitle("Sall Whiskey");
@@ -32,9 +33,11 @@ public class GUI extends Application {
         Button btnCreateDistillation = new Button("Create distillation");
         Button btnEndDistillation = new Button("End distillation");
         Button btnFillCask = new Button("Fill cask");
+        Button btnWarehouse = new Button("Warehouse");
+        Button btnWarehouseTao = new Button("WarehouseTap");
 
         // TODO sætte knapperne i toppen
-        menu.getChildren().addAll(btnCasks, btnCreateDistillation, btnEndDistillation, btnFillCask
+        menu.getChildren().addAll(btnCasks, btnCreateDistillation, btnEndDistillation, btnFillCask, btnWarehouse, btnWarehouseTao
                 );
         borderPane.setLeft(menu);
 
@@ -43,7 +46,8 @@ public class GUI extends Application {
         distillationCreatePane = new DistillationCreatePane(controller);
         distillationEndPane = new DistillationEndPane(controller);
         fillCaskPane = new FillCaskPane(controller);
-
+        warehousePane = new WarehousePane(controller);
+        warehouseTapPane = new WarehouseTapPane(controller);
 
         // Default view
         borderPane.setCenter(caskPane);
@@ -53,6 +57,8 @@ public class GUI extends Application {
         btnCreateDistillation.setOnAction(e -> { distillationCreatePane.refresh(); borderPane.setCenter(distillationCreatePane); });
         btnEndDistillation.setOnAction(e -> { distillationEndPane.refresh(); borderPane.setCenter(distillationEndPane); });
         btnFillCask.setOnAction(e -> { fillCaskPane.refresh(); borderPane.setCenter(fillCaskPane); });
+        btnWarehouse.setOnAction(e -> {warehousePane.refresh(); borderPane.setCenter(warehousePane);});
+        btnWarehouseTao.setOnAction(e -> {warehouseTapPane.refresh(); borderPane.setCenter(warehouseTapPane);});
 
         Scene scene = new Scene(borderPane, 1000, 600);
         stage.setScene(scene);
