@@ -59,14 +59,26 @@ public class FillCaskPane extends GridPane {
     }
 
     private void fillCasks() {
+        //TODO error message hvis liquidAmount er for høj
         Distillate selectedDistillate = lvwDistillates.getSelectionModel().getSelectedItem();
         Cask selectedCask = lvwCasks.getSelectionModel().getSelectedItem();
         String liquidAmountString = txfAmount.getText().trim();
 
-        if (selectedCask != null && selectedDistillate != null && !liquidAmountString.isEmpty()) {
+        if (selectedCask == null || selectedDistillate == null || liquidAmountString.isEmpty()) {
+            AppAlerts.showError("Missing information", "Please fill out all information");
+            return;
+        }
+
+        boolean confirm = AppAlerts.showConfirmation("Confirm filling cask",
+                "Are you sure you want to fill the cask?");
+
+        if (confirm) {
             int liquidAmount = Integer.parseInt(liquidAmountString);
 
             controller.pourDistillateIntoCask(selectedDistillate,liquidAmount,selectedCask);
+
+            AppAlerts.showInformation("Success", "Filled cask #" + selectedCask.getId() + " with "
+                    + liquidAmount + " liters from New Make #" + selectedDistillate.getNewMakeNumber());
         }
         refresh();
     }

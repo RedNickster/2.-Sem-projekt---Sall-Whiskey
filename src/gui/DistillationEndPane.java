@@ -47,7 +47,7 @@ public class DistillationEndPane extends GridPane{
         // Center
         VBox centerSection = new VBox(5);
         centerSection.getChildren().addAll(
-                new Label("Distillations"),
+                new Label("Active distillations"),
                 new Separator(),
                 lvwDistillations
         );
@@ -56,10 +56,7 @@ public class DistillationEndPane extends GridPane{
         lvwDistillates.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 // Only try to get distillations if an actual object is selected
-                lvwDistillations.getItems().setAll(newValue.getDistillations());
-            } else {
-                // If nothing is selected (e.g., after a refresh), clear the center list
-                lvwDistillations.getItems().clear();
+                lvwDistillations.getItems().setAll(controller.getActiveDistillations(newValue));
             }
         });
 
@@ -80,19 +77,33 @@ public class DistillationEndPane extends GridPane{
 
     }
     private void endDistillation() {
+        //TODO tekstuel fejl ved enddate før startdate, bogstaver ved int osv
         Distillation selectedDistillation = lvwDistillations.getSelectionModel().getSelectedItem();
         LocalDate endDate = dtpEndDate.getValue();
         String liquidAmountString = txfLiquidAmount.getText().trim();
         String alcoholPercentString = txfAlchoholPercent.getText().trim();
         String comment = txfComment.getText().trim();
 
-        if (selectedDistillation != null && endDate != null && !liquidAmountString.isEmpty() && !alcoholPercentString.isEmpty() && !comment.isEmpty()) {
+
+        if (selectedDistillation == null || endDate == null|| liquidAmountString.isEmpty() ||
+                        alcoholPercentString.isEmpty() || comment.isEmpty()) {
+            AppAlerts.showError("Missing information", "Please fill out all information");
+            return;
+        }
+
+        boolean confirm = AppAlerts.showConfirmation("Confirm ending distillation",
+                "Are you sure you want to end the distillation?");
+
+        if (confirm) {
             int liquidAmount = Integer.parseInt(liquidAmountString);
             double alcoholPercent = Double.parseDouble(alcoholPercentString);
 
             controller.endDistillation(selectedDistillation,endDate,liquidAmount,alcoholPercent,comment);
+
+            AppAlerts.showInformation("Success", "Ended distillation #" + selectedDistillation.getId());
         }
         refresh();
+
     }
 
     void refresh() {

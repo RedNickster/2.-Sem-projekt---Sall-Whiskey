@@ -45,7 +45,7 @@ public class Cask {
         }
     }
     
-    public void tabDistillate(Integer litersTapped) {
+    public void tapDistillate(Integer litersTapped) {
         if (litersTapped == null || litersTapped <= 0) {
             throw new IllegalArgumentException("Liters to tap must be positive.");
         }
@@ -99,7 +99,7 @@ public class Cask {
     
     @Override
     public String toString() {
-        return "Cask #" + id + " (" + liters + "L) - " + supplier + "(" + countryOfOrigin + ")" +
+        return "Cask #" + id + " (Available space: " + (liters - containsLiters()) + "L / Total: " + liters + "L) - " + supplier + "(" + countryOfOrigin + ")" +
                 " | Previous Liquids: " + previousLiquids;
     }
 }

@@ -70,11 +70,11 @@ public class CaskPane extends GridPane {
     }
 
     private void createCask() {
-        try {
-            int caskAmount = Integer.parseInt(txfCaskAmount.getText().trim());
+
+            // TODO lav alert hvis liter eller caskAmount ikke er tal
+            String caskAmountString = txfCaskAmount.getText().trim();
             int startId = controller.getCaskCount() + 1;
-            int lastId = startId + caskAmount - 1;
-            int liters = Integer.parseInt(txfXLiterSpace.getText().trim());
+            String litersString = txfXLiterSpace.getText().trim();
 
             List<CaskLiquids> selectedLiquids = cbxCaskLiquids.getCheckModel().getCheckedItems();
             ArrayList<CaskLiquids> liquidsList = new ArrayList<>(selectedLiquids);
@@ -82,34 +82,32 @@ public class CaskPane extends GridPane {
             String countryOfOrigin = txfXCountryOfOrigin.getText();
             String supplier = txfXSupplier.getText();
 
-            if (!countryOfOrigin.isEmpty() && !supplier.isEmpty()) {
+             if (countryOfOrigin.isEmpty() || supplier.isEmpty() || litersString.isEmpty() || caskAmountString.isEmpty()) {
+                 AppAlerts.showError("Missing information", "Please fill out all information");
+                 return;
+             }
+
+              boolean confirm = AppAlerts.showConfirmation("Confirm casks",
+                "Are you sure you want to create casks?");
+
+            if (confirm) {
+                int caskAmount = Integer.parseInt(caskAmountString);
+                int liters = Integer.parseInt(litersString);
+                int lastId = startId + caskAmount - 1;
                 int currentId = startId;
                 for (int index = 0; index < caskAmount; index++) {
                     controller.createCask(currentId, liters, liquidsList, countryOfOrigin, supplier);
                     currentId++;
                 }
+                if (caskAmount == 1) {
+                    AppAlerts.showInformation("Cask created","Successfully created Cask #" + startId);
+                } else {
+                    AppAlerts.showInformation("Casks created","Successfully created " + caskAmount
+                            + " casks.\n" + "IDs: " + startId + " through " + lastId);
+                }
 
                 refresh();
-
-                // --- SHOW POPUP ---
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Casks Created");
-                alert.setHeaderText(null);
-
-                if (caskAmount == 1) {
-                    alert.setContentText("Successfully created Cask #" + startId);
-                } else {
-                    alert.setContentText("Successfully created " + caskAmount + " casks.\n" +
-                            "IDs: " + startId + " through " + lastId);
-                }
-                alert.showAndWait();
             }
-        } catch (NumberFormatException e) {
-            // Error popup if input isn't a number
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setContentText("Please enter valid numbers for Litre and Amount.");
-            error.showAndWait();
-        }
     }
 
 

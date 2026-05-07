@@ -48,6 +48,12 @@ public class Controller {
         return temp;
     }
 
+    public Distillation createDistillationAndAddToDistillate(int id, LocalDate startDate, String employee, String commment, Distillate distillate) {
+        Distillation temp = new Distillation(id, startDate, employee, commment);
+        storage.addDistillation(temp);
+        distillate.addDistillation(temp);
+        return temp;
+
     /**
      * Metode som sætter status på distillation til "First Distillation Data Added" så første distillation er færdig.
      * @param distillation
@@ -86,7 +92,7 @@ public class Controller {
 
     public Distillate createDistillate(GrainVariety grainVariety, String maltBatch) {
         int newMakeNumber = storage.getDistillates().size() + 1;
-
+        
         Distillate temp = new Distillate(newMakeNumber, grainVariety, maltBatch);
         storage.addDistillate(temp);
         return temp;
@@ -100,12 +106,22 @@ public class Controller {
 
     public void pourDistillateIntoCask(Distillate distillate, int amount, Cask cask) {
         if (cask != null && distillate != null && amount > 0) {
-            cask.addDistillate(distillate, amount);
+            if (amount > distillate.getAvailableVolume()) {
+                throw new IllegalArgumentException("Not enough volume in distillate");
+            }
+            try {
+                cask.addDistillate(distillate, amount);
+                distillate.subtractVolume(amount);
+            } catch (IllegalArgumentException e) {
+                throw e;
+            }
         }
     }
 
-    public void createWarehouse(String adresse, double m2, int lagerPladser){
-        storage.addWarehouse(new Warehouse(adresse, m2, lagerPladser));
+    public Warehouse createWarehouse(String address, double m2, int storageSpaces) {
+        Warehouse temp = new Warehouse(address, m2, storageSpaces);
+        storage.addWarehouse(temp);
+        return temp;
     }
 
     public void addCaskToWarehouse(Cask cask, Warehouse warehouse) {
@@ -113,25 +129,38 @@ public class Controller {
     }
 
 
-    public void addComment(Distillation distillation, String comment){
+    public void addComment(Distillation distillation, String comment) {
         if (distillation != null && comment != null) {
             distillation.addComment(comment);
         }
     }
 
-    public int getCaskCount(){
+    public int getCaskCount() {
         return storage.getCaskCount();
     }
 
     public List<Distillation> getDistillations() {
         return storage.getDistillations();
     }
-    public List<Cask> getCasks(){
+
+    public List<Distillation> getActiveDistillations(Distillate distillate) {
+        List<Distillation> activeList = new ArrayList<>();
+        for (Distillation d : distillate.getDistillations()) {
+            if (d.getEndDate() == null) {
+                activeList.add(d);
+            }
+        }
+        return activeList;
+    }
+
+    public List<Cask> getCasks() {
         return storage.getCasks();
     }
+
     public List<Distillate> getDistillates() {
         return storage.getDistillates();
     }
+
     public List<Warehouse> getWarehouses() {
         return storage.getWarehouses();
     }

@@ -10,6 +10,7 @@ public class Distillate {
     private GrainVariety grainVariety;
     private String maltBatch;
     private boolean isSmoked;
+    private double volumeInCasks = 0;
 
     public Distillate(int newMakeNumber,  GrainVariety grainVariety, String maltBatch) {
         this.newMakeNumber = newMakeNumber;
@@ -32,6 +33,18 @@ public class Distillate {
         return total;
     }
 
+    public double getAvailableVolume() {
+        return getTotalVolume() - volumeInCasks;
+    }
+
+    public void subtractVolume(double amount) {
+        if (amount <= getAvailableVolume()) {
+            this.volumeInCasks += amount;
+        } else {
+            throw new IllegalArgumentException("Not enough volume in distillate");
+        }
+    }
+
     public List<Distillation> getDistillations() {
         return new ArrayList<>(distillations);
     }
@@ -42,6 +55,6 @@ public class Distillate {
 
     @Override
     public String toString() {
-        return "New Make #" + newMakeNumber + " (" + getTotalVolume() + "L)";
+        return "New Make #" + newMakeNumber + " (Avail: " + getAvailableVolume() + "L / Total: " + getTotalVolume() + "L) " + grainVariety + " " + maltBatch;
     }
 }

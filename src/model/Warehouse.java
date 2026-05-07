@@ -1,21 +1,19 @@
 package model;
 
-import java.util.HashMap;
-
 public class Warehouse {
 
-    private final String adresse;
-    private double m2;
-    private final Cask[] lokationer; // <Lokation, Cask>
+    private final String address;
+    private final double m2;
+    private final Cask[] locations;
 
-    public Warehouse(String adresse, double m2, int lagerPladser) {
-        this.adresse = adresse;
+    public Warehouse(String address, double m2, int storageSpaces) {
+        this.address = address;
         this.m2 = m2;
-        lokationer = new Cask[lagerPladser];
+        locations = new Cask[storageSpaces];
     }
 
     private boolean isCaskInWareHouse(Cask cask) {
-        for (Cask value : lokationer) {
+        for (Cask value : locations) {
             if (value == cask) {
                 return true;
             }
@@ -33,9 +31,9 @@ public class Warehouse {
         }
 
         // Checks if there is room for the cask, if yes; set lokation to cask and quit
-        for (int i = 0; i < lokationer.length; i++) {
-            if (lokationer[i] == null) {
-                lokationer[i] = cask;
+        for (int i = 0; i < locations.length; i++) {
+            if (locations[i] == null) {
+                locations[i] = cask;
                 return;
             }
         }
@@ -49,15 +47,15 @@ public class Warehouse {
             throw new IllegalArgumentException("Cask cannot be null");
         }
         
-        for (int i = 0; i < lokationer.length; i++) {
-            if (lokationer[i] == cask) {
-                lokationer[i] = null;
+        for (int i = 0; i < locations.length; i++) {
+            if (locations[i] == cask) {
+                locations[i] = null;
             }
         }
     }
 
     public boolean isFull() {
-        for (Cask cask : lokationer) {
+        for (Cask cask : locations) {
             if (cask == null) {
                 return false;
             }
@@ -67,7 +65,7 @@ public class Warehouse {
 
     @Override
     public String toString() {
-        return "Warehouse: " + adresse + ", m2: " + m2;
+        return "Warehouse: " + address + ", m2: " + m2;
     }
 
 }

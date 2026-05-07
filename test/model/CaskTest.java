@@ -134,7 +134,7 @@ public class CaskTest {
     }
     
     @Test
-    void TC8_tabDistillate_happyPath_proportionalReduction() {
+    void TC8_tapDistillate_happyPath_proportionalReduction() {
         // Arrange
         // Add distillates to the cask: 100L of distillate1, 200L of distillate2. Total = 300L
         cask.addDistillate(distillate1, 100);
@@ -142,28 +142,28 @@ public class CaskTest {
         Integer litersToTap = 30; // Tap 30 liters
         
         // Act
-        cask.tabDistillate(litersToTap);
+        cask.tapDistillate(litersToTap);
         
         // Assert
         assertEquals(270, cask.getTotalCurrentLiters());
     }
     
     @Test
-    void TC9_tabDistillate_edgeCase_tapAllLiters() {
+    void TC9_tapDistillate_edgeCase_tapAllLiters() {
         // Arrange
         cask.addDistillate(distillate1, 100);
         cask.addDistillate(distillate2, 200);
         Integer litersToTap = 300; // Tap all liters
         
         // Act
-        cask.tabDistillate(litersToTap);
+        cask.tapDistillate(litersToTap);
         
         // Assert
         assertEquals(0, cask.getTotalCurrentLiters());
     }
     
     @Test
-    void TC10_tabDistillate_error_zeroLiters() {
+    void TC10_tapDistillate_error_zeroLiters() {
         // Arrange
         cask.addDistillate(distillate1, 100);
         Integer litersToTap = 0;
@@ -171,13 +171,13 @@ public class CaskTest {
         
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {
-            cask.tabDistillate(litersToTap);
+            cask.tapDistillate(litersToTap);
         });
         assertEquals(initialLiters, cask.getTotalCurrentLiters());
     }
     
     @Test
-    void TC11_tabDistillate_error_negativeLiters() {
+    void TC11_tapDistillate_error_negativeLiters() {
         // Arrange
         cask.addDistillate(distillate1, 100);
         Integer litersToTap = -50;
@@ -185,13 +185,13 @@ public class CaskTest {
         
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {
-            cask.tabDistillate(litersToTap);
+            cask.tapDistillate(litersToTap);
         });
         assertEquals(initialLiters, cask.getTotalCurrentLiters());
     }
     
     @Test
-    void TC12_tabDistillate_error_tapMoreThanAvailable() {
+    void TC12_tapDistillate_error_tapMoreThanAvailable() {
         // Arrange
         cask.addDistillate(distillate1, 100);
         cask.addDistillate(distillate2, 200);
@@ -200,7 +200,7 @@ public class CaskTest {
         
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {
-            cask.tabDistillate(litersToTap);
+            cask.tapDistillate(litersToTap);
         });
         assertEquals(initialLiters, cask.getTotalCurrentLiters());
     }

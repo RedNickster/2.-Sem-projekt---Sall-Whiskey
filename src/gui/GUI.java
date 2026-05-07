@@ -10,13 +10,14 @@ import javafx.stage.Stage;
 
 public class GUI extends Application {
 
-    private final Controller controller = new Controller();
+    private final Controller controller = App.getController();
 
     private CaskPane caskPane;
     private DistillationCreatePane distillationCreatePane;
     private DistillationEndPane distillationEndPane;
     private FillCaskPane fillCaskPane;
-
+    private WarehousePane warehousePane;
+    private WarehouseTapPane warehouseTapPane;
 
     public void start(Stage stage) {
         stage.setTitle("Sall Whiskey");
@@ -32,13 +33,12 @@ public class GUI extends Application {
         Button btnCreateDistillation = new Button("Create distillation");
         Button btnEndDistillation = new Button("End distillation");
         Button btnFillCask = new Button("Fill cask");
-        Button btnUdflugtsOversigt = new Button("5");
-        Button btnHotelOversigt = new Button("6");
-        Button btnSøgDeltager = new Button("7");
-        Button btnKonfDeltagere = new Button("8");
+        Button btnWarehouse = new Button("Warehouse");
+        Button btnWarehouseTao = new Button("WarehouseTap");
 
-        menu.getChildren().addAll(btnCasks, btnCreateDistillation, btnEndDistillation, btnFillCask,
-                btnUdflugtsOversigt, btnHotelOversigt, btnSøgDeltager, btnKonfDeltagere);
+        // TODO sætte knapperne i toppen
+        menu.getChildren().addAll(btnCasks, btnCreateDistillation, btnEndDistillation, btnFillCask, btnWarehouse, btnWarehouseTao
+                );
         borderPane.setLeft(menu);
 
         // Panes
@@ -46,7 +46,8 @@ public class GUI extends Application {
         distillationCreatePane = new DistillationCreatePane(controller);
         distillationEndPane = new DistillationEndPane(controller);
         fillCaskPane = new FillCaskPane(controller);
-
+        warehousePane = new WarehousePane(controller);
+        warehouseTapPane = new WarehouseTapPane(controller);
 
         // Default view
         borderPane.setCenter(caskPane);
@@ -56,10 +57,8 @@ public class GUI extends Application {
         btnCreateDistillation.setOnAction(e -> { distillationCreatePane.refresh(); borderPane.setCenter(distillationCreatePane); });
         btnEndDistillation.setOnAction(e -> { distillationEndPane.refresh(); borderPane.setCenter(distillationEndPane); });
         btnFillCask.setOnAction(e -> { fillCaskPane.refresh(); borderPane.setCenter(fillCaskPane); });
-//        btnUdflugtsOversigt.setOnAction(e -> { udflugtOversigtPane.refresh(); borderPane.setCenter(udflugtOversigtPane); });
-//        btnHotelOversigt.setOnAction(e -> { hotelOversigtPane.refresh(); borderPane.setCenter(hotelOversigtPane); });
-//        btnSøgDeltager.setOnAction(e -> { participantSearchPane.refresh(); borderPane.setCenter(participantSearchPane); });
-//        btnKonfDeltagere.setOnAction(e -> { conferenceParticipantsPane.refresh(); borderPane.setCenter(conferenceParticipantsPane); });
+        btnWarehouse.setOnAction(e -> {warehousePane.refresh(); borderPane.setCenter(warehousePane);});
+        btnWarehouseTao.setOnAction(e -> {warehouseTapPane.refresh(); borderPane.setCenter(warehouseTapPane);});
 
         Scene scene = new Scene(borderPane, 1000, 600);
         stage.setScene(scene);
