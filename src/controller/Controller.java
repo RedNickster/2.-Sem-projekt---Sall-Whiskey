@@ -39,11 +39,11 @@ public class Controller {
      * @param id
      * @param startDate
      * @param employee
-     * @param commment
+     * @param comment
      * @return
      */
-    public Distillation createDistillation(int id, LocalDate startDate, String employee, String commment) {
-        Distillation temp = new Distillation(id, startDate, employee, commment);
+    public Distillation createDistillation(int id, LocalDate startDate, String employee, String comment) {
+        Distillation temp = new Distillation(id, startDate, employee, comment);
         storage.addDistillation(temp);
         return temp;
     }
@@ -53,6 +53,7 @@ public class Controller {
         storage.addDistillation(temp);
         distillate.addDistillation(temp);
         return temp;
+    }
 
     /**
      * Metode som sætter status på distillation til "First Distillation Data Added" så første distillation er færdig.

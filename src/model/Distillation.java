@@ -14,14 +14,14 @@ public class Distillation {
     private String employee;
     private String status;
     
-    public Distillation(int id, LocalDate startDate, String employee, String commment) {
+    public Distillation(int id, LocalDate startDate, String employee, String comment) {
         this.id = id;
         this.startDate = startDate;
         this.employee = employee;
         this.status = "Created";
 
-        if (commment != null && !commment.isEmpty()) {
-            this.comments.add(commment);
+        if (comment != null && !comment.isEmpty()) {
+            this.comments.add(comment);
         }
     }
     
