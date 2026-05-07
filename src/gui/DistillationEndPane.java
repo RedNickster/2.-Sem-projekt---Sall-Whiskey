@@ -47,7 +47,7 @@ public class DistillationEndPane extends GridPane{
         // Center
         VBox centerSection = new VBox(5);
         centerSection.getChildren().addAll(
-                new Label("Distillations"),
+                new Label("Active distillations"),
                 new Separator(),
                 lvwDistillations
         );

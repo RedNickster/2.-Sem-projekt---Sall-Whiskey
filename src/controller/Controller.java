@@ -61,7 +61,15 @@ public class Controller {
 
     public void pourDistillateIntoCask(Distillate distillate, int amount, Cask cask) {
         if (cask != null && distillate != null && amount > 0) {
-            cask.addDistillate(distillate, amount);
+            if (amount > distillate.getAvailableVolume()) {
+                throw new IllegalArgumentException("Not enough volume in distillate");
+            }
+            try {
+                cask.addDistillate(distillate, amount);
+                distillate.subtractVolume(amount);
+            } catch (IllegalArgumentException e) {
+                throw e;
+            }
         }
     }
 

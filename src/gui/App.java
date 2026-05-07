@@ -23,11 +23,11 @@ public class App {
     
     private static void initContent(){
         // Distillates
-        controller.createDistillate(GrainVariety.EVERGREEN, "MaltBatch1");
+        var de1 = controller.createDistillate(GrainVariety.EVERGREEN, "MaltBatch1");
         controller.createDistillate(GrainVariety.STAIRWAY, "MaltBatch2");
 
         // Distillations
-        var d1 = controller.createDistillation(1, LocalDate.now().minusDays(10), "Employee1", "Comment1");
+        var d1 = controller.createDistillationAndAddToDistillate(1, LocalDate.now().minusDays(10), "Employee1", "Comment1", de1);
         controller.createDistillation(2, LocalDate.now().minusDays(5), "Employee2", "Comment2");
         controller.endDistillation(d1, LocalDate.now(), 50.0, 45.0, "Finished distillation");
 
