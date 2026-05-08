@@ -100,7 +100,7 @@ public class DistillationEndPane extends GridPane{
 
             controller.endDistillation(selectedDistillation,endDate,liquidAmount,alcoholPercent,comment);
 
-            AppAlerts.showInformation("Success", "Ended distillation #" + selectedDistillation.getId());
+            AppAlerts.showInformation("Success", "Ended distillation #" + selectedDistillation.getNewMakeNumber());
         }
         refresh();
 

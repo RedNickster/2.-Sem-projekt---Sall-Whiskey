@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Distillation {
-    private int id;
+    private int newMakeNumber;
     private LocalDate startDate;
     private LocalDate endDate;
     private double liquidAmountAtEnd;
@@ -14,8 +14,8 @@ public class Distillation {
     private String employee;
     private String status;
     
-    public Distillation(int id, LocalDate startDate, String employee, String comment) {
-        this.id = id;
+    public Distillation(int newMakeNumber, LocalDate startDate, String employee, String comment) {
+        this.newMakeNumber = newMakeNumber;
         this.startDate = startDate;
         this.employee = employee;
         this.status = "Created";
@@ -25,8 +25,8 @@ public class Distillation {
         }
     }
     
-    public Distillation(int id, LocalDate startDate, String employee) {
-        this.id = id;
+    public Distillation(int newMakeNumber, LocalDate startDate, String employee) {
+        this.newMakeNumber = newMakeNumber;
         this.startDate = startDate;
         this.employee = employee;
         this.status = "Created";
@@ -63,8 +63,8 @@ public class Distillation {
     }
 
     // Getters
-    public int getId() {
-        return id;
+    public int getNewMakeNumber() {
+        return newMakeNumber;
     }
     public LocalDate getStartDate() {
         return startDate;
@@ -94,6 +94,6 @@ public class Distillation {
 
     @Override
     public String toString() {
-        return "Distillation #"+ id;
+        return "Distillation #"+ newMakeNumber;
     }
 }

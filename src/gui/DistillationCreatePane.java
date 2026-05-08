@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
-import java.util.Locale;
 
 public class DistillationCreatePane extends GridPane {
 
@@ -131,7 +130,7 @@ public class DistillationCreatePane extends GridPane {
                 controller.createDistillationAndAddToDistillate(id, startDate, employee, comment, selectedDistillate);
 
                 AppAlerts.showInformation("Success", "Created distillation #" + id +
-                        " and added it to distillate #" + selectedDistillate.getNewMakeNumber());
+                        " and added it to distillate #" + selectedDistillate.getId());
             }
             refresh();
 
