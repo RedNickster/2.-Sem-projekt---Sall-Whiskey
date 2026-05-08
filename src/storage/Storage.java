@@ -9,14 +9,18 @@ import java.util.*;
 
 public class Storage {
 
-    private final List<Cask> casks = new ArrayList<>();
-    private final List<Distillate> distillates = new ArrayList<>();
-    private final List<Warehouse> warehouses = new ArrayList<>();
-    private final List<Distillation> distillations = new ArrayList<>();
+    private final List<Cask> casks;
+    private final List<Distillate> distillates;
+    private final List<Warehouse> warehouses;
+    private final List<Distillation> distillations;
 
 
 
     public Storage() {
+        this.casks = new ArrayList<>();
+        this.distillates = new ArrayList<>();
+        this.warehouses = new ArrayList<>();
+        this.distillations = new ArrayList<>();
     }
 
 
@@ -49,7 +53,7 @@ public class Storage {
         return new ArrayList<>(this.distillates);
     }
 
-    public int getDistillationCount() {
+    public int getDistillationsInDistillateCount() {
         int count = 0;
         for (Distillate distillate : distillates) {
             for (Distillation d : distillate.getDistillations()) {

@@ -36,6 +36,8 @@ public class Controller {
 
     /**
      * Metode som creater en ny Distillation, som ikke er destilleret endnu.
+     *
+     * BRUGES IKKE LÆNGERE, UDGÅET I ITERATION 4
      * @param id
      * @param startDate
      * @param employee
@@ -57,6 +59,8 @@ public class Controller {
 
     /**
      * Metode som sætter status på distillation til "First Distillation Data Added" så første distillation er færdig.
+     *
+     * BRUGES IKKE LÆNGERE, UDGÅET I ITERATION 4
      * @param distillation
      */
     public void registerFirstDistillation(Distillation distillation) {
@@ -67,6 +71,8 @@ public class Controller {
 
     /**
      * Metode som sætter status på distillation til "Second Distillation Data Added" så første distillation er færdig.
+     *
+     * BRUGES IKKE LÆNGERE, UDGÅET I ITERATION 4
      * @param distillation
      */
     public void registerSecondDistillation(Distillation distillation) {
@@ -130,7 +136,7 @@ public class Controller {
     }
 
 
-    public void addComment(Distillation distillation, String comment) {
+    public void addCommentToDistillation(Distillation distillation, String comment) {
         if (distillation != null && comment != null) {
             distillation.addComment(comment);
         }

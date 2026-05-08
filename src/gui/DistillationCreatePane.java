@@ -126,7 +126,7 @@ public class DistillationCreatePane extends GridPane {
                     "Are you sure you want to start a distillation?");
 
             if (confirm) {
-                int id = controller.getStorage().getDistillationCount() + 1;
+                int id = controller.getStorage().getDistillationsInDistillateCount() + 1;
                 controller.createDistillationAndAddToDistillate(id, startDate, employee, comment, selectedDistillate);
 
                 AppAlerts.showInformation("Success", "Created distillation #" + id +

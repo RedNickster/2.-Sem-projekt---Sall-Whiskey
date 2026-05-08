@@ -26,7 +26,7 @@ public class WarehouseTest {
         warehouse = new Warehouse(address, m2, capacity);
 
         // Basic data for Casks
-        List<CaskLiquids> previousLiquids = new ArrayList<>(Arrays.asList(CaskLiquids.BURBON));
+        List<CaskLiquids> previousLiquids = new ArrayList<>(Arrays.asList(CaskLiquids.BOURBON));
         cask1 = new Cask(1, 500, previousLiquids, "USA", "Supplier A");
         cask2 = new Cask(2, 600, previousLiquids, "Scotland", "Supplier B");
         cask3 = new Cask(3, 700, previousLiquids, "Ireland", "Supplier C");

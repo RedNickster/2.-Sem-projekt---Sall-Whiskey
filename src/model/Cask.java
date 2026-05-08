@@ -22,14 +22,6 @@ public class Cask {
         this.distillates = new HashMap<>();
     }
     
-    private int containsLiters() {
-        int count = 0;
-        for (Integer liters : distillates.values()) {
-            count += liters;
-        }
-        return count;
-    }
-    
     public void addDistillate(Distillate distillate, Integer literToAdd) {
         if (literToAdd == null || distillate == null || literToAdd <= 0) {
             return;
@@ -70,6 +62,14 @@ public class Cask {
             updatedDistillates.put(distillate, newLiters);
         }
         this.distillates = updatedDistillates;
+    }
+    
+    private int containsLiters() {
+        int count = 0;
+        for (Integer liters : distillates.values()) {
+            count += liters;
+        }
+        return count;
     }
     
     public int getId() {

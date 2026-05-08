@@ -20,7 +20,7 @@ public class CaskTest {
         // Basic data for Cask
         int id = 1;
         int litersCapacity = 1000;
-        List<CaskLiquids> previousLiquids = new ArrayList<>(Arrays.asList(CaskLiquids.BURBON, CaskLiquids.SHERRY));
+        List<CaskLiquids> previousLiquids = new ArrayList<>(Arrays.asList(CaskLiquids.BOURBON, CaskLiquids.SHERRY));
         String countryOfOrigin = "USA";
         String supplier = "Supplier A";
         cask = new Cask(id, litersCapacity, previousLiquids, countryOfOrigin, supplier);

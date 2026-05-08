@@ -48,7 +48,7 @@ public class IntegrationTest {
     void TC9_UseCase3_AddDistillateToCaskAndStoreInWarehouseThenTap() {
         // Arrange
         Warehouse warehouse = new Warehouse("Warehouse 1, Main St", 100.0, 2);
-        Cask cask1 = new Cask(1, 500, new ArrayList<>(Arrays.asList(CaskLiquids.BURBON)), "USA", "Supplier A");
+        Cask cask1 = new Cask(1, 500, new ArrayList<>(Arrays.asList(CaskLiquids.BOURBON)), "USA", "Supplier A");
         Distillate distillate1 = new Distillate(1, GrainVariety.EVERGREEN, "Malt Batch");
         
         Integer litersToAdd = 300;

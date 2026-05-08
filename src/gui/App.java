@@ -28,14 +28,14 @@ public class App {
 
         // Distillations
         var d1 = controller.createDistillationAndAddToDistillate(1, LocalDate.now().minusDays(10), "Employee1", "Comment1", de1);
-        controller.createDistillation(2, LocalDate.now().minusDays(5), "Employee2", "Comment2");
+        controller.createDistillationAndAddToDistillate(2, LocalDate.now().minusDays(5), "Employee2", "Comment2", de1);
         controller.endDistillation(d1, LocalDate.now(), 50.0, 45.0, "Finished distillation");
 
         // Casks
         controller.createCask(1, 100, new ArrayList<>(), "Denmark", "Supplier1");
         
         ArrayList<CaskLiquids> usedLiquids = new ArrayList<>();
-        usedLiquids.add(CaskLiquids.BURBON);
+        usedLiquids.add(CaskLiquids.BOURBON);
         controller.createCask(2, 200, usedLiquids, "Scotland", "Supplier2");
         
         // Warehouse
