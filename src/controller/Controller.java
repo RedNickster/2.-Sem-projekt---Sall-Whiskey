@@ -65,7 +65,7 @@ public class Controller {
      */
     public void registerFirstDistillation(Distillation distillation) {
         if (distillation != null) {
-            distillation.setStatus("First Distillation Data Added");
+            // distillation.setStatus("First Distillation Data Added");
         }
     }
 
@@ -77,7 +77,7 @@ public class Controller {
      */
     public void registerSecondDistillation(Distillation distillation) {
         if (distillation != null) {
-            distillation.setStatus("Second distillation Data Added");
+            // distillation.setStatus("Second distillation Data Added");
         }
     }
 
