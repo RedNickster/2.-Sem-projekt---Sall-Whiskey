@@ -24,7 +24,7 @@ public class Cask {
     
     public void addDistillate(Distillate distillate, Integer literToAdd) {
         if (literToAdd == null || distillate == null || literToAdd <= 0) {
-            return;
+            throw new IllegalArgumentException("Data is invalid");
         }
         if (containsLiters() + literToAdd > liters) {
             throw new IllegalArgumentException("There is not room for that amount of disstillate");
