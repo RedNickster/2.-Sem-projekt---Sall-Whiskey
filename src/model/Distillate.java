@@ -5,18 +5,19 @@ import java.util.List;
 
 public class Distillate {
     
-    private int newMakeNumber;
+    private int id;
     private List<Distillation> distillations;
-    private GrainVariety grainVariety;
+    private GrainVariety grainVarietyEnum;
     private String maltBatch;
     private boolean isSmoked;
-    private double volumeInCasks = 0;
+    private double volumeInCasks;
 
-    public Distillate(int newMakeNumber,  GrainVariety grainVariety, String maltBatch) {
-        this.newMakeNumber = newMakeNumber;
+    public Distillate(int id, GrainVariety grainVarietyEnum, String maltBatch) {
+        this.id = id;
         this.distillations = new ArrayList<>();
-        this.grainVariety = grainVariety;
+        this.grainVarietyEnum = grainVarietyEnum;
         this.maltBatch = maltBatch;
+        this.volumeInCasks = 0;
     }
 
     public void addDistillation(Distillation distillation) {
@@ -25,7 +26,7 @@ public class Distillate {
         }
     }
 
-    public double getTotalVolume(){
+    private double getTotalVolume(){
         double total = 0;
         for (Distillation distillation : distillations) {
             total += distillation.getLiquidAmountAtEnd();
@@ -49,12 +50,12 @@ public class Distillate {
         return new ArrayList<>(distillations);
     }
 
-    public int getNewMakeNumber() {
-        return newMakeNumber;
+    public int getId() {
+        return id;
     }
 
     @Override
     public String toString() {
-        return "New Make #" + newMakeNumber + " (Avail: " + getAvailableVolume() + "L / Total: " + getTotalVolume() + "L) " + grainVariety + " " + maltBatch;
+        return "New Make #" + id + " (Avail: " + getAvailableVolume() + "L / Total: " + getTotalVolume() + "L) " + grainVarietyEnum + " " + maltBatch;
     }
 }

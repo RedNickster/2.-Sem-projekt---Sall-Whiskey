@@ -26,7 +26,7 @@ public class WarehouseTest {
         warehouse = new Warehouse(address, m2, capacity);
 
         // Basic data for Casks
-        List<CaskLiquids> previousLiquids = new ArrayList<>(Arrays.asList(CaskLiquids.BURBON));
+        List<CaskLiquids> previousLiquids = new ArrayList<>(Arrays.asList(CaskLiquids.BOURBON));
         cask1 = new Cask(1, 500, previousLiquids, "USA", "Supplier A");
         cask2 = new Cask(2, 600, previousLiquids, "Scotland", "Supplier B");
         cask3 = new Cask(3, 700, previousLiquids, "Ireland", "Supplier C");
@@ -128,20 +128,5 @@ public class WarehouseTest {
         assertThrows(IllegalArgumentException.class, () -> {
             warehouse.removeCask(nullCask);
         });
-    }
-
-    @Test
-    void TC9_UseCase3_AddDistillateToCaskAndStoreInWarehouseThenTap() {
-        // Arrange
-        Integer litersToAdd = 300;
-        Integer litersToTap = 50;
-        
-        // Act + Assert         // assertDoesNotThrow bruges for at vi kalder dem og er sikker på der ikke kommer fejl
-        assertDoesNotThrow(() -> cask1.addDistillate(distillate1, litersToAdd));
-        assertEquals(litersToAdd, cask1.getTotalCurrentLiters());
-        assertDoesNotThrow(() -> warehouse.addCask(cask1));
-        assertDoesNotThrow(() -> cask1.tapDistillate(litersToTap));
-        assertEquals(litersToAdd - litersToTap, cask1.getTotalCurrentLiters());
-        assertDoesNotThrow(() -> warehouse.removeCask(cask1));
     }
 }

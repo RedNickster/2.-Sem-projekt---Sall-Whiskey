@@ -5,31 +5,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Distillation {
-    private int id;
+    private int newMakeNumber;
     private LocalDate startDate;
     private LocalDate endDate;
     private double liquidAmountAtEnd;
     private double alcoholPercentage;
-    private List<String> comments = new ArrayList<>();
+    private List<String> comments;
     private String employee;
-    private String status;
     
-    public Distillation(int id, LocalDate startDate, String employee, String comment) {
-        this.id = id;
+    public Distillation(int newMakeNumber, LocalDate startDate, String employee, String comment) {
+        this.newMakeNumber = newMakeNumber;
         this.startDate = startDate;
         this.employee = employee;
-        this.status = "Created";
+        this.comments = new ArrayList<>();
 
         if (comment != null && !comment.isEmpty()) {
             this.comments.add(comment);
         }
     }
     
-    public Distillation(int id, LocalDate startDate, String employee) {
-        this.id = id;
+    public Distillation(int newMakeNumber, LocalDate startDate, String employee) {
+        this.newMakeNumber = newMakeNumber;
         this.startDate = startDate;
         this.employee = employee;
-        this.status = "Created";
     }
     
     
@@ -58,13 +56,12 @@ public class Distillation {
         this.endDate = endDate;
         this.liquidAmountAtEnd = liquidAmount;
         this.alcoholPercentage = alcoholPercentage;
-        this.status = "Finalized";
         addComment(comment);
     }
 
     // Getters
-    public int getId() {
-        return id;
+    public int getNewMakeNumber() {
+        return newMakeNumber;
     }
     public LocalDate getStartDate() {
         return startDate;
@@ -84,16 +81,9 @@ public class Distillation {
     public String getEmployee() {
         return employee;
     }
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
+    
     @Override
     public String toString() {
-        return "Distillation #"+ id;
+        return "Distillation #"+ newMakeNumber;
     }
 }

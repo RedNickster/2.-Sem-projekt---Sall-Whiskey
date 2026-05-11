@@ -9,8 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
-import java.time.LocalDate;
-
 public class FillCaskPane extends GridPane {
 
     private final Controller controller;
@@ -78,7 +76,7 @@ public class FillCaskPane extends GridPane {
             controller.pourDistillateIntoCask(selectedDistillate,liquidAmount,selectedCask);
 
             AppAlerts.showInformation("Success", "Filled cask #" + selectedCask.getId() + " with "
-                    + liquidAmount + " liters from New Make #" + selectedDistillate.getNewMakeNumber());
+                    + liquidAmount + " liters from New Make #" + selectedDistillate.getId());
         }
         refresh();
     }
