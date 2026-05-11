@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Cask {
     private String countryOfOrigin;
     private String supplier;
     private Map<Distillate, Integer> distillates;
+    private List<CaskControl> caskControls;
     
     public Cask(int id, int liters, List<CaskLiquids> previousLiquids, String countryOfOrigin, String supplier) {
         this.id = id;
@@ -20,6 +22,7 @@ public class Cask {
         this.countryOfOrigin = countryOfOrigin;
         this.supplier = supplier;
         this.distillates = new HashMap<>();
+        this.caskControls = new ArrayList<>();
     }
     
     public void addDistillate(Distillate distillate, Integer literToAdd) {
@@ -70,6 +73,12 @@ public class Cask {
             count += liters;
         }
         return count;
+    }
+    
+    private CaskControl createCaskControl(LocalDate date, double alcoholPercentage, String tasteComment) {
+        CaskControl temp = new CaskControl(date, alcoholPercentage, tasteComment);
+        this.caskControls.add(temp);
+        return temp;
     }
     
     public int getId() {
