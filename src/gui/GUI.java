@@ -18,6 +18,7 @@ public class GUI extends Application {
     private FillCaskPane fillCaskPane;
     private WarehousePane warehousePane;
     private WarehouseTapPane warehouseTapPane;
+    private DefaultPane defaultPane;
 
     public void start(Stage stage) {
         stage.setTitle("Sall Whiskey");
@@ -29,19 +30,14 @@ public class GUI extends Application {
         VBox menu = new VBox(8);
         menu.setPadding(new Insets(10));
 
-        Button btnCasks = new Button("Casks");
-        Button btnCreateDistillation = new Button("Create distillation");
-        Button btnEndDistillation = new Button("End distillation");
-        Button btnFillCask = new Button("Fill cask");
-        Button btnWarehouse = new Button("Warehouse");
-        Button btnWarehouseTao = new Button("WarehouseTap");
+        Button btnHome = new Button("Dashboard");
+        btnHome.setStyle("-fx-background-color: #d3d3d3; -fx-font-weight: bold;"); // Visual distinction
 
-        // TODO sætte knapperne i toppen
-        menu.getChildren().addAll(btnCasks, btnCreateDistillation, btnEndDistillation, btnFillCask, btnWarehouse, btnWarehouseTao
-                );
+        menu.getChildren().add(0, btnHome);
         borderPane.setLeft(menu);
 
         // Panes
+        defaultPane = new DefaultPane();
         caskPane = new CaskPane(controller);
         distillationCreatePane = new DistillationCreatePane(controller);
         distillationEndPane = new DistillationEndPane(controller);
@@ -50,18 +46,23 @@ public class GUI extends Application {
         warehouseTapPane = new WarehouseTapPane(controller);
 
         // Default view
-        borderPane.setCenter(caskPane);
+        borderPane.setCenter(defaultPane);
 
         // menu knapper
-        btnCasks.setOnAction(e -> { caskPane.refresh(); borderPane.setCenter(caskPane); });
-        btnCreateDistillation.setOnAction(e -> { distillationCreatePane.refresh(); borderPane.setCenter(distillationCreatePane); });
-        btnEndDistillation.setOnAction(e -> { distillationEndPane.refresh(); borderPane.setCenter(distillationEndPane); });
-        btnFillCask.setOnAction(e -> { fillCaskPane.refresh(); borderPane.setCenter(fillCaskPane); });
-        btnWarehouse.setOnAction(e -> {warehousePane.refresh(); borderPane.setCenter(warehousePane);});
-        btnWarehouseTao.setOnAction(e -> {warehouseTapPane.refresh(); borderPane.setCenter(warehouseTapPane);});
+        btnHome.setOnAction(e -> borderPane.setCenter(defaultPane));
+        defaultPane.setActions(
+                () -> { caskPane.refresh(); borderPane.setCenter(caskPane); },
+                () -> { distillationCreatePane.refresh(); borderPane.setCenter(distillationCreatePane); },
+                () -> { distillationEndPane.refresh(); borderPane.setCenter(distillationEndPane); },
+                () -> { fillCaskPane.refresh(); borderPane.setCenter(fillCaskPane); },
+                () -> { warehousePane.refresh(); borderPane.setCenter(warehousePane); },
+                () -> { warehouseTapPane.refresh(); borderPane.setCenter(warehouseTapPane); }
+        );
 
         Scene scene = new Scene(borderPane, 1000, 600);
         stage.setScene(scene);
         stage.show();
+
+
     }
 }
