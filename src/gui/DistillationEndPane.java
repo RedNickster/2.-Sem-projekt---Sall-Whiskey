@@ -82,12 +82,13 @@ public class DistillationEndPane extends GridPane{
         LocalDate endDate = dtpEndDate.getValue();
         String liquidAmountString = txfLiquidAmount.getText().trim();
         String alcoholPercentString = txfAlchoholPercent.getText().trim();
+        double alcoholPercent = Double.parseDouble(alcoholPercentString);
         String comment = txfComment.getText().trim();
 
 
         if (selectedDistillation == null || endDate == null|| liquidAmountString.isEmpty() ||
-                        alcoholPercentString.isEmpty() || comment.isEmpty()) {
-            AppAlerts.showError("Missing information", "Please fill out all information");
+                        alcoholPercentString.isEmpty() || comment.isEmpty() || alcoholPercent > 100) {
+            AppAlerts.showError("Missing information", "Please fill out all information properly");
             return;
         }
 
@@ -96,7 +97,6 @@ public class DistillationEndPane extends GridPane{
 
         if (confirm) {
             int liquidAmount = Integer.parseInt(liquidAmountString);
-            double alcoholPercent = Double.parseDouble(alcoholPercentString);
 
             controller.endDistillation(selectedDistillation,endDate,liquidAmount,alcoholPercent,comment);
 
