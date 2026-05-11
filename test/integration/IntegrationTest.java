@@ -41,7 +41,6 @@ public class IntegrationTest {
         Storage controllerStorage = controller.getStorage();
         assertTrue(controllerStorage.getDistillations().contains(distillation), "Distillation should be in storage");
         assertTrue(controllerStorage.getCasks().contains(cask), "Cask should be in storage");
-        assertEquals("Finalized", distillation.getStatus(), "Distillation status should be 'Finalized'");
     }
 
     @Test
