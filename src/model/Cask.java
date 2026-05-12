@@ -15,6 +15,7 @@ public class Cask {
     private String countryOfOrigin;
     private String supplier;
     private Map<Distillate, Integer> distillates;
+    private List<Liquid> liquids;
     private List<CaskControl> caskControls;
     
     public Cask(int id, int liters, List<CaskLiquids> previousLiquids, String countryOfOrigin, String supplier) {
@@ -27,18 +28,23 @@ public class Cask {
         this.caskControls = new ArrayList<>();
     }
     
-    public void addDistillate(Distillate distillate, Integer literToAdd) {
-        if (literToAdd == null || distillate == null || literToAdd <= 0) {
+    public void addDistillate(Distillate distillate, double literToAdd) {
+        if (distillate == null || literToAdd <= 0) {
             throw new IllegalArgumentException("Data is invalid");
         }
         if (containsLiters() + literToAdd > liters) {
             throw new IllegalArgumentException("There is not room for that amount of disstillate");
         }
         
-        if (distillates.containsKey(distillate)) {
-            distillates.compute(distillate, (_, currentLiters) -> currentLiters + literToAdd);
+        if (liquids.contains(distillate)) {
+            // TODO - Finder liquid med distillate, og tilføjer mængde
+            for (Liquid liquid : liquids) {
+                if (liquid.getDistillate().equals(distillate)) {
+                    liquid.addAmountOfDistillateInCask(literToAdd);
+                }
+            }
         } else {
-            distillates.put(distillate, literToAdd);
+            this.liquids.add(new Liquid(LocalDate.now(), literToAdd, this, distillate));
         }
     }
     
