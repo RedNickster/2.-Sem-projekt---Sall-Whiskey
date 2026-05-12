@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Warehouse {
 
     private final String address;
@@ -61,6 +64,16 @@ public class Warehouse {
     
     public boolean isFull() {
         return isFull;
+    }
+
+    public List<Cask> getCasks() {
+        List<Cask> actualCasks = new ArrayList<>();
+        for (Cask c : locations) {
+            if (c != null) {
+                actualCasks.add(c);
+            }
+        }
+        return  actualCasks;
     }
     
     @Override

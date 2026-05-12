@@ -20,6 +20,8 @@ public class Cask {
         this.previousLiquids = (previousLiquids != null) ? new ArrayList<>(previousLiquids) : new ArrayList<>();
         this.countryOfOrigin = countryOfOrigin;
         this.supplier = supplier;
+
+        this.liquids = new ArrayList<>();
     }
     
     public void addDistillate(Distillate distillate, double literToAdd) {
