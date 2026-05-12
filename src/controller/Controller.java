@@ -86,7 +86,7 @@ public class Controller {
 
     public Distillate createDistillate(GrainVariety grainVariety, String maltBatch) {
         int newMakeNumber = storage.getDistillates().size() + 1;
-        
+
         Distillate temp = new Distillate(newMakeNumber, grainVariety, maltBatch);
         storage.addDistillate(temp);
         return temp;
@@ -157,5 +157,22 @@ public class Controller {
 
     public List<Warehouse> getWarehouses() {
         return storage.getWarehouses();
+    }
+
+    public void controlCask(Cask cask, LocalDate date, double alcoholPercent, String tasteComment) {
+        cask.checkCask(date, alcoholPercent, tasteComment);
+    }
+
+    public List<Cask> getCasksInWarehouse(Warehouse warehouse) {
+        return (warehouse != null) ? warehouse.getCasks() : new ArrayList<>();
+    }
+
+    public List<Cask> getAvailableCasks() {
+        List<Cask> available = new ArrayList<>(storage.getCasks());
+
+        for (Warehouse w : storage.getWarehouses()) {
+            available.removeAll(w.getCasks());
+        }
+        return available;
     }
 }

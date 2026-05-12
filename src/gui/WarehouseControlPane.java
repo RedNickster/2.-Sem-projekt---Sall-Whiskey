@@ -51,7 +51,9 @@ public class WarehouseControlPane extends GridPane {
         );
         this.add(centerSection, 1, 0);
 
-        //TODO listener in lvw for the warehouse
+        lvwWarehouses.getSelectionModel().selectedItemProperty().addListener((obs, oldW, newW) -> {
+            lvwCasksInWarehouse.getItems().setAll(controller.getCasksInWarehouse(newW));
+        });
 
         // Right
         VBox rightSection = new VBox(5);
@@ -75,10 +77,28 @@ public class WarehouseControlPane extends GridPane {
         String tasteComment = txfTasteComment.getText().trim();
 
         //TODO controller metode for controlCask
+        if (selectedCask == null || date == null || alcoholPercentString.isEmpty() || tasteComment.isEmpty()) {
+            AppAlerts.showError("Missing information", "Please fill out all information");
+            return;
+        }
+
+        boolean confirm = AppAlerts.showConfirmation("Confirm controlling cask",
+                "Are you sure you want to control the cask?");
+
+        if (confirm) {
+            double alcoholPercent = Double.parseDouble(alcoholPercentString);
+
+            controller.controlCask(selectedCask, date, alcoholPercent, tasteComment);
+
+            AppAlerts.showInformation("Success", "Cotrolled cask #" + selectedCask.getId());
+        }
+        refresh();
     }
 
     void refresh() {
-        lvwWarehouses.getItems().setAll(controller.getStorage().getWarehouses());
-        //lvwCasksInWarehouse.getItems().clear();
+        lvwWarehouses.getItems().setAll(controller.getWarehouses());
+        datePicker.setValue(null);
+        txfAlcoholpercent.clear();
+        txfTasteComment.clear();
     }
 }

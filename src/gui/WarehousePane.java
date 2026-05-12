@@ -45,6 +45,10 @@ public class WarehousePane extends GridPane {
         );
         this.add(centerSection, 1, 0);
 
+        lvwWarehouses.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            this.updateCasksInWarehouseList(newVal);
+        });
+
         btnRemoveFromWarehouse.setOnAction(event -> this.removeFromWarehouse());
 
         // Right
@@ -105,12 +109,13 @@ public class WarehousePane extends GridPane {
         refresh();
     }
 
+    private void updateCasksInWarehouseList(Warehouse selectedWarehouse) {
+        lvwCasksInWarehouse.getItems().setAll(controller.getCasksInWarehouse(selectedWarehouse));
+    }
 
     void refresh() {
-        lvwWarehouses.getItems().setAll(controller.getStorage().getWarehouses());
-        lvwCasksAvailable.getItems().setAll(controller.getStorage().getCasks());
-        //lvwCasksInWarehouse.getItems().clear();
-        //lvwCasksAvailable.getItems().clear();
+        lvwWarehouses.getItems().setAll(controller.getWarehouses());
+        lvwCasksAvailable.getItems().setAll(controller.getAvailableCasks());
     }
 }
 
