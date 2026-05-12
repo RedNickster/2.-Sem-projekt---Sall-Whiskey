@@ -4,9 +4,7 @@ import model.enums.CaskLiquids;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Cask {
     private int id;
@@ -14,7 +12,6 @@ public class Cask {
     private List<CaskLiquids> previousLiquids;
     private String countryOfOrigin;
     private String supplier;
-    private Map<Distillate, Integer> distillates;
     private List<Liquid> liquids;
     private List<CaskControl> caskControls;
     
@@ -24,7 +21,6 @@ public class Cask {
         this.previousLiquids = (previousLiquids != null) ? new ArrayList<>(previousLiquids) : new ArrayList<>();
         this.countryOfOrigin = countryOfOrigin;
         this.supplier = supplier;
-        this.distillates = new HashMap<>();
         this.caskControls = new ArrayList<>();
     }
     
@@ -37,7 +33,6 @@ public class Cask {
         }
         
         if (liquids.contains(distillate)) {
-            // TODO - Finder liquid med distillate, og tilføjer mængde
             for (Liquid liquid : liquids) {
                 if (liquid.getDistillate().equals(distillate)) {
                     liquid.addAmountOfDistillateInCask(literToAdd);
@@ -57,28 +52,25 @@ public class Cask {
             throw new IllegalArgumentException("Cannot tap more liters than available in the cask. Available: " + total + ", Tapped: " + litersTapped);
         }
 
-        Map<Distillate, Integer> updatedDistillates = new HashMap<>();
-        for (Map.Entry<Distillate, Integer> entry : distillates.entrySet()) {
-            Distillate distillate = entry.getKey();
-            Integer currentLiters = entry.getValue();
+        for (Liquid entry : liquids) {
+            double currentLiters = entry.getAmountOfDistillateInCask();
             
             // Calculate proportional reduction
-            double proportion = (double) currentLiters / total;
-            int litersToRemove = (int) Math.round(proportion * litersTapped);
+            double proportion = currentLiters / total;
+            double litersToRemove = proportion * litersTapped;
             
-            int newLiters = currentLiters - litersToRemove;
+            double newLiters = currentLiters - litersToRemove;
             if (newLiters < 0) {
                 newLiters = 0; // Should not happen if calculations are correct and litersTapped <= total
             }
-            updatedDistillates.put(distillate, newLiters);
+            entry.removeAmountOfDistillateInCask(newLiters);
         }
-        this.distillates = updatedDistillates;
     }
     
     private int containsLiters() {
         int count = 0;
-        for (Integer liters : distillates.values()) {
-            count += liters;
+        for (Liquid entry : liquids) {
+            count += entry.getAmountOfDistillateInCask();
         }
         return count;
     }

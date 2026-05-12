@@ -27,6 +27,10 @@ public class Liquid {
         this.amountOfDistillateInCask += amountToAdd;
     }
     
+    public void removeAmountOfDistillateInCask(Double amountToRemove) {
+        this.amountOfDistillateInCask -= amountToRemove;
+    }
+    
     public void checkLiquid(LocalDate date, double alcoholPercent, String tasteComment) {
         liquidChecks.add(new LiquidCheck(date, alcoholPercent, tasteComment));
     }
@@ -42,5 +46,7 @@ public class Liquid {
         return distillate;
     }
     
-    
+    public Double getAmountOfDistillateInCask() {
+        return amountOfDistillateInCask;
+    }
 }
