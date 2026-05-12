@@ -2,8 +2,8 @@ package gui;
 
 import controller.Controller;
 import javafx.application.Application;
-import model.GrainVariety;
-import model.CaskLiquids;
+import model.enums.GrainVariety;
+import model.enums.CaskLiquids;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

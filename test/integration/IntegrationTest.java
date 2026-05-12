@@ -4,14 +4,13 @@ import controller.Controller;
 import model.Cask;
 import model.Distillation;
 import storage.IStorage;
-import storage.Storage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import model.Warehouse;
 import model.Distillate;
-import model.GrainVariety;
-import model.CaskLiquids;
+import model.enums.GrainVariety;
+import model.enums.CaskLiquids;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

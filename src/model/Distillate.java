@@ -1,19 +1,21 @@
 package model;
 
+import model.enums.GrainVariety;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Distillate {
     
-    private int id;
+    private int inewMakeNumber;
     private List<Distillation> distillations;
     private GrainVariety grainVarietyEnum;
     private String maltBatch;
     private boolean isSmoked;
     private double volumeInCasks;
 
-    public Distillate(int id, GrainVariety grainVarietyEnum, String maltBatch) {
-        this.id = id;
+    public Distillate(int inewMakeNumber, GrainVariety grainVarietyEnum, String maltBatch) {
+        this.inewMakeNumber = inewMakeNumber;
         this.distillations = new ArrayList<>();
         this.grainVarietyEnum = grainVarietyEnum;
         this.maltBatch = maltBatch;
@@ -50,12 +52,12 @@ public class Distillate {
         return new ArrayList<>(distillations);
     }
 
-    public int getId() {
-        return id;
+    public int getInewMakeNumber() {
+        return inewMakeNumber;
     }
 
     @Override
     public String toString() {
-        return "#" + id + " (Avail: " + getAvailableVolume() + "L / Total: " + getTotalVolume() + "L) " + grainVarietyEnum + " " + maltBatch;
+        return "#" + inewMakeNumber + " (Avail: " + getAvailableVolume() + "L / Total: " + getTotalVolume() + "L) " + grainVarietyEnum + " " + maltBatch;
     }
 }

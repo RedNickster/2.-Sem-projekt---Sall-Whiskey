@@ -1,6 +1,8 @@
 package controller;
 
 import model.*;
+import model.enums.CaskLiquids;
+import model.enums.GrainVariety;
 import storage.IStorage;
 import storage.Storage;
 

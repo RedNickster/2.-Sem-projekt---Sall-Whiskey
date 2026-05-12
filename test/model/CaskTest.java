@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.CaskLiquids;
+import model.enums.GrainVariety;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

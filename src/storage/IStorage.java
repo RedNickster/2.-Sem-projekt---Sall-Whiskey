@@ -8,17 +8,16 @@ import model.Warehouse;
 import java.util.List;
 
 public interface IStorage {
-    void addCask(Cask cask);
-    List<Cask> getCasks();
+    
     int getCaskCount();
-
-    void addDistillate(Distillate distillate);
+    List<Cask> getCasks();
     List<Distillate> getDistillates();
-    int getDistillationsInDistillateCount();
-
-    void addWarehouse(Warehouse warehouse);
     List<Warehouse> getWarehouses();
-
-    void addDistillation(Distillation distillation);
+    int getDistillationsInDistillateCount();
+    
     List<Distillation> getDistillations();
+    void addCask(Cask cask);
+    void addDistillate(Distillate distillate);
+    void addWarehouse(Warehouse warehouse);
+    void addDistillation(Distillation distillation);
 }
