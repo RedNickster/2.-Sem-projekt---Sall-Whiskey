@@ -7,15 +7,15 @@ import java.util.List;
 
 public class Distillate {
     
-    private int inewMakeNumber;
+    private int newMakeNumber;
     private List<Distillation> distillations;
     private GrainVariety grainVarietyEnum;
     private String maltBatch;
     private boolean isSmoked;
     private double volumeInCasks;
 
-    public Distillate(int inewMakeNumber, GrainVariety grainVarietyEnum, String maltBatch) {
-        this.inewMakeNumber = inewMakeNumber;
+    public Distillate(int newMakeNumber, GrainVariety grainVarietyEnum, String maltBatch) {
+        this.newMakeNumber = newMakeNumber;
         this.distillations = new ArrayList<>();
         this.grainVarietyEnum = grainVarietyEnum;
         this.maltBatch = maltBatch;
@@ -52,12 +52,12 @@ public class Distillate {
         return new ArrayList<>(distillations);
     }
 
-    public int getInewMakeNumber() {
-        return inewMakeNumber;
+    public int getNewMakeNumber() {
+        return newMakeNumber;
     }
 
     @Override
     public String toString() {
-        return "#" + inewMakeNumber + " (Avail: " + getAvailableVolume() + "L / Total: " + getTotalVolume() + "L) " + grainVarietyEnum + " " + maltBatch;
+        return "#" + newMakeNumber + " (Avail: " + getAvailableVolume() + "L / Total: " + getTotalVolume() + "L) " + grainVarietyEnum + " " + maltBatch;
     }
 }

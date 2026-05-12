@@ -13,11 +13,11 @@ public interface IStorage {
     List<Cask> getCasks();
     List<Distillate> getDistillates();
     List<Warehouse> getWarehouses();
-    int getDistillationsInDistillateCount();
-    
     List<Distillation> getDistillations();
+    
     void addCask(Cask cask);
     void addDistillate(Distillate distillate);
     void addWarehouse(Warehouse warehouse);
     void addDistillation(Distillation distillation);
+    int getDistillationsInDistillateCount();
 }

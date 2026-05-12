@@ -14,8 +14,6 @@ public class Storage implements IStorage {
     private final List<Warehouse> warehouses;
     private final List<Distillation> distillations;
 
-
-
     public Storage() {
         this.casks = new ArrayList<>();
         this.distillates = new ArrayList<>();

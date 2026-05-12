@@ -50,15 +50,15 @@ public class IntegrationTest {
         Cask cask1 = new Cask(1, 500, new ArrayList<>(Arrays.asList(CaskLiquids.BOURBON)), "USA", "Supplier A");
         Distillate distillate1 = new Distillate(1, GrainVariety.EVERGREEN, "Malt Batch");
         
-        Integer litersToAdd = 300;
-        Integer litersToTap = 50;
+        double litersToAdd = 300;
+        double litersToTap = 50;
         
         // Act + Assert
         assertDoesNotThrow(() -> cask1.addDistillate(distillate1, litersToAdd));
-        assertEquals(litersToAdd, cask1.getTotalCurrentLiters());
+        assertEquals(litersToAdd, cask1.containsLiters());
         assertDoesNotThrow(() -> warehouse.addCask(cask1));
         assertDoesNotThrow(() -> cask1.tapDistillate(litersToTap));
-        assertEquals(litersToAdd - litersToTap, cask1.getTotalCurrentLiters());
+        assertEquals(litersToAdd - litersToTap, cask1.containsLiters());
         assertDoesNotThrow(() -> warehouse.removeCask(cask1));
     }
 }

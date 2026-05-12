@@ -8,13 +8,13 @@ public class Liquid {
     
     private boolean isWhisky;
     private LocalDate fillingDate;
-    private Double amountOfDistillateInCask;
+    private double amountOfDistillateInCask;
     
     private Cask cask;
     private Distillate distillate;
     private List<LiquidCheck> liquidChecks;
     
-    public Liquid(LocalDate fillingDate, Double amountOfDistillateInCask, Cask cask, Distillate distillate) {
+    public Liquid(LocalDate fillingDate, double amountOfDistillateInCask, Cask cask, Distillate distillate) {
         this.fillingDate = fillingDate;
         this.amountOfDistillateInCask = amountOfDistillateInCask;
         this.cask = cask;
@@ -23,11 +23,11 @@ public class Liquid {
         this.liquidChecks = new ArrayList<>();
     }
     
-    public void addAmountOfDistillateInCask(Double amountToAdd) {
+    void addAmountOfDistillateInCask(double amountToAdd) {
         this.amountOfDistillateInCask += amountToAdd;
     }
     
-    public void removeAmountOfDistillateInCask(Double amountToRemove) {
+    void removeAmountOfDistillateInCask(double amountToRemove) {
         this.amountOfDistillateInCask -= amountToRemove;
     }
     
@@ -50,11 +50,15 @@ public class Liquid {
         return false;
     }
     
+    public double getAlcoholPercentage() {
+        return liquidChecks.getLast().getAlcoholPercentage();
+    }
+    
     public Distillate getDistillate() {
         return distillate;
     }
     
-    public Double getAmountOfDistillateInCask() {
+    public double getAmountOfDistillateInCask() {
         return amountOfDistillateInCask;
     }
 }

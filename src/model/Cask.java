@@ -20,6 +20,7 @@ public class Cask {
         this.previousLiquids = (previousLiquids != null) ? new ArrayList<>(previousLiquids) : new ArrayList<>();
         this.countryOfOrigin = countryOfOrigin;
         this.supplier = supplier;
+        this.liquids = new ArrayList<>();
     }
     
     public void addDistillate(Distillate distillate, double literToAdd) {
@@ -29,33 +30,30 @@ public class Cask {
         if (containsLiters() + literToAdd > liters) {
             throw new IllegalArgumentException("There is not room for that amount of disstillate");
         }
-        
-        if (liquids.contains(distillate)) {
-            for (Liquid liquid : liquids) {
-                if (liquid.getDistillate().equals(distillate)) {
-                    liquid.addAmountOfDistillateInCask(literToAdd);
-                }
+        Liquid existingLiquid = null;
+        for (Liquid liquid : liquids) {
+            if (liquid.getDistillate().equals(distillate)) {
+                existingLiquid = liquid;
+                break;
             }
+        }
+
+        if (existingLiquid != null) {
+            existingLiquid.addAmountOfDistillateInCask(literToAdd);
         } else {
             this.liquids.add(new Liquid(LocalDate.now(), literToAdd, this, distillate));
         }
     }
     
-    public void checkCask(LocalDate date, double alcoholPercent, String tasteComment) {
-        for (Liquid entry : liquids) {
-            entry.checkLiquid(date, alcoholPercent, tasteComment);
-        }
-    }
-    
-    public void tapDistillate(Integer litersTapped) {
-        if (litersTapped == null || litersTapped <= 0) {
+    public void tapDistillate(double litersTapped) {
+        if (litersTapped <= 0) {
             throw new IllegalArgumentException("Liters to tap must be positive.");
         }
-        int total = containsLiters();
+        double total = containsLiters();
         if (litersTapped > total) {
             throw new IllegalArgumentException("Cannot tap more liters than available in the cask. Available: " + total + ", Tapped: " + litersTapped);
         }
-
+        
         for (Liquid entry : liquids) {
             double currentLiters = entry.getAmountOfDistillateInCask();
             
@@ -63,20 +61,22 @@ public class Cask {
             double proportion = currentLiters / total;
             double litersToRemove = proportion * litersTapped;
             
-            double newLiters = currentLiters - litersToRemove;
-            if (newLiters < 0) {
-                newLiters = 0; // Should not happen if calculations are correct and litersTapped <= total
-            }
-            entry.removeAmountOfDistillateInCask(newLiters);
+            entry.removeAmountOfDistillateInCask(litersToRemove);
         }
     }
     
-    private int containsLiters() {
-        int count = 0;
+    public double containsLiters() {
+        double count = 0;
         for (Liquid entry : liquids) {
             count += entry.getAmountOfDistillateInCask();
         }
         return count;
+    }
+    
+    public void checkCask(LocalDate date, double alcoholPercentage, String tasteComment) {
+        for (Liquid entry : liquids) {
+            entry.checkLiquid(date, alcoholPercentage, tasteComment);
+        }
     }
     
     public int getId() {
@@ -98,11 +98,6 @@ public class Cask {
     public String getSupplier() {
         return supplier;
     }
-
-    public int getTotalCurrentLiters() {
-        return containsLiters();
-    }
-    
     
     @Override
     public String toString() {

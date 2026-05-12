@@ -103,12 +103,8 @@ public class Controller {
             if (amount > distillate.getAvailableVolume()) {
                 throw new IllegalArgumentException("Not enough volume in distillate");
             }
-            try {
-                cask.addDistillate(distillate, amount);
-                distillate.subtractVolume(amount);
-            } catch (IllegalArgumentException e) {
-                throw e;
-            }
+            cask.addDistillate(distillate, amount);
+            distillate.subtractVolume(amount);
         }
     }
 

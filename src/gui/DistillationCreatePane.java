@@ -131,7 +131,7 @@ public class DistillationCreatePane extends GridPane {
                 controller.createDistillationAndAddToDistillate(id, startDate, employee, comment, selectedDistillate);
 
                 AppAlerts.showInformation("Success", "Created distillation #" + id +
-                        " and added it to distillate #" + selectedDistillate.getInewMakeNumber());
+                        " and added it to distillate #" + selectedDistillate.getNewMakeNumber());
             }
             refresh();
 
