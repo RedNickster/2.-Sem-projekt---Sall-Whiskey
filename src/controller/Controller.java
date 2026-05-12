@@ -120,6 +120,10 @@ public class Controller {
         warehouse.addCask(cask);
     }
 
+    public void removeCaskFromWarehouse(Cask cask, Warehouse warehouse) {
+        warehouse.removeCask(cask);
+    }
+
 
     public void addCommentToDistillation(Distillation distillation, String comment) {
         if (distillation != null && comment != null) {

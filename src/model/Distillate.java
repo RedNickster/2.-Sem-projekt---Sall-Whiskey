@@ -56,6 +56,6 @@ public class Distillate {
 
     @Override
     public String toString() {
-        return "New Make #" + id + " (Avail: " + getAvailableVolume() + "L / Total: " + getTotalVolume() + "L) " + grainVarietyEnum + " " + maltBatch;
+        return "#" + id + " (Avail: " + getAvailableVolume() + "L / Total: " + getTotalVolume() + "L) " + grainVarietyEnum + " " + maltBatch;
     }
 }

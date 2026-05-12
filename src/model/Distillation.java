@@ -84,6 +84,6 @@ public class Distillation {
     
     @Override
     public String toString() {
-        return "Distillation #"+ newMakeNumber;
+        return "New Make #"+ newMakeNumber;
     }
 }
