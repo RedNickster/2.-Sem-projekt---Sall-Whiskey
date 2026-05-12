@@ -3,6 +3,7 @@ package integration;
 import controller.Controller;
 import model.Cask;
 import model.Distillation;
+import storage.IStorage;
 import storage.Storage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,7 @@ public class IntegrationTest {
         controller.endDistillation(distillation, LocalDate.now().plusDays(1), 50.0, 45.0, "Finished");
         
         // 4. Verify in storage
-        Storage controllerStorage = controller.getStorage();
+        IStorage controllerStorage = controller.getStorage();
         assertTrue(controllerStorage.getDistillations().contains(distillation), "Distillation should be in storage");
         assertTrue(controllerStorage.getCasks().contains(cask), "Cask should be in storage");
     }

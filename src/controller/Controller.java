@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import storage.IStorage;
 import storage.Storage;
 
 import java.time.LocalDate;
@@ -9,13 +10,17 @@ import java.util.List;
 
 public class Controller {
 
-    private Storage storage;
+    private IStorage storage;
 
-    public Controller() {
-        this.storage = new Storage();
+    public Controller(IStorage storage) {
+        this.storage = storage;
     }
 
-    public Storage getStorage() {
+    public Controller() {
+        this(new Storage());
+    }
+
+    public IStorage getStorage() {
         return storage;
     }
 
@@ -57,29 +62,9 @@ public class Controller {
         return temp;
     }
 
-    /**
-     * Metode som sætter status på distillation til "First Distillation Data Added" så første distillation er færdig.
-     *
-     * BRUGES IKKE LÆNGERE, UDGÅET I ITERATION 4
-     * @param distillation
-     */
-    public void registerFirstDistillation(Distillation distillation) {
-        if (distillation != null) {
-            // distillation.setStatus("First Distillation Data Added");
-        }
-    }
 
-    /**
-     * Metode som sætter status på distillation til "Second Distillation Data Added" så første distillation er færdig.
-     *
-     * BRUGES IKKE LÆNGERE, UDGÅET I ITERATION 4
-     * @param distillation
-     */
-    public void registerSecondDistillation(Distillation distillation) {
-        if (distillation != null) {
-            // distillation.setStatus("Second distillation Data Added");
-        }
-    }
+
+
 
     /**
      * Metode som slutter en distillation ved at sætte dens status til "Finalized", og dermed kan kun fortsætte
