@@ -12,4 +12,8 @@ public class LiquidCheck {
         this.alcoholPercentage = alcoholPercentage;
         this.tasteComment = tasteComment;
     }
+    
+    public double getAlcoholPercentage() {
+        return alcoholPercentage;
+    }
 }

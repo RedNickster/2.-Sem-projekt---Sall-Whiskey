@@ -13,7 +13,6 @@ public class Cask {
     private String countryOfOrigin;
     private String supplier;
     private List<Liquid> liquids;
-    private List<CaskControl> caskControls;
     
     public Cask(int id, int liters, List<CaskLiquids> previousLiquids, String countryOfOrigin, String supplier) {
         this.id = id;
@@ -21,7 +20,6 @@ public class Cask {
         this.previousLiquids = (previousLiquids != null) ? new ArrayList<>(previousLiquids) : new ArrayList<>();
         this.countryOfOrigin = countryOfOrigin;
         this.supplier = supplier;
-        this.caskControls = new ArrayList<>();
     }
     
     public void addDistillate(Distillate distillate, double literToAdd) {
@@ -40,6 +38,12 @@ public class Cask {
             }
         } else {
             this.liquids.add(new Liquid(LocalDate.now(), literToAdd, this, distillate));
+        }
+    }
+    
+    public void checkCask(LocalDate date, double alcoholPercent, String tasteComment) {
+        for (Liquid entry : liquids) {
+            entry.checkLiquid(date, alcoholPercent, tasteComment);
         }
     }
     
@@ -73,12 +77,6 @@ public class Cask {
             count += entry.getAmountOfDistillateInCask();
         }
         return count;
-    }
-    
-    private CaskControl createCaskControl(LocalDate date, double alcoholPercentage, String tasteComment) {
-        CaskControl temp = new CaskControl(date, alcoholPercentage, tasteComment);
-        this.caskControls.add(temp);
-        return temp;
     }
     
     public int getId() {

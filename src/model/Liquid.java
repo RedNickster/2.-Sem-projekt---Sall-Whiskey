@@ -32,14 +32,22 @@ public class Liquid {
     }
     
     public void checkLiquid(LocalDate date, double alcoholPercent, String tasteComment) {
+        checkIfIsWhisky();
         liquidChecks.add(new LiquidCheck(date, alcoholPercent, tasteComment));
     }
     
-    public boolean isWhisky() {
-        if (fillingDate.plusYears(3).isBefore(LocalDate.now())) {
+    public boolean checkIfIsWhisky() {
+        if (fillingDate.plusYears(3).isBefore(LocalDate.now()) && lastCheckAlcoholOverForty()) {
             isWhisky = true;
         }
         return isWhisky;
+    }
+    
+    private boolean lastCheckAlcoholOverForty() {
+        if (liquidChecks.getLast().getAlcoholPercentage() >= 40.0) {
+            return true;
+        }
+        return false;
     }
     
     public Distillate getDistillate() {
