@@ -35,14 +35,14 @@ public class CaskTest {
     }
     
     @Test
-    void TC1_addDistillate_happyPath_emptyCask() {
+    void TC1_addDistillate_ToCask_happyPath_emptyCask() {
         // Arrange
         // cask is initialized in @BeforeEach with 1000L capacity
         Distillate newDistillate = distillate1;
         int litersToAdd = 100;
         
         // Act
-        cask.addDistillate(newDistillate, litersToAdd);
+        cask.addDistillateToCask(newDistillate, litersToAdd);
         
         // Assert
         assertEquals(100, cask.containsLiters());
@@ -51,84 +51,84 @@ public class CaskTest {
     }
     
     @Test
-    void TC2_addDistillate_happyPath_existingDistillate() {
+    void TC2_addDistillate_happyPath_existingDistillateToCask() {
         // Arrange
         int initialLiters = 100;
-        cask.addDistillate(distillate1, initialLiters);
+        cask.addDistillateToCask(distillate1, initialLiters);
         Distillate existingDistillate = distillate1;
         int litersToAdd = 200;
         
         // Act
-        cask.addDistillate(existingDistillate, litersToAdd);
+        cask.addDistillateToCask(existingDistillate, litersToAdd);
         
         // Assert
         assertEquals(300, cask.containsLiters());
     }
     
     @Test
-    void TC3_addDistillate_edgeCase_exactCapacity() {
+    void TC3_addDistillate_ToCask_edgeCase_exactCapacity() {
         // Arrange
         int initialLiters = 900;
-        cask.addDistillate(distillate1, initialLiters);
+        cask.addDistillateToCask(distillate1, initialLiters);
         int litersToAdd = 100;
         
         // Act
-        cask.addDistillate(distillate2, litersToAdd);
+        cask.addDistillateToCask(distillate2, litersToAdd);
         
         // Assert
         assertEquals(1000, cask.containsLiters());
     }
     
     @Test
-    void TC4_addDistillate_error_exceedsCapacity() {
+    void TC4_addDistillate_ToCask_error_exceedsCapacity() {
         // Arrange
         int initialLiters = 900;
-        cask.addDistillate(distillate1, initialLiters); // Fill cask almost to capacity
+        cask.addDistillateToCask(distillate1, initialLiters); // Fill cask almost to capacity
         int litersToAdd = 101; // Exceeds capacity by 1 liter
         
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {
-            cask.addDistillate(distillate2, litersToAdd);
+            cask.addDistillateToCask(distillate2, litersToAdd);
         });
         assertEquals(initialLiters, cask.containsLiters());
     }
     
     @Test
-    void TC5_addDistillate_error_nullDistillate() {
+    void TC5_addDistillate_error_nullDistillateToCask() {
         // Arrange
         Distillate nullDistillate = null;
         int litersToAdd = 50;
         
         // Act + Assert
-        assertThrows(IllegalArgumentException.class, () -> {cask.addDistillate(nullDistillate, litersToAdd);});
+        assertThrows(IllegalArgumentException.class, () -> {cask.addDistillateToCask(nullDistillate, litersToAdd);});
     }
     
     @Test
-    void TC6_addDistillate_error_zeroLiters() {
+    void TC6_addDistillate_ToCask_error_zeroLiters() {
         // Arrange
         Distillate newDistillate = distillate1;
         int litersToAdd = 0;
         
         // Act + Assert
-        assertThrows(IllegalArgumentException.class, () -> {cask.addDistillate(newDistillate, litersToAdd);});
+        assertThrows(IllegalArgumentException.class, () -> {cask.addDistillateToCask(newDistillate, litersToAdd);});
     }
     
     @Test
-    void TC7_addDistillate_error_negativeLiters() {
+    void TC7_addDistillate_ToCask_error_negativeLiters() {
         // Arrange
         Distillate newDistillate = distillate1;
         int litersToAdd = -50;
         
         // Act + Assert
-        assertThrows(IllegalArgumentException.class, () -> {cask.addDistillate(newDistillate, litersToAdd);});
+        assertThrows(IllegalArgumentException.class, () -> {cask.addDistillateToCask(newDistillate, litersToAdd);});
     }
     
     @Test
     void TC8_tapDistillate_happyPath_proportionalReduction() {
         // Arrange
         // Add distillates to the cask: 100L of distillate1, 200L of distillate2. Total = 300L
-        cask.addDistillate(distillate1, 100);
-        cask.addDistillate(distillate2, 200);
+        cask.addDistillateToCask(distillate1, 100);
+        cask.addDistillateToCask(distillate2, 200);
         double litersToTap = 30; // Tap 30 liters
         
         // Act
@@ -141,8 +141,8 @@ public class CaskTest {
     @Test
     void TC9_tapDistillate_edgeCase_tapAllLiters() {
         // Arrange
-        cask.addDistillate(distillate1, 100);
-        cask.addDistillate(distillate2, 200);
+        cask.addDistillateToCask(distillate1, 100);
+        cask.addDistillateToCask(distillate2, 200);
         double litersToTap = 300; // Tap all liters
         
         // Act
@@ -155,7 +155,7 @@ public class CaskTest {
     @Test
     void TC10_tapDistillate_error_zeroLiters() {
         // Arrange
-        cask.addDistillate(distillate1, 100);
+        cask.addDistillateToCask(distillate1, 100);
         double litersToTap = 0;
         double initialLiters = cask.containsLiters();
         
@@ -169,7 +169,7 @@ public class CaskTest {
     @Test
     void TC11_tapDistillate_error_negativeLiters() {
         // Arrange
-        cask.addDistillate(distillate1, 100);
+        cask.addDistillateToCask(distillate1, 100);
         double litersToTap = -50;
         double initialLiters = cask.containsLiters();
         
@@ -183,8 +183,8 @@ public class CaskTest {
     @Test
     void TC12_tapDistillate_error_tapMoreThanAvailable() {
         // Arrange
-        cask.addDistillate(distillate1, 100);
-        cask.addDistillate(distillate2, 200);
+        cask.addDistillateToCask(distillate1, 100);
+        cask.addDistillateToCask(distillate2, 200);
         double litersToTap = 500; // More than available 300L
         double initialLiters = cask.containsLiters();
         

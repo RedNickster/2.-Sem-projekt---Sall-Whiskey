@@ -23,7 +23,7 @@ public class Cask {
         this.liquids = new ArrayList<>();
     }
     
-    public void addDistillate(Distillate distillate, double literToAdd) {
+    public void addDistillateToCask(Distillate distillate, double literToAdd) {
         if (distillate == null || literToAdd <= 0) {
             throw new IllegalArgumentException("Data is invalid");
         }
