@@ -23,7 +23,7 @@ public class IntegrationTest {
 
     @BeforeEach
     void setUp() {
-        controller = new Controller();
+        controller = new Controller(new storage.Storage());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class IntegrationTest {
         double litersToTap = 50;
         
         // Act + Assert
-        assertDoesNotThrow(() -> cask1.addDistillate(distillate1, litersToAdd));
+        assertDoesNotThrow(() -> cask1.addDistillateToCask(distillate1, litersToAdd));
         assertEquals(litersToAdd, cask1.containsLiters());
         assertDoesNotThrow(() -> warehouse.addCask(cask1));
         assertDoesNotThrow(() -> cask1.tapDistillate(litersToTap));

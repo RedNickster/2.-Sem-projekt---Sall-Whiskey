@@ -21,6 +21,12 @@ public class BottleBatch {
      * @return how much water that needs to be added to batch to end up with the target alcohol percentage
      */
     public double dilluteLiquid(double targetAlcoholPercentage) {
+        if (bottleBatchLiquidList.isEmpty()) {
+            throw new IllegalStateException("Cannot dilute an empty bottle batch.");
+        }
+        if (targetAlcoholPercentage <= 0) {
+            throw new IllegalArgumentException("Cannot dillute to an alcohol percentage lower or equal to zero.");
+        }
         double actualPerc = getAlcoholPercentage();
         double actualVol = getTotalLiquidAmount();
         
@@ -30,7 +36,7 @@ public class BottleBatch {
             );
         }
         
-        double targetVolume = actualPerc / targetAlcoholPercentage;
+        double targetVolume = actualPerc / targetAlcoholPercentage * 100;
         return targetVolume - actualVol;
     }
     
