@@ -57,14 +57,39 @@ public class WarehousePane extends GridPane {
         );
         this.add(rightSection, 2, 0);
 
-        //btnAddToWarehouse.setOnAction((event -> this.addToWarehouse()));
+        btnAddToWarehouse.setOnAction((event -> this.addToWarehouse()));
     }
+
+    private void addToWarehouse() {
+        Warehouse selectedWarehouse = lvwWarehouses.getSelectionModel().getSelectedItem();
+        Cask selectedCask = lvwCasksAvailable.getSelectionModel().getSelectedItem();
+
+
+        if (selectedCask == null || selectedWarehouse == null) {
+            AppAlerts.showError("Missing information", "Please fill out all information");
+            return;
+        }
+
+        boolean confirm = AppAlerts.showConfirmation("Confirm adding cask",
+                "Are you sure you want to add the cask to the warehouse?");
+
+        if (confirm) {
+            controller.addCaskToWarehouse(selectedCask, selectedWarehouse);
+
+            AppAlerts.showInformation("Success", "Added cask #" + selectedCask.getId() + " to "
+                    + " Warehouse");
+        }
+        refresh();
+    }
+
+
     void refresh() {
         lvwWarehouses.getItems().setAll(controller.getStorage().getWarehouses());
         lvwCasksAvailable.getItems().setAll(controller.getStorage().getCasks());
         //lvwCasksInWarehouse.getItems().clear();
         //lvwCasksAvailable.getItems().clear();
     }
+
 }
 
 
