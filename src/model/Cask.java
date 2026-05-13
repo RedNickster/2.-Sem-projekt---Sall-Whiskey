@@ -98,6 +98,10 @@ public class Cask {
     public String getSupplier() {
         return supplier;
     }
+
+    public double getAvailableSpace() {
+        return liters - containsLiters();
+    }
     
     @Override
     public String toString() {

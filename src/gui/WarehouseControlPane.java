@@ -82,6 +82,11 @@ public class WarehouseControlPane extends GridPane {
             return;
         }
 
+        if (selectedCask.containsLiters() == 0) {
+            AppAlerts.showError("Impossible action", "Cask is empty and can therefore not be controlled");
+            return;
+        }
+
         boolean confirm = AppAlerts.showConfirmation("Confirm controlling cask",
                 "Are you sure you want to control the cask?");
 
