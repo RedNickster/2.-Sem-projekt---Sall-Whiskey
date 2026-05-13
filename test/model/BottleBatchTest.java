@@ -20,11 +20,11 @@ public class BottleBatchTest {
 
     // Helper class for mocking Liquid
     private class MockLiquid extends Liquid {
-        private double alcoholPercentage;
+        private double alcoholPercentage; // To mock getAlcoholPercentage
         private double amount; // To mock getAmountOfDistillateInCask
 
         public MockLiquid(double amount, double alcoholPercentage) {
-            // Pass dummy values for Cask and Distillate as they are not relevant for this test
+            // Pass dummy values for Cask and Distillate because they are not relevant for this test
             super(LocalDate.now(), amount, null, null);
             this.alcoholPercentage = alcoholPercentage;
             this.amount = amount;

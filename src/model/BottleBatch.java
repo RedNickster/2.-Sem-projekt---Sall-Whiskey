@@ -6,6 +6,7 @@ import java.util.List;
 public class BottleBatch {
     private String name;
     private String description;
+    private double amountOfWaterUsedToDilute;
     
     private List<BottleBatchLiquid> bottleBatchLiquidList;
     
@@ -13,6 +14,7 @@ public class BottleBatch {
         this.name = name;
         this.description = description;
         bottleBatchLiquidList = new ArrayList<>();
+        this.amountOfWaterUsedToDilute = 0;
     }
     
     /**
@@ -37,7 +39,9 @@ public class BottleBatch {
         }
         
         double targetVolume = actualPerc / targetAlcoholPercentage * 100;
-        return targetVolume - actualVol;
+        double singleTimeWaterUsed = targetVolume - actualVol;
+        this.amountOfWaterUsedToDilute = singleTimeWaterUsed;
+        return singleTimeWaterUsed;
     }
     
     public BottleBatchLiquid addLiquid(BottleBatchLiquid liquid) {
@@ -63,5 +67,9 @@ public class BottleBatch {
             liquidAmount += bbl.getLiquidAmount();
         }
         return liquidAmount;
+    }
+    
+    public double getAmountOfWaterUsedToDilute() {
+        return amountOfWaterUsedToDilute;
     }
 }
