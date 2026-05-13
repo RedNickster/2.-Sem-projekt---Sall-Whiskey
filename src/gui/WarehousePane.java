@@ -75,6 +75,11 @@ public class WarehousePane extends GridPane {
             return;
         }
 
+        if (selectedWarehouse.isFull()) {
+            AppAlerts.showError("Full warehouse", "Warehouse is full");
+            return;
+        }
+
         boolean confirm = AppAlerts.showConfirmation("Confirm adding cask",
                 "Are you sure you want to add the cask?");
 
