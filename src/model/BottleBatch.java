@@ -38,7 +38,7 @@ public class BottleBatch {
             );
         }
         
-        double targetVolume = actualPerc / targetAlcoholPercentage * 100;
+        double targetVolume = (actualVol * actualPerc) / targetAlcoholPercentage;
         double singleTimeWaterUsed = targetVolume - actualVol;
         this.amountOfWaterUsedToDilute = singleTimeWaterUsed;
         return singleTimeWaterUsed;
@@ -50,15 +50,18 @@ public class BottleBatch {
     }
     
     private double getAlcoholPercentage() {
-        double alcoholPercentage = 0;
-        double count = 0;
-        
+        double totalAlcoholVolume = 0;
+        double totalLiquidVolume = 0;
+
         for (BottleBatchLiquid bbl : bottleBatchLiquidList) {
-            alcoholPercentage += bbl.getLiquid().getAlcoholPercentage();
-            count++;
+            totalAlcoholVolume += bbl.getLiquid().getAlcoholPercentage() * bbl.getLiquidAmount();
+            totalLiquidVolume += bbl.getLiquidAmount();
         }
-        
-        return alcoholPercentage / count;
+
+        if (totalLiquidVolume == 0) {
+            return 0; // Return 0 or throw an exception if an empty batch should not have an alcohol percentage.
+        }
+        return totalAlcoholVolume / totalLiquidVolume;
     }
     
     private double getTotalLiquidAmount() {
