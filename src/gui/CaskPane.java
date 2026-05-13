@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import model.Cask;
-import model.CaskLiquids;
+import model.enums.CaskLiquids;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;

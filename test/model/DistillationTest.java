@@ -28,7 +28,7 @@ public class DistillationTest {
     void testDistillationConstructorAndInitialState() {
         // Tester om alt er oprettet rigtigt :)
         assertNotNull(distillation);
-        assertEquals(id, distillation.getNewMakeNumber());
+        assertEquals(id, distillation.getId());
         assertEquals(startDate, distillation.getStartDate());
         assertEquals(employee, distillation.getEmployee());
         assertTrue(distillation.getComments().isEmpty());

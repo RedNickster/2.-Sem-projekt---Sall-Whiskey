@@ -3,14 +3,14 @@ package integration;
 import controller.Controller;
 import model.Cask;
 import model.Distillation;
-import storage.Storage;
+import storage.IStorage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import model.Warehouse;
 import model.Distillate;
-import model.GrainVariety;
-import model.CaskLiquids;
+import model.enums.GrainVariety;
+import model.enums.CaskLiquids;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class IntegrationTest {
         controller.endDistillation(distillation, LocalDate.now().plusDays(1), 50.0, 45.0, "Finished");
         
         // 4. Verify in storage
-        Storage controllerStorage = controller.getStorage();
+        IStorage controllerStorage = controller.getStorage();
         assertTrue(controllerStorage.getDistillations().contains(distillation), "Distillation should be in storage");
         assertTrue(controllerStorage.getCasks().contains(cask), "Cask should be in storage");
     }
@@ -50,15 +50,15 @@ public class IntegrationTest {
         Cask cask1 = new Cask(1, 500, new ArrayList<>(Arrays.asList(CaskLiquids.BOURBON)), "USA", "Supplier A");
         Distillate distillate1 = new Distillate(1, GrainVariety.EVERGREEN, "Malt Batch");
         
-        Integer litersToAdd = 300;
-        Integer litersToTap = 50;
+        double litersToAdd = 300;
+        double litersToTap = 50;
         
         // Act + Assert
         assertDoesNotThrow(() -> cask1.addDistillate(distillate1, litersToAdd));
-        assertEquals(litersToAdd, cask1.getTotalCurrentLiters());
+        assertEquals(litersToAdd, cask1.containsLiters());
         assertDoesNotThrow(() -> warehouse.addCask(cask1));
         assertDoesNotThrow(() -> cask1.tapDistillate(litersToTap));
-        assertEquals(litersToAdd - litersToTap, cask1.getTotalCurrentLiters());
+        assertEquals(litersToAdd - litersToTap, cask1.containsLiters());
         assertDoesNotThrow(() -> warehouse.removeCask(cask1));
     }
 }

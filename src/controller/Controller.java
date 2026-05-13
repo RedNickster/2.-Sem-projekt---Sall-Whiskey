@@ -1,6 +1,9 @@
 package controller;
 
 import model.*;
+import model.enums.CaskLiquids;
+import model.enums.GrainVariety;
+import storage.IStorage;
 import storage.Storage;
 
 import java.time.LocalDate;
@@ -9,13 +12,17 @@ import java.util.List;
 
 public class Controller {
 
-    private Storage storage;
+    private IStorage storage;
 
-    public Controller() {
-        this.storage = new Storage();
+    public Controller(IStorage storage) {
+        this.storage = storage;
     }
 
-    public Storage getStorage() {
+    public Controller() {
+        this(new Storage());
+    }
+
+    public IStorage getStorage() {
         return storage;
     }
 
@@ -57,29 +64,9 @@ public class Controller {
         return temp;
     }
 
-    /**
-     * Metode som sætter status på distillation til "First Distillation Data Added" så første distillation er færdig.
-     *
-     * BRUGES IKKE LÆNGERE, UDGÅET I ITERATION 4
-     * @param distillation
-     */
-    public void registerFirstDistillation(Distillation distillation) {
-        if (distillation != null) {
-            // distillation.setStatus("First Distillation Data Added");
-        }
-    }
 
-    /**
-     * Metode som sætter status på distillation til "Second Distillation Data Added" så første distillation er færdig.
-     *
-     * BRUGES IKKE LÆNGERE, UDGÅET I ITERATION 4
-     * @param distillation
-     */
-    public void registerSecondDistillation(Distillation distillation) {
-        if (distillation != null) {
-            // distillation.setStatus("Second distillation Data Added");
-        }
-    }
+
+
 
     /**
      * Metode som slutter en distillation ved at sætte dens status til "Finalized", og dermed kan kun fortsætte
@@ -99,7 +86,7 @@ public class Controller {
 
     public Distillate createDistillate(GrainVariety grainVariety, String maltBatch) {
         int newMakeNumber = storage.getDistillates().size() + 1;
-        
+
         Distillate temp = new Distillate(newMakeNumber, grainVariety, maltBatch);
         storage.addDistillate(temp);
         return temp;
@@ -116,12 +103,8 @@ public class Controller {
             if (amount > distillate.getAvailableVolume()) {
                 throw new IllegalArgumentException("Not enough volume in distillate");
             }
-            try {
-                cask.addDistillate(distillate, amount);
-                distillate.subtractVolume(amount);
-            } catch (IllegalArgumentException e) {
-                throw e;
-            }
+            cask.addDistillate(distillate, amount);
+            distillate.subtractVolume(amount);
         }
     }
 
@@ -133,6 +116,10 @@ public class Controller {
 
     public void addCaskToWarehouse(Cask cask, Warehouse warehouse) {
         warehouse.addCask(cask);
+    }
+
+    public void removeCaskFromWarehouse(Cask cask, Warehouse warehouse) {
+        warehouse.removeCask(cask);
     }
 
 
@@ -170,5 +157,22 @@ public class Controller {
 
     public List<Warehouse> getWarehouses() {
         return storage.getWarehouses();
+    }
+
+    public void controlCask(Cask cask, LocalDate date, double alcoholPercent, String tasteComment) {
+        cask.checkCask(date, alcoholPercent, tasteComment);
+    }
+
+    public List<Cask> getCasksInWarehouse(Warehouse warehouse) {
+        return (warehouse != null) ? warehouse.getCasks() : new ArrayList<>();
+    }
+
+    public List<Cask> getAvailableCasks() {
+        List<Cask> available = new ArrayList<>(storage.getCasks());
+
+        for (Warehouse w : storage.getWarehouses()) {
+            available.removeAll(w.getCasks());
+        }
+        return available;
     }
 }

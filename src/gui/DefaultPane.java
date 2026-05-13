@@ -11,7 +11,8 @@ public class DefaultPane extends GridPane {
     private final Button btnEndDistillation = new Button("End distillation");
     private final Button btnFillCask = new Button("Fill cask");
     private final Button btnWarehouse = new Button("Warehouse");
-    private final Button btnWarehouseTap = new Button("WarehouseTap");
+    private final Button btnWarehouseControl = new Button("WarehouseControl");
+    private final Button btnCreateWhisky = new Button("Create whisky");
 
     public DefaultPane() {
         this.setPadding(new Insets(20));
@@ -26,7 +27,7 @@ public class DefaultPane extends GridPane {
                 btnCasks,
                 btnFillCask,
                 btnWarehouse,
-                btnWarehouseTap
+                btnWarehouseControl
         );
         this.add(leftSection, 1, 0);
 
@@ -43,26 +44,28 @@ public class DefaultPane extends GridPane {
         // Right whiskey/bottle
         VBox rightSection = new VBox(10);
         rightSection.getChildren().addAll(
-                new Label("Whiskey/Bottle")
+                new Label("Whiskey/Bottle"),
+                btnCreateWhisky
         );
         this.add(rightSection, 3, 0);
 
     }
 
     public void setActions(Runnable caskAct, Runnable createDistAct, Runnable endDistAct,
-                           Runnable fillAct, Runnable houseAct, Runnable tapAct) {
+                           Runnable fillAct, Runnable warehouseAct, Runnable warehouseControlAct, Runnable createWhisAct) {
         btnCasks.setOnAction(e -> caskAct.run());
         btnCreateDistillation.setOnAction(e -> createDistAct.run());
         btnEndDistillation.setOnAction(e -> endDistAct.run());
         btnFillCask.setOnAction(e -> fillAct.run());
-        btnWarehouse.setOnAction(e -> houseAct.run());
-        btnWarehouseTap.setOnAction(e -> tapAct.run());
+        btnWarehouse.setOnAction(e -> warehouseAct.run());
+        btnWarehouseControl.setOnAction(e -> warehouseControlAct.run());
+        btnCreateWhisky.setOnAction(e -> createWhisAct.run());
     }
 
     private void styleButtons() {
         // Just an example to make them look more like a dashboard
         for (Button b : new Button[]{btnCasks, btnCreateDistillation, btnEndDistillation,
-                btnFillCask, btnWarehouse, btnWarehouseTap}) {
+                btnFillCask, btnWarehouse, btnWarehouseControl, btnCreateWhisky}) {
             b.setPrefWidth(200);
             b.setPrefHeight(40);
         }

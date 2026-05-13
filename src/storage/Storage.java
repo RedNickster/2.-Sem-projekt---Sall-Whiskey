@@ -7,14 +7,12 @@ import model.Warehouse;
 
 import java.util.*;
 
-public class Storage {
+public class Storage implements IStorage {
 
     private final List<Cask> casks;
     private final List<Distillate> distillates;
     private final List<Warehouse> warehouses;
     private final List<Distillation> distillations;
-
-
 
     public Storage() {
         this.casks = new ArrayList<>();

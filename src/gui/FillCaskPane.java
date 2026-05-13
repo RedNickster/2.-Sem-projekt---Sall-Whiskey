@@ -76,7 +76,7 @@ public class FillCaskPane extends GridPane {
             controller.pourDistillateIntoCask(selectedDistillate,liquidAmount,selectedCask);
 
             AppAlerts.showInformation("Success", "Filled cask #" + selectedCask.getId() + " with "
-                    + liquidAmount + " liters from New Make #" + selectedDistillate.getId());
+                    + liquidAmount + " liters from New Make #" + selectedDistillate.getNewMakeNumber());
         }
         refresh();
     }

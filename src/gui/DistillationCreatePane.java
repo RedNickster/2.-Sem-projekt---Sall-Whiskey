@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import model.enums.GrainVariety;
 
 import java.time.LocalDate;
 
@@ -130,7 +131,7 @@ public class DistillationCreatePane extends GridPane {
                 controller.createDistillationAndAddToDistillate(id, startDate, employee, comment, selectedDistillate);
 
                 AppAlerts.showInformation("Success", "Created distillation #" + id +
-                        " and added it to distillate #" + selectedDistillate.getId());
+                        " and added it to distillate #" + selectedDistillate.getNewMakeNumber());
             }
             refresh();
 

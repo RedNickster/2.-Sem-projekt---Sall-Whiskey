@@ -17,8 +17,9 @@ public class GUI extends Application {
     private DistillationEndPane distillationEndPane;
     private FillCaskPane fillCaskPane;
     private WarehousePane warehousePane;
-    private WarehouseTapPane warehouseTapPane;
+    private WarehouseControlPane warehouseControlPane;
     private DefaultPane defaultPane;
+    private CreateWhiskyPane createWhiskyPane;
 
     public void start(Stage stage) {
         stage.setTitle("Sall Whiskey");
@@ -43,7 +44,8 @@ public class GUI extends Application {
         distillationEndPane = new DistillationEndPane(controller);
         fillCaskPane = new FillCaskPane(controller);
         warehousePane = new WarehousePane(controller);
-        warehouseTapPane = new WarehouseTapPane(controller);
+        warehouseControlPane = new WarehouseControlPane(controller);
+        createWhiskyPane = new CreateWhiskyPane(controller);
 
         // Default view
         borderPane.setCenter(defaultPane);
@@ -56,7 +58,8 @@ public class GUI extends Application {
                 () -> { distillationEndPane.refresh(); borderPane.setCenter(distillationEndPane); },
                 () -> { fillCaskPane.refresh(); borderPane.setCenter(fillCaskPane); },
                 () -> { warehousePane.refresh(); borderPane.setCenter(warehousePane); },
-                () -> { warehouseTapPane.refresh(); borderPane.setCenter(warehouseTapPane); }
+                () -> { warehouseControlPane.refresh(); borderPane.setCenter(warehouseControlPane); },
+                () -> { createWhiskyPane.refresh(); borderPane.setCenter(createWhiskyPane); }
         );
 
         Scene scene = new Scene(borderPane, 1000, 600);

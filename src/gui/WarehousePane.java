@@ -45,7 +45,11 @@ public class WarehousePane extends GridPane {
         );
         this.add(centerSection, 1, 0);
 
-        //btnRemoveFromWarehouse.setOnAction(e -> this.removeFromWarehouse);
+        lvwWarehouses.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            this.updateCasksInWarehouseList(newVal);
+        });
+
+        btnRemoveFromWarehouse.setOnAction(event -> this.removeFromWarehouse());
 
         // Right
         VBox rightSection = new VBox(5);
@@ -58,12 +62,13 @@ public class WarehousePane extends GridPane {
         this.add(rightSection, 2, 0);
 
         btnAddToWarehouse.setOnAction((event -> this.addToWarehouse()));
+
+        //TODO tilføje listeners og tilhørende metoder for at vise cask ikke i lager i available, og cask i lager i anden
     }
 
     private void addToWarehouse() {
-        Warehouse selectedWarehouse = lvwWarehouses.getSelectionModel().getSelectedItem();
         Cask selectedCask = lvwCasksAvailable.getSelectionModel().getSelectedItem();
-
+        Warehouse selectedWarehouse = lvwWarehouses.getSelectionModel().getSelectedItem();
 
         if (selectedCask == null || selectedWarehouse == null) {
             AppAlerts.showError("Missing information", "Please fill out all information");
@@ -71,25 +76,47 @@ public class WarehousePane extends GridPane {
         }
 
         boolean confirm = AppAlerts.showConfirmation("Confirm adding cask",
-                "Are you sure you want to add the cask to the warehouse?");
+                "Are you sure you want to add the cask?");
 
         if (confirm) {
             controller.addCaskToWarehouse(selectedCask, selectedWarehouse);
 
             AppAlerts.showInformation("Success", "Added cask #" + selectedCask.getId() + " to "
-                    + " Warehouse");
+                    + "warehouse");
         }
         refresh();
     }
 
+    private void removeFromWarehouse() {
+        Cask selectedCask = lvwCasksInWarehouse.getSelectionModel().getSelectedItem();
+        Warehouse selectedWarehouse = lvwWarehouses.getSelectionModel().getSelectedItem();
 
-    void refresh() {
-        lvwWarehouses.getItems().setAll(controller.getStorage().getWarehouses());
-        lvwCasksAvailable.getItems().setAll(controller.getStorage().getCasks());
-        //lvwCasksInWarehouse.getItems().clear();
-        //lvwCasksAvailable.getItems().clear();
+        if (selectedCask == null || selectedWarehouse == null) {
+            AppAlerts.showError("Missing information", "Please fill out all information");
+            return;
+        }
+
+        boolean confirm = AppAlerts.showConfirmation("Confirm removing cask",
+                "Are you sure you want to remove the cask?");
+
+        if (confirm) {
+
+            controller.removeCaskFromWarehouse(selectedCask, selectedWarehouse);
+
+            AppAlerts.showInformation("Success", "Removed cask #" + selectedCask.getId() + " from "
+                    + "warehouse");
+        }
+        refresh();
     }
 
+    private void updateCasksInWarehouseList(Warehouse selectedWarehouse) {
+        lvwCasksInWarehouse.getItems().setAll(controller.getCasksInWarehouse(selectedWarehouse));
+    }
+
+    void refresh() {
+        lvwWarehouses.getItems().setAll(controller.getWarehouses());
+        lvwCasksAvailable.getItems().setAll(controller.getAvailableCasks());
+    }
 }
 
 

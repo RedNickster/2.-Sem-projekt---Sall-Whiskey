@@ -1,10 +1,10 @@
 package model;
 
+import model.enums.CaskLiquids;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Cask {
     private int id;
@@ -12,8 +12,7 @@ public class Cask {
     private List<CaskLiquids> previousLiquids;
     private String countryOfOrigin;
     private String supplier;
-    private Map<Distillate, Integer> distillates;
-    private List<CaskControl> caskControls;
+    private List<Liquid> liquids;
     
     public Cask(int id, int liters, List<CaskLiquids> previousLiquids, String countryOfOrigin, String supplier) {
         this.id = id;
@@ -21,64 +20,63 @@ public class Cask {
         this.previousLiquids = (previousLiquids != null) ? new ArrayList<>(previousLiquids) : new ArrayList<>();
         this.countryOfOrigin = countryOfOrigin;
         this.supplier = supplier;
-        this.distillates = new HashMap<>();
-        this.caskControls = new ArrayList<>();
+        this.liquids = new ArrayList<>();
     }
     
-    public void addDistillate(Distillate distillate, Integer literToAdd) {
-        if (literToAdd == null || distillate == null || literToAdd <= 0) {
+    public void addDistillate(Distillate distillate, double literToAdd) {
+        if (distillate == null || literToAdd <= 0) {
             throw new IllegalArgumentException("Data is invalid");
         }
         if (containsLiters() + literToAdd > liters) {
             throw new IllegalArgumentException("There is not room for that amount of disstillate");
         }
-        
-        if (distillates.containsKey(distillate)) {
-            distillates.compute(distillate, (_, currentLiters) -> currentLiters + literToAdd);
+        Liquid existingLiquid = null;
+        for (Liquid liquid : liquids) {
+            if (liquid.getDistillate().equals(distillate)) {
+                existingLiquid = liquid;
+                break;
+            }
+        }
+
+        if (existingLiquid != null) {
+            existingLiquid.addAmountOfDistillateInCask(literToAdd);
         } else {
-            distillates.put(distillate, literToAdd);
+            this.liquids.add(new Liquid(LocalDate.now(), literToAdd, this, distillate));
         }
     }
     
-    public void tapDistillate(Integer litersTapped) {
-        if (litersTapped == null || litersTapped <= 0) {
+    public void tapDistillate(double litersTapped) {
+        if (litersTapped <= 0) {
             throw new IllegalArgumentException("Liters to tap must be positive.");
         }
-        int total = containsLiters();
+        double total = containsLiters();
         if (litersTapped > total) {
             throw new IllegalArgumentException("Cannot tap more liters than available in the cask. Available: " + total + ", Tapped: " + litersTapped);
         }
-
-        Map<Distillate, Integer> updatedDistillates = new HashMap<>();
-        for (Map.Entry<Distillate, Integer> entry : distillates.entrySet()) {
-            Distillate distillate = entry.getKey();
-            Integer currentLiters = entry.getValue();
+        
+        for (Liquid entry : liquids) {
+            double currentLiters = entry.getAmountOfDistillateInCask();
             
             // Calculate proportional reduction
-            double proportion = (double) currentLiters / total;
-            int litersToRemove = (int) Math.round(proportion * litersTapped);
+            double proportion = currentLiters / total;
+            double litersToRemove = proportion * litersTapped;
             
-            int newLiters = currentLiters - litersToRemove;
-            if (newLiters < 0) {
-                newLiters = 0; // Should not happen if calculations are correct and litersTapped <= total
-            }
-            updatedDistillates.put(distillate, newLiters);
+            entry.removeAmountOfDistillateInCask(litersToRemove);
         }
-        this.distillates = updatedDistillates;
     }
     
-    private int containsLiters() {
-        int count = 0;
-        for (Integer liters : distillates.values()) {
-            count += liters;
+    public double containsLiters() {
+        double count = 0;
+        for (Liquid entry : liquids) {
+            count += entry.getAmountOfDistillateInCask();
         }
         return count;
     }
     
-    private CaskControl createCaskControl(LocalDate date, double alcoholPercentage, String tasteComment) {
-        CaskControl temp = new CaskControl(date, alcoholPercentage, tasteComment);
-        this.caskControls.add(temp);
-        return temp;
+    public void checkCask(LocalDate date, double alcoholPercentage, String tasteComment) {
+        for (Liquid entry : liquids) {
+            entry.checkLiquid(date, alcoholPercentage, tasteComment);
+        }
     }
     
     public int getId() {
@@ -100,11 +98,6 @@ public class Cask {
     public String getSupplier() {
         return supplier;
     }
-
-    public int getTotalCurrentLiters() {
-        return containsLiters();
-    }
-    
     
     @Override
     public String toString() {

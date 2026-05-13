@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.CaskLiquids;
+import model.enums.GrainVariety;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,13 +39,13 @@ public class CaskTest {
         // Arrange
         // cask is initialized in @BeforeEach with 1000L capacity
         Distillate newDistillate = distillate1;
-        Integer litersToAdd = 100;
+        int litersToAdd = 100;
         
         // Act
         cask.addDistillate(newDistillate, litersToAdd);
         
         // Assert
-        assertEquals(100, cask.getTotalCurrentLiters());
+        assertEquals(100, cask.containsLiters());
         // Note: Cannot directly assert specific distillate amount without public getter or reflection.
         // The total liters check provides implicit verification for now.
     }
@@ -54,13 +56,13 @@ public class CaskTest {
         int initialLiters = 100;
         cask.addDistillate(distillate1, initialLiters);
         Distillate existingDistillate = distillate1;
-        Integer litersToAdd = 200;
+        int litersToAdd = 200;
         
         // Act
         cask.addDistillate(existingDistillate, litersToAdd);
         
         // Assert
-        assertEquals(300, cask.getTotalCurrentLiters());
+        assertEquals(300, cask.containsLiters());
     }
     
     @Test
@@ -68,13 +70,13 @@ public class CaskTest {
         // Arrange
         int initialLiters = 900;
         cask.addDistillate(distillate1, initialLiters);
-        Integer litersToAdd = 100;
+        int litersToAdd = 100;
         
         // Act
         cask.addDistillate(distillate2, litersToAdd);
         
         // Assert
-        assertEquals(1000, cask.getTotalCurrentLiters());
+        assertEquals(1000, cask.containsLiters());
     }
     
     @Test
@@ -82,55 +84,43 @@ public class CaskTest {
         // Arrange
         int initialLiters = 900;
         cask.addDistillate(distillate1, initialLiters); // Fill cask almost to capacity
-        Integer litersToAdd = 101; // Exceeds capacity by 1 liter
+        int litersToAdd = 101; // Exceeds capacity by 1 liter
         
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {
             cask.addDistillate(distillate2, litersToAdd);
         });
-        assertEquals(initialLiters, cask.getTotalCurrentLiters());
+        assertEquals(initialLiters, cask.containsLiters());
     }
     
     @Test
     void TC5_addDistillate_error_nullDistillate() {
         // Arrange
         Distillate nullDistillate = null;
-        Integer litersToAdd = 50;
-        int initialLiters = cask.getTotalCurrentLiters();
+        int litersToAdd = 50;
         
-        // Act
-        cask.addDistillate(nullDistillate, litersToAdd);
-        
-        // Assert
-        assertEquals(initialLiters, cask.getTotalCurrentLiters());
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> {cask.addDistillate(nullDistillate, litersToAdd);});
     }
     
     @Test
     void TC6_addDistillate_error_zeroLiters() {
         // Arrange
         Distillate newDistillate = distillate1;
-        Integer litersToAdd = 0;
-        int initialLiters = cask.getTotalCurrentLiters();
+        int litersToAdd = 0;
         
-        // Act
-        cask.addDistillate(newDistillate, litersToAdd);
-        
-        // Assert
-        assertEquals(initialLiters, cask.getTotalCurrentLiters());
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> {cask.addDistillate(newDistillate, litersToAdd);});
     }
     
     @Test
     void TC7_addDistillate_error_negativeLiters() {
         // Arrange
         Distillate newDistillate = distillate1;
-        Integer litersToAdd = -50;
-        int initialLiters = cask.getTotalCurrentLiters();
+        int litersToAdd = -50;
         
-        // Act
-        cask.addDistillate(newDistillate, litersToAdd);
-        
-        // Assert
-        assertEquals(initialLiters, cask.getTotalCurrentLiters());
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> {cask.addDistillate(newDistillate, litersToAdd);});
     }
     
     @Test
@@ -139,13 +129,13 @@ public class CaskTest {
         // Add distillates to the cask: 100L of distillate1, 200L of distillate2. Total = 300L
         cask.addDistillate(distillate1, 100);
         cask.addDistillate(distillate2, 200);
-        Integer litersToTap = 30; // Tap 30 liters
+        double litersToTap = 30; // Tap 30 liters
         
         // Act
         cask.tapDistillate(litersToTap);
         
         // Assert
-        assertEquals(270, cask.getTotalCurrentLiters());
+        assertEquals(270, cask.containsLiters());
     }
     
     @Test
@@ -153,41 +143,41 @@ public class CaskTest {
         // Arrange
         cask.addDistillate(distillate1, 100);
         cask.addDistillate(distillate2, 200);
-        Integer litersToTap = 300; // Tap all liters
+        double litersToTap = 300; // Tap all liters
         
         // Act
         cask.tapDistillate(litersToTap);
         
         // Assert
-        assertEquals(0, cask.getTotalCurrentLiters());
+        assertEquals(0, cask.containsLiters());
     }
     
     @Test
     void TC10_tapDistillate_error_zeroLiters() {
         // Arrange
         cask.addDistillate(distillate1, 100);
-        Integer litersToTap = 0;
-        int initialLiters = cask.getTotalCurrentLiters();
+        double litersToTap = 0;
+        double initialLiters = cask.containsLiters();
         
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {
             cask.tapDistillate(litersToTap);
         });
-        assertEquals(initialLiters, cask.getTotalCurrentLiters());
+        assertEquals(initialLiters, cask.containsLiters());
     }
     
     @Test
     void TC11_tapDistillate_error_negativeLiters() {
         // Arrange
         cask.addDistillate(distillate1, 100);
-        Integer litersToTap = -50;
-        int initialLiters = cask.getTotalCurrentLiters();
+        double litersToTap = -50;
+        double initialLiters = cask.containsLiters();
         
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {
             cask.tapDistillate(litersToTap);
         });
-        assertEquals(initialLiters, cask.getTotalCurrentLiters());
+        assertEquals(initialLiters, cask.containsLiters());
     }
     
     @Test
@@ -195,13 +185,13 @@ public class CaskTest {
         // Arrange
         cask.addDistillate(distillate1, 100);
         cask.addDistillate(distillate2, 200);
-        Integer litersToTap = 500; // More than available 300L
-        int initialLiters = cask.getTotalCurrentLiters();
+        double litersToTap = 500; // More than available 300L
+        double initialLiters = cask.containsLiters();
         
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {
             cask.tapDistillate(litersToTap);
         });
-        assertEquals(initialLiters, cask.getTotalCurrentLiters());
+        assertEquals(initialLiters, cask.containsLiters());
     }
 }
