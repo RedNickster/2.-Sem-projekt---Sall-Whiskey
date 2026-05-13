@@ -23,28 +23,35 @@ public class CreateWhiskyPane extends GridPane {
     public CreateWhiskyPane(Controller controller) {
         this.controller = controller;
 
+        this.setPadding(new Insets(20));
+        this.setHgap(20);
+        this.setVgap(15);
+
 
         // Left
         VBox leftSection = new VBox(5);
         leftSection.getChildren().addAll(
-                new Label(""),
-                new Separator()
+                new Label("1"),
+                new Separator(),
+                new Label("1")
         );
         this.add(leftSection,1,0);
 
         // Center
         VBox centerSection = new VBox(5);
         centerSection.getChildren().addAll(
-                new Label(""),
-                new Separator()
+                new Label("2"),
+                new Separator(),
+                new Label("2")
         );
         this.add(centerSection,2,0);
 
         // Right
         VBox rightSection = new VBox(5);
-        centerSection.getChildren().addAll(
-                new Label(""),
+        rightSection.getChildren().addAll(
+                new Label("3"),
                 new Separator(),
+                new Label("3"),
                 btnDilute,
                 btnCreateWhisky
         );
