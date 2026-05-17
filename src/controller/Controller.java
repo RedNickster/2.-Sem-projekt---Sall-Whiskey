@@ -164,7 +164,11 @@ public class Controller {
     }
 
     public List<Cask> getCasksInWarehouse(Warehouse warehouse) {
-        return (warehouse != null) ? warehouse.getCasks() : new ArrayList<>();
+        if (warehouse != null) {
+            return warehouse.getCasks();
+        }
+
+        return new ArrayList<>();
     }
 
     public List<Cask> getAvailableCasks() {
@@ -174,5 +178,9 @@ public class Controller {
             available.removeAll(w.getCasks());
         }
         return available;
+    }
+
+    public Cask[] getAllLocationsInWarehouse(Warehouse warehouse) {
+        return warehouse.getAllLocations();
     }
 }

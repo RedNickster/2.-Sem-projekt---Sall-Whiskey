@@ -1,9 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Warehouse {
 
@@ -54,6 +51,8 @@ public class Warehouse {
             }
         }
     }
+
+
     
     private boolean isCaskInWareHouse(Cask cask) {
         for (Cask value : locations) {
@@ -75,9 +74,15 @@ public class Warehouse {
                 actualCasks.add(c);
             }
         }
-        return  actualCasks;
+        return actualCasks;
     }
-    
+
+    public Cask[] getAllLocations() {
+        return Arrays.copyOf(locations, locations.length);
+    }
+
+
+    //TODO inkludere ledige og maks pladser
     @Override
     public String toString() {
         return "Warehouse: " + address + ", m2: " + m2;
