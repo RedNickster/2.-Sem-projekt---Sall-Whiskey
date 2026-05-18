@@ -47,6 +47,10 @@ public class Distillate {
             throw new IllegalArgumentException("Not enough volume in distillate");
         }
     }
+    
+    public double getVolumeOfLastDesstilation() {
+        return (distillations.isEmpty()) ? 0 : distillations.getLast().getLiquidAmountAtEnd();
+    }
 
     public List<Distillation> getDistillations() {
         return new ArrayList<>(distillations);
@@ -58,6 +62,6 @@ public class Distillate {
 
     @Override
     public String toString() {
-        return "#" + newMakeNumber + " (Avail: " + getAvailableVolume() + "L / Total: " + getTotalVolume() + "L) " + grainVarietyEnum + " " + maltBatch;
+        return "#" + newMakeNumber + " (Avail: " + getAvailableVolume() + "L / Total: " + getVolumeOfLastDesstilation() + "L) " + grainVarietyEnum + " " + maltBatch;
     }
 }
