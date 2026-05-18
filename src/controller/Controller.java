@@ -103,7 +103,7 @@ public class Controller {
             if (amount > distillate.getAvailableVolume()) {
                 throw new IllegalArgumentException("Not enough volume in distillate");
             }
-            cask.addDistillate(distillate, amount);
+            cask.addDistillateToCask(distillate, amount);
             distillate.subtractVolume(amount);
         }
     }
@@ -112,6 +112,28 @@ public class Controller {
         Warehouse temp = new Warehouse(address, m2, storageSpaces);
         storage.addWarehouse(temp);
         return temp;
+    }
+
+    public BottleBatch createBottleBatch(String name, String description) {
+        BottleBatch bottleBatch = new BottleBatch(name, description);
+        storage.addBottleBatch(bottleBatch);
+        return bottleBatch;
+    }
+
+    public void addLiquidToBatch(BottleBatch bottleBatch, Cask cask, double amount) {
+        List<Liquid> liquids = cask.getLiquids();
+
+        if (!liquids.isEmpty()) {
+            Liquid liquid = liquids.get(liquids.size() - 1);
+
+            if (cask.containsLiters() >= amount) {
+                cask.tapDistillate(amount);
+
+                BottleBatchLiquid bbl = new BottleBatchLiquid(amount, liquid);
+
+                bottleBatch.addLiquid(bbl);
+            }
+        }
     }
 
     public void addCaskToWarehouse(Cask cask, Warehouse warehouse) {

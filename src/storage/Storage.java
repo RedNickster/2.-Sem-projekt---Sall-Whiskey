@@ -1,9 +1,6 @@
 package storage;
 
-import model.Cask;
-import model.Distillate;
-import model.Distillation;
-import model.Warehouse;
+import model.*;
 
 import java.util.*;
 
@@ -13,12 +10,14 @@ public class Storage implements IStorage {
     private final List<Distillate> distillates;
     private final List<Warehouse> warehouses;
     private final List<Distillation> distillations;
+    private final List<BottleBatch> bottleBatches;
 
     public Storage() {
         this.casks = new ArrayList<>();
         this.distillates = new ArrayList<>();
         this.warehouses = new ArrayList<>();
         this.distillations = new ArrayList<>();
+        this.bottleBatches = new ArrayList<>();
     }
 
 
@@ -83,5 +82,16 @@ public class Storage implements IStorage {
 
     public List<Distillation> getDistillations() {
         return new ArrayList<>(this.distillations);
+    }
+
+    // ----- BottleBatch -----
+    public void addBottleBatch(BottleBatch bottleBatch) {
+        if (!bottleBatches.contains(bottleBatch)) {
+            bottleBatches.add(bottleBatch);
+        }
+    }
+
+    public List<BottleBatch> getBottleBatches() {
+        return new ArrayList<>(bottleBatches);
     }
 }

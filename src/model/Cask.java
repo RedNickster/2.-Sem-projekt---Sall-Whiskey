@@ -23,7 +23,7 @@ public class Cask {
         this.liquids = new ArrayList<>();
     }
     
-    public void addDistillate(Distillate distillate, double literToAdd) {
+    public void addDistillateToCask(Distillate distillate, double literToAdd) {
         if (distillate == null || literToAdd <= 0) {
             throw new IllegalArgumentException("Data is invalid");
         }
@@ -98,7 +98,11 @@ public class Cask {
     public String getSupplier() {
         return supplier;
     }
-    
+
+    public List<Liquid> getLiquids() {
+        return new ArrayList<>(liquids);
+    }
+
     @Override
     public String toString() {
         return "Cask #" + id + " (Available space: " + (liters - containsLiters()) + "L / Total: " + liters + "L) - " + supplier + "(" + countryOfOrigin + ")" +

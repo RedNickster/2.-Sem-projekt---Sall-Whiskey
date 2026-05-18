@@ -58,4 +58,16 @@ public class BottleBatch {
         }
         return liquidAmount;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<BottleBatchLiquid> getBottleBatchLiquidList() {
+        return new ArrayList<>(bottleBatchLiquidList);
+    }
 }

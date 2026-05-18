@@ -1,9 +1,6 @@
 package storage;
 
-import model.Cask;
-import model.Distillate;
-import model.Distillation;
-import model.Warehouse;
+import model.*;
 
 import java.util.List;
 
@@ -14,10 +11,13 @@ public interface IStorage {
     List<Distillate> getDistillates();
     List<Warehouse> getWarehouses();
     List<Distillation> getDistillations();
+    List<BottleBatch> getBottleBatches();
     
     void addCask(Cask cask);
     void addDistillate(Distillate distillate);
     void addWarehouse(Warehouse warehouse);
     void addDistillation(Distillation distillation);
+    void addBottleBatch(BottleBatch bottleBatch);
     int getDistillationsInDistillateCount();
+
 }
