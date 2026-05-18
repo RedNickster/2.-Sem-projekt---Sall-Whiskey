@@ -37,7 +37,7 @@ public class Distillate {
     }
 
     public double getAvailableVolume() {
-        return getTotalVolume() - volumeInCasks;
+        return getVolumeOfLastDesstilation() - volumeInCasks;
     }
 
     public void subtractVolume(double amount) {
@@ -49,7 +49,12 @@ public class Distillate {
     }
     
     public double getVolumeOfLastDesstilation() {
-        return (distillations.isEmpty()) ? 0 : distillations.getLast().getLiquidAmountAtEnd();
+        for (int i = distillations.size() - 1; i >= 0; i--) {
+            if (distillations.get(i).getLiquidAmountAtEnd() > 0) {
+                return distillations.get(i).getLiquidAmountAtEnd();
+            }
+        }
+        return 0;
     }
 
     public List<Distillation> getDistillations() {
