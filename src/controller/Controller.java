@@ -184,7 +184,7 @@ public class Controller {
         return warehouse.getAllLocations();
     }
 
-    public void moveCaskInWarehouse(Cask cask, Warehouse warehouse, Integer location) {
+    public void moveCaskInWarehouse(Cask cask, Warehouse warehouse, int location) {
         warehouse.moveCask(cask, location);
     }
 }
