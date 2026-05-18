@@ -87,8 +87,8 @@ public class IntegrationTest {
         BottleBatch bottleBatch = new BottleBatch("Batch for Dilution", "Integration Test Batch");
 
         // 5. Add Liquids to BottleBatch
-        bottleBatch.addLiquid(new BottleBatchLiquid(liquid1.getAmountOfDistillateInCask(), liquid1));
-        bottleBatch.addLiquid(new BottleBatchLiquid(liquid2.getAmountOfDistillateInCask(), liquid2));
+        bottleBatch.addLiquid(new BottleBatchLiquid(liquid1.getAmountOfDistillateInCask(), liquid1, LocalDate.now()));
+        bottleBatch.addLiquid(new BottleBatchLiquid(liquid2.getAmountOfDistillateInCask(), liquid2, LocalDate.now()));
 
         /*
          Total alcohol volume = (100 * 60) + (200 * 75) = 6000 + 15000 = 21000

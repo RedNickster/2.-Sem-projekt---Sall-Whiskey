@@ -6,28 +6,35 @@ import model.enums.GrainVariety;
 import storage.IStorage;
 import storage.Storage;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
-
+    
     private IStorage storage;
-
+    
     public Controller(IStorage storage) {
         this.storage = storage;
     }
-
+    
     public Controller() {
         this(new Storage());
     }
-
+    
     public IStorage getStorage() {
         return storage;
     }
-
+    
     /**
      * Metode som creater en ny tom Cask og tilføjer den til storage.
+     *
      * @param id
      * @param liters
      * @param previousLiquids
@@ -40,18 +47,19 @@ public class Controller {
         storage.addCask(cask);
         return cask;
     }
-
+    
     public Distillation createDistillationAndAddToDistillate(int id, LocalDate startDate, String employee, String commment, Distillate distillate) {
         Distillation temp = new Distillation(id, startDate, employee, commment);
         storage.addDistillation(temp);
         distillate.addDistillation(temp);
         return temp;
     }
-
-
+    
+    
     /**
      * Metode som slutter en distillation ved at sætte dens status til "Finalized", og dermed kan kun fortsætte
      * arbejdet hvis distillationen har destilleret to gange.
+     *
      * @param distillitation
      * @param endDate
      * @param liquidAmount
@@ -63,22 +71,22 @@ public class Controller {
             distillitation.endDistillation(endDate, liquidAmount, alcoholPercentage, comment);
         }
     }
-
-
+    
+    
     public Distillate createDistillate(GrainVariety grainVariety, String maltBatch) {
         int newMakeNumber = storage.getDistillates().size() + 1;
-
+        
         Distillate temp = new Distillate(newMakeNumber, grainVariety, maltBatch);
         storage.addDistillate(temp);
         return temp;
     }
-
+    
     public void combineToDistillate(List<Distillation> selectedDistillates, Distillate selectedDistillate) {
         for (Distillation selected : selectedDistillates) {
             selectedDistillate.addDistillation(selected);
         }
     }
-
+    
     public void pourDistillateIntoCask(Distillate distillate, int amount, Cask cask) {
         if (cask != null && distillate != null && amount > 0) {
             if (amount > distillate.getAvailableVolume()) {
@@ -88,53 +96,53 @@ public class Controller {
             distillate.subtractVolume(amount);
         }
     }
-
+    
     public Warehouse createWarehouse(String address, double m2, int storageSpaces) {
         Warehouse temp = new Warehouse(address, m2, storageSpaces);
         storage.addWarehouse(temp);
         return temp;
     }
-
+    
     public BottleBatch createBottleBatch(String name, String description) {
         BottleBatch bottleBatch = new BottleBatch(name, description);
         storage.addBottleBatch(bottleBatch);
         return bottleBatch;
     }
-
+    
     public void addLiquidToBatch(BottleBatch bottleBatch, Cask cask, double amount) {
         List<Liquid> liquids = cask.getLiquids();
-
+        
         if (!liquids.isEmpty()) {
             Liquid liquid = liquids.get(liquids.size() - 1);
-
+            
             if (cask.containsLiters() >= amount) {
                 cask.tapDistillate(amount);
-
-                BottleBatchLiquid bbl = new BottleBatchLiquid(amount, liquid);
-
+                
+                BottleBatchLiquid bbl = new BottleBatchLiquid(amount, liquid, LocalDate.now());
+                
                 bottleBatch.addLiquid(bbl);
             }
         }
     }
-
+    
     public void addCaskToWarehouse(Cask cask, Warehouse warehouse) {
         warehouse.addCask(cask);
     }
-
+    
     public void removeCaskFromWarehouse(Cask cask, Warehouse warehouse) {
         warehouse.removeCask(cask);
     }
-
+    
     public void addCommentToDistillation(Distillation distillation, String comment) {
         if (distillation != null && comment != null) {
             distillation.addComment(comment);
         }
     }
-
+    
     public int getCaskCount() {
         return storage.getCaskCount();
     }
-
+    
     public List<Distillation> getActiveDistillations(Distillate distillate) {
         List<Distillation> activeList = new ArrayList<>();
         for (Distillation d : distillate.getDistillations()) {
@@ -144,49 +152,137 @@ public class Controller {
         }
         return activeList;
     }
-
+    
     public void controlCask(Cask cask, LocalDate date, double alcoholPercent, String tasteComment) {
         cask.checkCask(date, alcoholPercent, tasteComment);
     }
-
+    
     public void moveCaskInWarehouse(Cask cask, Warehouse warehouse, Integer location) {
         warehouse.moveCask(cask, location);
     }
-
+    
     public List<Distillation> getDistillations() {
         return storage.getDistillations();
     }
-
+    
     public List<Cask> getCasks() {
         return storage.getCasks();
     }
-
+    
     public List<Distillate> getDistillates() {
         return storage.getDistillates();
     }
-
+    
     public List<Warehouse> getWarehouses() {
         return storage.getWarehouses();
     }
-
+    
     public List<Cask> getCasksInWarehouse(Warehouse warehouse) {
         if (warehouse != null) {
             return warehouse.getCasks();
         }
-
+        
         return new ArrayList<>();
     }
-
+    
     public List<Cask> getAvailableCasks() {
         List<Cask> available = new ArrayList<>(storage.getCasks());
-
+        
         for (Warehouse w : storage.getWarehouses()) {
             available.removeAll(w.getCasks());
         }
         return available;
     }
-
+    
     public Cask[] getAllLocationsInWarehouse(Warehouse warehouse) {
         return warehouse.getAllLocations();
+    }
+    
+    public String showWhiskyHistory(BottleBatch batch) {
+        // TODO LAV DSD FRA RAPPORT. DENNE SKAL LAVES HURTIGT!!!
+        String batchName = batch.getName(); // Batch name
+        Period timeOnCask = Period.ofYears(0); // Time distillate have been in Cask
+        
+        List<Liquid> liquidList = new ArrayList<>(); // List of all liquid so we can extract informaiton
+        for (BottleBatchLiquid bbl : batch.getBottleBatchLiquidList()) {
+            liquidList.add(bbl.getLiquid());
+            // Finds period length
+            Period tempPeriod = Period.between(bbl.getLiquid().getFillingDate(), bbl.getCreationDate());
+            // Anchor for comparing two Period variables
+            LocalDate anchor = LocalDate.now();
+            // Comparison of the two Period variables
+            if (anchor.plus(tempPeriod).isAfter(anchor.plus(timeOnCask))) {
+                timeOnCask = tempPeriod;
+            }
+        }
+        
+        List<Distillate> distillateList = new ArrayList<>(); // List of all distillates, information extraction
+        for (Liquid liquid : liquidList) {
+            distillateList.add(liquid.getDistillate());
+        }
+        
+        List<GrainVariety> grainVarietyList = new ArrayList<>(); // all grains used
+        List<Integer> newMakeNumberList = new ArrayList<>();
+        for (Distillate disstilate : distillateList) {
+            if (!grainVarietyList.contains(disstilate.getGrainVarietyEnum())) {
+                grainVarietyList.add(disstilate.getGrainVarietyEnum());
+            }
+            if (!newMakeNumberList.contains(disstilate.getNewMakeNumber())) {
+                newMakeNumberList.add(disstilate.getNewMakeNumber());
+            }
+        }
+        
+        List<Cask> caskList = new ArrayList<>();
+        List<CaskLiquids> caskLiquidsList = new ArrayList<>();
+        for (Liquid liquid : liquidList) {
+            if (!caskList.contains(liquid.getCask())) {
+                caskList.add(liquid.getCask());
+            }
+            for (CaskLiquids caskLiquids : liquid.getCask().getPreviousLiquids()) {
+                if (!caskLiquidsList.contains(caskLiquids)) {
+                    caskLiquidsList.add(caskLiquids);
+                }
+            }
+        }
+        // Formatting (selfmade)
+        String formattedTimeOnCask;
+        int years = timeOnCask.getYears();
+        int months = timeOnCask.getMonths();
+        if (months == 0) {
+            formattedTimeOnCask = years + " years";
+        } else {
+            formattedTimeOnCask = years + " years and " + months + " months";
+        }
+
+        // Formatting (ai helped :))
+        String formattedGrainVariety = String.join(", ", grainVarietyList.stream().map(Enum::toString).toArray(String[]::new));
+        String formattedCaskLiquids = String.join(", ", caskLiquidsList.stream().map(Enum::toString).toArray(String[]::new));
+
+        // AI also helped formatting this :)
+        StringBuilder formattedCasks = new StringBuilder();
+        for (int i = 0; i < caskList.size(); i++) {
+            Cask c = caskList.get(i);
+            formattedCasks.append("Cask #").append(c.getId())
+                          .append(" (Supplier: ").append(c.getSupplier())
+                          .append(", Origin: ").append(c.getCountryOfOrigin()).append(")");
+            if (i < caskList.size() - 1) {
+                formattedCasks.append(", ");
+            }
+        }
+        
+        // Writing to txt file (selfmade)
+        Path filePath = Paths.get("src/storage/BottleBatchInformation.txt");
+        String lineInformation = batchName + " lavet af byg: " + formattedGrainVariety +
+                ", Destilleret hos Sall Whisky. Destillat(erne) har ligget på fad i " + formattedTimeOnCask +
+                " på fadene " + formattedCasks.toString() + " som tidligere har indeholdt " + formattedCaskLiquids;
+        try {
+            // Write all lines to the file (overwrites existing content)
+            Files.write(filePath, lineInformation.getBytes());
+            System.out.println("Data written to file successfully.");
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+        
+        return lineInformation;
     }
 }

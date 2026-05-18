@@ -29,8 +29,6 @@ public class Distillation {
         this.startDate = startDate;
         this.employee = employee;
     }
-    
-    
 
     public void addComment(String comment) {
         if (comment != null && !comment.trim().isEmpty()) {

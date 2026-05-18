@@ -56,7 +56,11 @@ public class Distillate {
     public int getNewMakeNumber() {
         return newMakeNumber;
     }
-
+    
+    public GrainVariety getGrainVarietyEnum() {
+        return grainVarietyEnum;
+    }
+    
     @Override
     public String toString() {
         return "#" + newMakeNumber + " (Avail: " + getAvailableVolume() + "L / Total: " + getVolumeOfLastDesstilation() + "L) " + grainVarietyEnum + " " + maltBatch;

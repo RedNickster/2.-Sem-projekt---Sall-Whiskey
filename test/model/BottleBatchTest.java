@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-// TODO - Lav diagra over denne testklasse til dilluteLiquid();
+
 public class BottleBatchTest {
 
     private BottleBatch bottleBatch;
@@ -46,7 +46,7 @@ public class BottleBatchTest {
         // Arrange
         // Mock Liquid with 50% alcohol and 100L volume
         MockLiquid mockLiquid1 = new MockLiquid(100, 50.0);
-        bottleBatch.addLiquid(new BottleBatchLiquid(100, mockLiquid1));
+        bottleBatch.addLiquid(new BottleBatchLiquid(100, mockLiquid1, LocalDate.now()));
 
         double targetPercentage = 40.0; // Dilute from 50% to 40%
 
@@ -61,7 +61,7 @@ public class BottleBatchTest {
     void TC2_dilluteLiquid_edgeCase_targetEqualsCurrent() {
         // Arrange
         MockLiquid mockLiquid1 = new MockLiquid(100, 50.0);
-        bottleBatch.addLiquid(new BottleBatchLiquid(100, mockLiquid1));
+        bottleBatch.addLiquid(new BottleBatchLiquid(100, mockLiquid1, LocalDate.now()));
 
         double targetPercentage = 50.0; // Target equals current
 
@@ -75,7 +75,7 @@ public class BottleBatchTest {
     void TC3_dilluteLiquid_edgeCase_targetHigherThanCurrent() {
         // Arrange
         MockLiquid mockLiquid1 = new MockLiquid(100, 50.0);
-        bottleBatch.addLiquid(new BottleBatchLiquid(100, mockLiquid1));
+        bottleBatch.addLiquid(new BottleBatchLiquid(100, mockLiquid1, LocalDate.now()));
 
         double targetPercentage = 60.0; // Target higher than current
 
@@ -101,7 +101,7 @@ public class BottleBatchTest {
     void TC5_dilluteLiquid_boundary_zeroTargetPercentage() {
         // Arrange
         MockLiquid mockLiquid1 = new MockLiquid(100, 50.0);
-        bottleBatch.addLiquid(new BottleBatchLiquid(100, mockLiquid1));
+        bottleBatch.addLiquid(new BottleBatchLiquid(100, mockLiquid1, LocalDate.now()));
 
         double targetPercentage = 0.0;
 
@@ -115,7 +115,7 @@ public class BottleBatchTest {
     void TC6_dilluteLiquid_boundary_negativeTargetPercentage() {
         // Arrange
         MockLiquid mockLiquid1 = new MockLiquid(100, 50.0);
-        bottleBatch.addLiquid(new BottleBatchLiquid(100, mockLiquid1));
+        bottleBatch.addLiquid(new BottleBatchLiquid(100, mockLiquid1, LocalDate.now()));
 
         double targetPercentage = -10.0;
 

@@ -7,10 +7,11 @@ public class BottleBatchLiquid {
     private Liquid liquid;
     private LocalDate creationDate;
     
-    public BottleBatchLiquid(double liquidAmount, Liquid liquid) {
+
+    public BottleBatchLiquid(double liquidAmount, Liquid liquid, LocalDate creationDate) {
         this.liquidAmount = liquidAmount;
         this.liquid = liquid;
-        this.creationDate = LocalDate.now();
+        this.creationDate = creationDate;
     }
     
     public Liquid getLiquid() {

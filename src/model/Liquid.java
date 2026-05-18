@@ -65,4 +65,8 @@ public class Liquid {
     public LocalDate getFillingDate() {
         return fillingDate;
     }
+    
+    public Cask getCask() {
+        return cask;
+    }
 }
