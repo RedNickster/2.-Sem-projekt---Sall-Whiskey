@@ -27,7 +27,7 @@ public class IntegrationTest {
     void testIntegration_UC1_UC2() {
         // 1. Create Distillation
         Distillation distillation = controller.createDistillationAndAddToDistillate(1, LocalDate.now(),
-                "Employee", "Comment", new Distillate(1, GrainVariety.EVERGREEN,
+                "Employee", "Comment", controller.createDistillate(GrainVariety.EVERGREEN,
                         "malt batch"));
         
         // 2. Create Cask (using null for previousLiquids as allowed by model)
