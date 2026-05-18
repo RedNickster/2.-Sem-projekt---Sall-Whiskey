@@ -29,11 +29,7 @@ public class Distillate {
     }
 
     private double getTotalVolume(){
-        double total = 0;
-        for (Distillation distillation : distillations) {
-            total += distillation.getLiquidAmountAtEnd();
-        }
-        return total;
+        return distillations.getLast().getLiquidAmountAtEnd();
     }
 
     public double getAvailableVolume() {
