@@ -41,31 +41,12 @@ public class Controller {
         return cask;
     }
 
-    /**
-     * Metode som creater en ny Distillation, som ikke er destilleret endnu.
-     *
-     * BRUGES IKKE LÆNGERE, UDGÅET I ITERATION 4
-     * @param id
-     * @param startDate
-     * @param employee
-     * @param comment
-     * @return
-     */
-    public Distillation createDistillation(int id, LocalDate startDate, String employee, String comment) {
-        Distillation temp = new Distillation(id, startDate, employee, comment);
-        storage.addDistillation(temp);
-        return temp;
-    }
-
     public Distillation createDistillationAndAddToDistillate(int id, LocalDate startDate, String employee, String commment, Distillate distillate) {
         Distillation temp = new Distillation(id, startDate, employee, commment);
         storage.addDistillation(temp);
         distillate.addDistillation(temp);
         return temp;
     }
-
-
-
 
 
     /**
