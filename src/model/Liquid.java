@@ -61,4 +61,8 @@ public class Liquid {
     public double getAmountOfDistillateInCask() {
         return amountOfDistillateInCask;
     }
+    
+    public LocalDate getFillingDate() {
+        return fillingDate;
+    }
 }

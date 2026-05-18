@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +72,28 @@ public class BottleBatch {
             liquidAmount += bbl.getLiquidAmount();
         }
         return liquidAmount;
+    }
+    
+    public Period getTimeInCask() {
+        LocalDate fillingDate = null;
+        LocalDate creationDate = null;
+        
+        for (BottleBatchLiquid bbl : bottleBatchLiquidList) {
+            if (bbl.getLiquid().getFillingDate().isAfter(fillingDate)) {
+                fillingDate = bbl.getLiquid().getFillingDate();
+            }
+            
+            if (bbl.getCreationDate().isAfter(creationDate)) {
+                creationDate = bbl.getCreationDate();
+            }
+        }
+        
+        if  (fillingDate == null || creationDate == null) {
+            return Period.ZERO;
+        }
+        
+        return Period.between(fillingDate, creationDate);
+        
     }
 
     public double getAmountOfWaterUsedToDilute() {
