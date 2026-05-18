@@ -62,10 +62,10 @@ public class IntegrationTest {
     @Test
     void testIntegration_CreateBottleBatchAndDilute() {
         // Arrange
-        // 1. Create a minimal Cask (required for Liquid constructor)
+        // 1. Create a Cask (required for Liquid constructor)
         Cask cask = new Cask(99, 1000, new ArrayList<>(), "Test Cask", "Test Supplier");
 
-        // 2. Create a minimal Distillate (required for Liquid constructor)
+        // 2. Create a Distillate (required for Liquid constructor)
         Distillate distillate = new Distillate(99, GrainVariety.EVERGREEN, "Test MaltBatch");
 
         // 3. Create Liquid objects with specific alcohol percentages and amounts
