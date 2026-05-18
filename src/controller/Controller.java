@@ -125,7 +125,6 @@ public class Controller {
         warehouse.removeCask(cask);
     }
 
-
     public void addCommentToDistillation(Distillation distillation, String comment) {
         if (distillation != null && comment != null) {
             distillation.addComment(comment);
@@ -134,10 +133,6 @@ public class Controller {
 
     public int getCaskCount() {
         return storage.getCaskCount();
-    }
-
-    public List<Distillation> getDistillations() {
-        return storage.getDistillations();
     }
 
     public List<Distillation> getActiveDistillations(Distillate distillate) {
@@ -150,6 +145,18 @@ public class Controller {
         return activeList;
     }
 
+    public void controlCask(Cask cask, LocalDate date, double alcoholPercent, String tasteComment) {
+        cask.checkCask(date, alcoholPercent, tasteComment);
+    }
+
+    public void moveCaskInWarehouse(Cask cask, Warehouse warehouse, Integer location) {
+        warehouse.moveCask(cask, location);
+    }
+
+    public List<Distillation> getDistillations() {
+        return storage.getDistillations();
+    }
+
     public List<Cask> getCasks() {
         return storage.getCasks();
     }
@@ -160,10 +167,6 @@ public class Controller {
 
     public List<Warehouse> getWarehouses() {
         return storage.getWarehouses();
-    }
-
-    public void controlCask(Cask cask, LocalDate date, double alcoholPercent, String tasteComment) {
-        cask.checkCask(date, alcoholPercent, tasteComment);
     }
 
     public List<Cask> getCasksInWarehouse(Warehouse warehouse) {
@@ -185,9 +188,5 @@ public class Controller {
 
     public Cask[] getAllLocationsInWarehouse(Warehouse warehouse) {
         return warehouse.getAllLocations();
-    }
-
-    public void moveCaskInWarehouse(Cask cask, Warehouse warehouse, int location) {
-        warehouse.moveCask(cask, location);
     }
 }
