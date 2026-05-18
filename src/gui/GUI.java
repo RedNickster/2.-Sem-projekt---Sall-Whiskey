@@ -20,6 +20,7 @@ public class GUI extends Application {
     private WarehouseControlPane warehouseControlPane;
     private DefaultPane defaultPane;
     private CreateWhiskyPane createWhiskyPane;
+    private WarehouseMoveCaskPane moveCaskPane;
 
     public void start(Stage stage) {
         stage.setTitle("Sall Whiskey");
@@ -46,6 +47,7 @@ public class GUI extends Application {
         warehousePane = new WarehousePane(controller);
         warehouseControlPane = new WarehouseControlPane(controller);
         createWhiskyPane = new CreateWhiskyPane(controller);
+        moveCaskPane = new WarehouseMoveCaskPane(controller);
 
         // Default view
         borderPane.setCenter(defaultPane);
@@ -59,7 +61,8 @@ public class GUI extends Application {
                 () -> { fillCaskPane.refresh(); borderPane.setCenter(fillCaskPane); },
                 () -> { warehousePane.refresh(); borderPane.setCenter(warehousePane); },
                 () -> { warehouseControlPane.refresh(); borderPane.setCenter(warehouseControlPane); },
-                () -> { createWhiskyPane.refresh(); borderPane.setCenter(createWhiskyPane); }
+                () -> { createWhiskyPane.refresh(); borderPane.setCenter(createWhiskyPane); },
+                () -> { moveCaskPane.refresh(); borderPane.setCenter(moveCaskPane);}
         );
 
         Scene scene = new Scene(borderPane, 1000, 600);

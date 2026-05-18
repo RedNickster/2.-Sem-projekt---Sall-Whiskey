@@ -63,7 +63,7 @@ public class WarehousePane extends GridPane {
 
         btnAddToWarehouse.setOnAction((event -> this.addToWarehouse()));
 
-        //TODO tilføje listeners og tilhørende metoder for at vise cask ikke i lager i available, og cask i lager i anden
+        //TODO tilføje warning ved isFull
     }
 
     private void addToWarehouse() {
@@ -72,6 +72,11 @@ public class WarehousePane extends GridPane {
 
         if (selectedCask == null || selectedWarehouse == null) {
             AppAlerts.showError("Missing information", "Please fill out all information");
+            return;
+        }
+
+        if (selectedWarehouse.isFull()) {
+            AppAlerts.showError("Full warehouse", "Warehouse is full");
             return;
         }
 

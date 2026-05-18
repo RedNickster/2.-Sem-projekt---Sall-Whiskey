@@ -1,7 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Warehouse {
 
@@ -26,7 +25,7 @@ public class Warehouse {
             throw new IllegalArgumentException("Cask is already in warehouse");
         }
         
-        // Checks if there is room for the cask, if yes; set lokation to cask and quit
+        // Checks if there is room for the cask, if yes; set location to cask and quit
         for (int i = 0; i < locations.length; i++) {
             if (locations[i] == null) {
                 locations[i] = cask;
@@ -52,6 +51,26 @@ public class Warehouse {
             }
         }
     }
+
+    public void moveCask(Cask cask, Integer location) {
+
+        if (locations.length < location) {
+            throw new IllegalArgumentException("Location doesn't exist");
+        }
+
+        if (locations[location] != null) {
+            throw new IllegalArgumentException("Location taken");
+        }
+
+        for (int i = 0; i < locations.length; i++) {
+            if (locations[i] == cask) {
+                locations[i] = null;
+            }
+        }
+        locations[location] = cask;
+    }
+
+
     
     private boolean isCaskInWareHouse(Cask cask) {
         for (Cask value : locations) {
@@ -73,9 +92,15 @@ public class Warehouse {
                 actualCasks.add(c);
             }
         }
-        return  actualCasks;
+        return actualCasks;
     }
-    
+
+    public Cask[] getAllLocations() {
+        return Arrays.copyOf(locations, locations.length);
+    }
+
+
+    //TODO inkludere ledige og maks pladser
     @Override
     public String toString() {
         return "Warehouse: " + address + ", m2: " + m2;

@@ -67,11 +67,18 @@ public class FillCaskPane extends GridPane {
             return;
         }
 
+        int liquidAmount = Integer.parseInt(liquidAmountString);
+
+        if (liquidAmount > selectedDistillate.getAvailableVolume() || liquidAmount > selectedCask.getAvailableSpace()) {
+            AppAlerts.showError("Numbers don't match", "Make sure there is enough distillate and space in cask");
+            return;
+        }
+
         boolean confirm = AppAlerts.showConfirmation("Confirm filling cask",
                 "Are you sure you want to fill the cask?");
 
         if (confirm) {
-            int liquidAmount = Integer.parseInt(liquidAmountString);
+
 
             controller.pourDistillateIntoCask(selectedDistillate,liquidAmount,selectedCask);
 

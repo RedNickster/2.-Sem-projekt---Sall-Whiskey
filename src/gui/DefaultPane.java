@@ -13,6 +13,7 @@ public class DefaultPane extends GridPane {
     private final Button btnWarehouse = new Button("Warehouse");
     private final Button btnWarehouseControl = new Button("WarehouseControl");
     private final Button btnCreateWhisky = new Button("Create whisky");
+    private final Button btnMoveCask = new Button("Move cask");
 
     public DefaultPane() {
         this.setPadding(new Insets(20));
@@ -27,7 +28,8 @@ public class DefaultPane extends GridPane {
                 btnCasks,
                 btnFillCask,
                 btnWarehouse,
-                btnWarehouseControl
+                btnWarehouseControl,
+                btnMoveCask
         );
         this.add(leftSection, 1, 0);
 
@@ -52,7 +54,8 @@ public class DefaultPane extends GridPane {
     }
 
     public void setActions(Runnable caskAct, Runnable createDistAct, Runnable endDistAct,
-                           Runnable fillAct, Runnable warehouseAct, Runnable warehouseControlAct, Runnable createWhisAct) {
+                           Runnable fillAct, Runnable warehouseAct, Runnable warehouseControlAct, Runnable createWhisAct,
+                           Runnable moveCaskAct) {
         btnCasks.setOnAction(e -> caskAct.run());
         btnCreateDistillation.setOnAction(e -> createDistAct.run());
         btnEndDistillation.setOnAction(e -> endDistAct.run());
@@ -60,12 +63,13 @@ public class DefaultPane extends GridPane {
         btnWarehouse.setOnAction(e -> warehouseAct.run());
         btnWarehouseControl.setOnAction(e -> warehouseControlAct.run());
         btnCreateWhisky.setOnAction(e -> createWhisAct.run());
+        btnMoveCask.setOnAction(e -> moveCaskAct.run());
     }
 
     private void styleButtons() {
         // Just an example to make them look more like a dashboard
         for (Button b : new Button[]{btnCasks, btnCreateDistillation, btnEndDistillation,
-                btnFillCask, btnWarehouse, btnWarehouseControl, btnCreateWhisky}) {
+                btnFillCask, btnWarehouse, btnWarehouseControl, btnCreateWhisky, btnMoveCask}) {
             b.setPrefWidth(200);
             b.setPrefHeight(40);
         }

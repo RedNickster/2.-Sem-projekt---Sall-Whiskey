@@ -99,6 +99,11 @@ public class Cask {
         return supplier;
     }
 
+    public double getAvailableSpace() {
+        return liters - containsLiters();
+    }
+
+
     public List<Liquid> getLiquids() {
         return new ArrayList<>(liquids);
     }

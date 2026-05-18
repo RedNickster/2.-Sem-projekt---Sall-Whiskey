@@ -1,14 +1,11 @@
 package integration;
 
 import controller.Controller;
-import model.Cask;
-import model.Distillation;
+import model.*;
 import storage.IStorage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-import model.Warehouse;
-import model.Distillate;
 import model.enums.GrainVariety;
 import model.enums.CaskLiquids;
 
@@ -23,7 +20,7 @@ public class IntegrationTest {
 
     @BeforeEach
     void setUp() {
-        controller = new Controller();
+        controller = new Controller(new storage.Storage());
     }
 
     @Test
@@ -60,5 +57,58 @@ public class IntegrationTest {
         assertDoesNotThrow(() -> cask1.tapDistillate(litersToTap));
         assertEquals(litersToAdd - litersToTap, cask1.containsLiters());
         assertDoesNotThrow(() -> warehouse.removeCask(cask1));
+    }
+
+    @Test
+    void testIntegration_CreateBottleBatchAndDilute() {
+        // Arrange
+        // 1. Create a minimal Cask (required for Liquid constructor)
+        Cask cask = new Cask(99, 1000, new ArrayList<>(), "Test Cask", "Test Supplier");
+
+        // 2. Create a minimal Distillate (required for Liquid constructor)
+        Distillate distillate = new Distillate(99, GrainVariety.EVERGREEN, "Test MaltBatch");
+
+        // 3. Create Liquid objects with specific alcohol percentages and amounts
+        // Liquid 1: 100L at 60% alcohol
+        Liquid liquid1 = new Liquid(LocalDate.now(), 100, cask, distillate);
+        // LiquidCheck is needed to set the alcohol percentage in Liquid
+        liquid1.checkLiquid(LocalDate.now(), 60.0, "Initial check for liquid1");
+
+        // Liquid 2: 200L at 75% alcohol
+        Liquid liquid2 = new Liquid(LocalDate.now(), 200, cask, distillate);
+        liquid2.checkLiquid(LocalDate.now(), 75.0, "Initial check for liquid2");
+
+        // 4. Create BottleBatch
+        BottleBatch bottleBatch = new BottleBatch("Batch for Dilution", "Integration Test Batch");
+
+        // 5. Add Liquids to BottleBatch
+        bottleBatch.addLiquid(new BottleBatchLiquid(liquid1.getAmountOfDistillateInCask(), liquid1));
+        bottleBatch.addLiquid(new BottleBatchLiquid(liquid2.getAmountOfDistillateInCask(), liquid2));
+
+        /*
+         Total alcohol volume = (100 * 60) + (200 * 75) = 6000 + 15000 = 21000
+         Total liquid volume = 100 + 200 = 300
+         Initial average percentage = 21000 / 300 = 70.0%
+        */
+        
+        double targetAlcoholPercentage = 50.0; // Target 50%
+
+
+        // Act
+        double waterNeeded = bottleBatch.dilluteLiquid(targetAlcoholPercentage);
+
+        // Assert
+        /*
+         Calculate expected water needed:
+         Current total volume (L) = 300
+         Current alcohol percentage = 70.0%
+         Target alcohol percentage = 50.0%
+         Target total volume = (Current total volume * Current percentage) / Target percentage
+         Target total volume = (300 * 70.0) / 50.0 = 21000 / 50.0 = 420 L
+         Water needed = Target total volume - Current total volume = 420 - 300 = 120 L
+         
+         Just in case you wonder where the magic number comes from ;)
+         */
+        assertEquals(120.0, waterNeeded);
     }
 }
