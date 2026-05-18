@@ -7,7 +7,7 @@ public class BottleBatch {
     private String name;
     private String description;
     private double amountOfWaterUsedToDilute;
-    
+
     private List<BottleBatchLiquid> bottleBatchLiquidList;
     
     public BottleBatch(String name, String description) {
@@ -71,8 +71,20 @@ public class BottleBatch {
         }
         return liquidAmount;
     }
-    
+
     public double getAmountOfWaterUsedToDilute() {
         return amountOfWaterUsedToDilute;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<BottleBatchLiquid> getBottleBatchLiquidList() {
+        return new ArrayList<>(bottleBatchLiquidList);
     }
 }

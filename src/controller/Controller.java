@@ -114,6 +114,28 @@ public class Controller {
         return temp;
     }
 
+    public BottleBatch createBottleBatch(String name, String description) {
+        BottleBatch bottleBatch = new BottleBatch(name, description);
+        storage.addBottleBatch(bottleBatch);
+        return bottleBatch;
+    }
+
+    public void addLiquidToBatch(BottleBatch bottleBatch, Cask cask, double amount) {
+        List<Liquid> liquids = cask.getLiquids();
+
+        if (!liquids.isEmpty()) {
+            Liquid liquid = liquids.get(liquids.size() - 1);
+
+            if (cask.containsLiters() >= amount) {
+                cask.tapDistillate(amount);
+
+                BottleBatchLiquid bbl = new BottleBatchLiquid(amount, liquid);
+
+                bottleBatch.addLiquid(bbl);
+            }
+        }
+    }
+
     public void addCaskToWarehouse(Cask cask, Warehouse warehouse) {
         warehouse.addCask(cask);
     }

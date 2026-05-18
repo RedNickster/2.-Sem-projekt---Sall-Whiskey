@@ -102,7 +102,12 @@ public class Cask {
     public double getAvailableSpace() {
         return liters - containsLiters();
     }
-    
+
+
+    public List<Liquid> getLiquids() {
+        return new ArrayList<>(liquids);
+    }
+
     @Override
     public String toString() {
         return "Cask #" + id + " (Available space: " + (liters - containsLiters()) + "L / Total: " + liters + "L) - " + supplier + "(" + countryOfOrigin + ")" +
