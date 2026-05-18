@@ -20,6 +20,8 @@ public class WarehouseMoveCaskPane extends GridPane {
     private final ListView<Cask> lvwCasksInWarehouse = new ListView<>();
     private final ListView<String> lvwStorageLocations = new ListView<>();
 
+    private final Button btnmMoveCask = new Button("Move cask");
+
     public WarehouseMoveCaskPane(Controller controller) {
         this.controller = controller;
 
@@ -50,33 +52,55 @@ public class WarehouseMoveCaskPane extends GridPane {
         rightSection.getChildren().addAll(
                 new Label("Locations"),
                 new Separator(),
-                lvwStorageLocations
+                lvwStorageLocations,
+                btnmMoveCask
 
         );
         this.add(rightSection,2,0);
+
+        btnmMoveCask.setOnAction(e -> this.moveCask());
 
         lvwWarehouses.getSelectionModel().selectedItemProperty().addListener((obs, oldW, newW) -> {
             lvwCasksInWarehouse.getItems().clear();
             lvwStorageLocations.getItems().clear();
 
-            //if (newW != null) {
-                lvwCasksInWarehouse.getItems().setAll(controller.getCasksInWarehouse(newW));
+            lvwCasksInWarehouse.getItems().setAll(controller.getCasksInWarehouse(newW));
 
-                Cask[] slots = controller.getAllLocationsInWarehouse(newW);
+            Cask[] slots = controller.getAllLocationsInWarehouse(newW);
 
-                for (int i = 0; i < slots.length; i++) {
-                    Cask cask = slots[i];
-                    int slotNum = i + 1;
+            for (int i = 0; i < slots.length; i++) {
+                Cask cask = slots[i];
+                int slotNum = i + 1;
 
-                    if (cask == null) {
-                        lvwStorageLocations.getItems().add("Slot " + slotNum + ": [ Available Space ]");
-                    } else {
-                        lvwStorageLocations.getItems().add("Slot " + slotNum + ": Cask #" + cask.getId());
-                    }
+                if (cask == null) {
+                    lvwStorageLocations.getItems().add("Slot " + slotNum + ": [ Available Space ]");
+                } else {
+                    lvwStorageLocations.getItems().add("Slot " + slotNum + ": Cask #" + cask.getId());
                 }
-            //}
+            }
         });
 
+    }
+
+    private void moveCask() {
+        Warehouse selectedWarehouse = lvwWarehouses.getSelectionModel().getSelectedItem();
+        Cask selectedCask = lvwCasksInWarehouse.getSelectionModel().getSelectedItem();
+        int selectedLocation = lvwStorageLocations.getSelectionModel().getSelectedIndex();
+
+        if (selectedWarehouse == null || selectedCask == null || selectedLocation == -1) {
+            AppAlerts.showError("Missing information", "Please fill out all information");
+            return;
+        }
+
+        boolean confirm = AppAlerts.showConfirmation("Confirm move",
+                "Are you sure you want to move the cask?");
+
+        if (confirm) {
+            controller.moveCaskInWarehouse(selectedCask, selectedWarehouse, selectedLocation);
+
+            AppAlerts.showInformation("Success", "Moved cask #" + selectedCask.getId());
+        }
+        refresh();
     }
 
     void refresh() {

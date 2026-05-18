@@ -25,7 +25,7 @@ public class Warehouse {
             throw new IllegalArgumentException("Cask is already in warehouse");
         }
         
-        // Checks if there is room for the cask, if yes; set lokation to cask and quit
+        // Checks if there is room for the cask, if yes; set location to cask and quit
         for (int i = 0; i < locations.length; i++) {
             if (locations[i] == null) {
                 locations[i] = cask;
@@ -50,6 +50,24 @@ public class Warehouse {
                 return;
             }
         }
+    }
+
+    public void moveCask(Cask cask, Integer location) {
+
+        if (locations.length < location) {
+            throw new IllegalArgumentException("Location doesn't exist");
+        }
+
+        if (locations[location] != null) {
+            throw new IllegalArgumentException("Location taken");
+        }
+
+        for (int i = 0; i < locations.length; i++) {
+            if (locations[i] == cask) {
+                locations[i] = null;
+            }
+        }
+        locations[location] = cask;
     }
 
 
