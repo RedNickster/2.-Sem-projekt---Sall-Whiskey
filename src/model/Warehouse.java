@@ -52,7 +52,7 @@ public class Warehouse {
         }
     }
 
-    public void moveCask(Cask cask, Integer location) {
+    public void moveCask(Cask cask, int location) {
 
         if (locations.length < location) {
             throw new IllegalArgumentException("Location doesn't exist");

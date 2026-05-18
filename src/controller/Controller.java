@@ -41,7 +41,6 @@ public class Controller {
         return cask;
     }
 
-    // Ikke i dkd
     /**
      * Metode som creater en ny Distillation, som ikke er destilleret endnu.
      *
